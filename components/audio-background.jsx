@@ -50,6 +50,33 @@ const AudioBackground = () => {
     return () => { delete window.__startBgAudio; };
   }, []);
 
+  // Stop the music when the user leaves the page (tab switch, app
+  // background, lock screen, navigation away). Resume on return only if
+  // the track was actively playing before the page was hidden.
+  useEffectAudio(() => {
+    let wasPlaying = false;
+    const onVisibility = () => {
+      const a = ref.current;
+      if (!a) return;
+      if (document.hidden) {
+        wasPlaying = !a.paused && !a.muted;
+        if (wasPlaying) a.pause();
+      } else if (wasPlaying) {
+        a.play().catch(() => {});
+      }
+    };
+    const onPageHide = () => {
+      const a = ref.current;
+      if (a) a.pause();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('pagehide', onPageHide);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', onPageHide);
+    };
+  }, []);
+
   const toggle = () => {
     setHasInteracted(true);
     const a = ref.current;

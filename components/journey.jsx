@@ -172,9 +172,9 @@ const Journey = () => {
         <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        {window.dashy(t.title_main)}<br/>
-        <span className="em">{window.dashy(t.title_em)}</span> {window.dashy(t.title_to)}
-        <span className="it">{window.dashy(t.subtitle)}</span>
+        {t.title_main}<br/>
+        <span className="em">{t.title_em}</span> {t.title_to}
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`journey-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
