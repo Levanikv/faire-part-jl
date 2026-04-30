@@ -125,7 +125,7 @@ const Hero = () => {
     document.body.style.overflow = 'hidden';
     window.scrollTo(0, 0);
 
-    // ---- gridReveal — prolonged for a smoother, more deliberate cascade ----
+    // ---- gridReveal — slow, deliberate cascade so the photos breathe ----
     const gridReveal = () => {
       const tl = gsap.timeline();
       const wh = window.innerHeight;
@@ -134,24 +134,24 @@ const Hero = () => {
         const fromTop = i % 2 === 0;
         tl.from(col, {
           y: dy * (fromTop ? -1 : 1),
-          duration: 1.6,
-          stagger: { each: 0.08, from: fromTop ? 'end' : 'start' },
+          duration: 3.0,
+          stagger: { each: 0.12, from: fromTop ? 'end' : 'start' },
           ease: 'power1.inOut',
         }, 'reveal');
       });
       return tl;
     };
 
-    // ---- gridZoom — prolonged so the separation has more presence ----
+    // ---- gridZoom — extended scale + spread, lets the separation linger ----
     const gridZoom = () => {
-      const tl = gsap.timeline({ defaults: { duration: 1.6, ease: 'power3.inOut' } });
+      const tl = gsap.timeline({ defaults: { duration: 2.4, ease: 'power3.inOut' } });
       tl.to(grid, { scale: 1.85 });
       tl.to(cols[0], { xPercent: -38 }, '<');
       tl.to(cols[2], { xPercent:  38 }, '<');
       tl.to(cols[1], {
         yPercent: (idx) => (idx < Math.floor(cols[1].length / 2) ? -1 : 1) * 36,
-        duration: 0.85, ease: 'power1.inOut',
-      }, '-=0.85');
+        duration: 1.2, ease: 'power1.inOut',
+      }, '-=1.2');
       return tl;
     };
 
