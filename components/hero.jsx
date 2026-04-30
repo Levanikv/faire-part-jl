@@ -192,8 +192,36 @@ const Hero = () => {
       .add(toggleContent(),  '-=0.95')   // texts begin blur-out as photos are separating
       .to(grid, { opacity: 0.2, duration: 1.0, ease: 'power2.inOut' }, '-=0.4');
 
+    // ---- Subtle parallax: text drifts down a touch and photos drift up
+    //      a touch as the user scrolls past the hero. Counter-direction
+    //      gives a gentle sense of depth without anything dramatic. ----
+    const parallaxText = gsap.to(content, {
+      y: 70,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: block,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5,
+      },
+    });
+    const parallaxPhotos = gsap.to(grid, {
+      yPercent: -8,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: block,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5,
+      },
+    });
+
     return () => {
       master.kill();
+      parallaxText.scrollTrigger?.kill();
+      parallaxText.kill();
+      parallaxPhotos.scrollTrigger?.kill();
+      parallaxPhotos.kill();
       document.body.style.overflow = prevOverflow;
       if (window.__lenis) window.__lenis.start();
       gsap.set(
