@@ -134,8 +134,8 @@ const Hero = () => {
         const fromTop = i % 2 === 0;
         tl.from(col, {
           y: dy * (fromTop ? -1 : 1),
-          duration: 3.0,
-          stagger: { each: 0.12, from: fromTop ? 'end' : 'start' },
+          duration: 2.4,
+          stagger: { each: 0.1, from: fromTop ? 'end' : 'start' },
           ease: 'power1.inOut',
         }, 'reveal');
       });
@@ -144,14 +144,14 @@ const Hero = () => {
 
     // ---- gridZoom — extended scale + spread, lets the separation linger ----
     const gridZoom = () => {
-      const tl = gsap.timeline({ defaults: { duration: 2.4, ease: 'power3.inOut' } });
+      const tl = gsap.timeline({ defaults: { duration: 2.0, ease: 'power3.inOut' } });
       tl.to(grid, { scale: 1.85 });
       tl.to(cols[0], { xPercent: -38 }, '<');
       tl.to(cols[2], { xPercent:  38 }, '<');
       tl.to(cols[1], {
         yPercent: (idx) => (idx < Math.floor(cols[1].length / 2) ? -1 : 1) * 36,
-        duration: 1.2, ease: 'power1.inOut',
-      }, '-=1.2');
+        duration: 1.0, ease: 'power1.inOut',
+      }, '-=1.0');
       return tl;
     };
 
