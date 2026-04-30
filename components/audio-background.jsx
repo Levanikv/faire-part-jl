@@ -1,6 +1,7 @@
 // AudioBackground — discreet music control floating top-right.
-// UI ready for a Qartuli (Georgian polyphonic) loop. The actual audio file
-// must be supplied by the user (see SRC below); when missing we hide the button entirely.
+// The button is always visible (placeholder UI). When AUDIO_SRC is set,
+// clicking it actually plays / mutes; otherwise it just toggles UI state
+// so the user can see the affordance.
 
 const { useState: useStateAudio, useEffect: useEffectAudio, useRef: useRefAudio } = React;
 
@@ -17,38 +18,37 @@ const AudioBackground = () => {
     tip_off: 'Qartuli ♪', tip_on: 'En cours',
   };
 
-  if (!AUDIO_SRC) return null; // no track configured → don't show the button
-
-  useEffectAudio(() => {
-    const a = ref.current;
-    if (!a) return;
-    a.volume = 0.35;
-    a.play().catch(() => {});
-  }, []);
+  // (No useEffect autoplay — autoplay-with-sound is blocked on iOS Safari
+  //  anyway, and we want the user to opt-in via the button.)
 
   const toggle = () => {
-    const a = ref.current;
-    if (!a) return;
-    if (muted) { a.muted = false; a.play().catch(() => {}); setMuted(false); }
-    else { a.muted = true; setMuted(true); }
     setHasInteracted(true);
+    const a = ref.current;
+    if (a && AUDIO_SRC) {
+      if (muted) { a.muted = false; a.volume = 0.35; a.play().catch(() => {}); }
+      else { a.muted = true; }
+    }
+    setMuted((m) => !m);
   };
 
   return (
     <>
       <style>{`
         .audio-fab {
-          position: fixed; top: 18px; right: 18px;
+          position: fixed;
+          top: max(18px, env(safe-area-inset-top));
+          right: max(18px, env(safe-area-inset-right));
           z-index: 100;
-          width: 44px; height: 44px;
+          width: 46px; height: 46px;
           border-radius: 50%;
-          background: rgba(243, 236, 216, 0.85);
+          background: rgba(243, 236, 216, 0.88);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           border: 1px solid var(--rule);
           display: flex; align-items: center; justify-content: center;
           cursor: pointer;
-          transition: all .3s cubic-bezier(.4,0,.2,1);
+          padding: 0;
+          transition: transform .3s cubic-bezier(.4,0,.2,1), background .3s;
           box-shadow: 0 4px 18px rgba(31, 36, 25, 0.08);
           opacity: 0;
           transform: scale(0.8);
@@ -104,7 +104,7 @@ const AudioBackground = () => {
         }
       `}</style>
 
-      <audio ref={ref} src={AUDIO_SRC} loop muted preload="auto" />
+      {AUDIO_SRC && <audio ref={ref} src={AUDIO_SRC} loop muted preload="auto" />}
 
       <button
         className={`audio-fab ${!muted ? 'playing' : ''} ${!hasInteracted ? 'invite-pulse' : ''}`}

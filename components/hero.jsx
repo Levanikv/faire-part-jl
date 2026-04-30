@@ -93,8 +93,10 @@ const Hero = () => {
     const center  = centerRef.current;
     const title   = titleRef.current;
     const grid    = gridRef.current;
-    const titleEls = [logoRef.current, eyebrowRef.current, namesRef.current].filter(Boolean);
-    const subEls  = [cdRowRef.current, dateRef.current].filter(Boolean);
+    // Title (centered) — eyebrow + names blur in inside the title wrapper.
+    // Sub elements (top cluster: logo + countdown, bottom: date) fade in around it.
+    const titleEls = [eyebrowRef.current, namesRef.current].filter(Boolean);
+    const subEls  = [logoRef.current, cdRowRef.current, dateRef.current].filter(Boolean);
     if (!block || !grid || !title || !center) return;
 
     // Lenis smooth scroll (shared across the page)
@@ -209,28 +211,36 @@ const Hero = () => {
           background: var(--cream);
           padding: 0 !important;
           gap: 0;
+          height: 100vh;
           height: 100svh;
+          height: 100dvh;
+          min-height: 100vh !important;
           min-height: 100svh !important;
+          min-height: 100dvh !important;
           display: block !important;
           overflow: visible;
           position: relative;
         }
         .hero-wrapper {
           position: relative;
+          height: 100vh;
           height: 100svh;
+          height: 100dvh;
           width: 100%;
           padding: 0 20px;
           overflow: hidden;
           background: linear-gradient(180deg, var(--cream) 0%, var(--beige-light) 65%, var(--beige) 100%);
         }
 
-        /* Centered text content layer — countdown pinned to the top,
-           title group (logo + names) absolutely centered (this is what the
-           gallery's titleOffsetY trick re-centers), date pinned to the bottom. */
+        /* Centered text content layer — top cluster (logo + countdown),
+           title group (names) absolutely centered, date pinned to the bottom. */
         .hero-content {
           position: relative;
           z-index: 2;
-          width: 100%; height: 100svh;
+          width: 100%;
+          height: 100vh;
+          height: 100svh;
+          height: 100dvh;
           text-align: center;
           pointer-events: none;
         }
@@ -325,7 +335,18 @@ const Hero = () => {
           font-size: 8px;
         }
 
-        /* Monogram — sits inside the centered title group */
+        /* Top cluster — JL monogram stacked above the countdown, absolutely
+           pinned to the top of the viewport with safe-area padding. */
+        .hero-top {
+          position: absolute;
+          top: max(40px, env(safe-area-inset-top));
+          left: 0; right: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 14px;
+          will-change: opacity, transform, filter;
+        }
         .hero-logo {
           display: flex; align-items: center; justify-content: center;
         }
@@ -333,11 +354,7 @@ const Hero = () => {
           filter: drop-shadow(0 1px 12px rgba(247, 242, 230, 0.6));
         }
 
-        /* Countdown — absolutely pinned to the top of the viewport */
         .hero-cd-row {
-          position: absolute;
-          top: 56px;
-          left: 0; right: 0;
           display: flex; align-items: baseline; justify-content: center;
           gap: 16px;
           font-family: var(--sans);
@@ -345,7 +362,6 @@ const Hero = () => {
           letter-spacing: 0.34em;
           text-transform: uppercase;
           color: var(--sage-deep);
-          will-change: opacity;
         }
         .hero-cd-row .cd-pair { display: inline-flex; align-items: baseline; gap: 5px; }
         .hero-cd-row .num {
@@ -396,7 +412,7 @@ const Hero = () => {
         /* Date — absolutely pinned to the bottom of the viewport, slightly larger */
         .hero-date {
           position: absolute;
-          bottom: 56px;
+          bottom: max(40px, env(safe-area-inset-bottom));
           left: 0; right: 0;
           display: flex; flex-direction: column; align-items: center; gap: 14px;
           will-change: opacity;
@@ -440,21 +456,23 @@ const Hero = () => {
 
       <div className="hero-wrapper" ref={wrapperRef}>
         <div className="hero-content" ref={contentRef}>
-          <div className="hero-cd-row" ref={cdRowRef} aria-label={tc.a11y_countdown}>
-            <span className="cd-pair"><span className="num">{String(cd.d).padStart(2,'0')}</span>{th.cd_d}</span>
-            <span className="dot" />
-            <span className="cd-pair"><span className="num">{String(cd.h).padStart(2,'0')}</span>{th.cd_h}</span>
-            <span className="dot" />
-            <span className="cd-pair"><span className="num">{String(cd.m).padStart(2,'0')}</span>{th.cd_m}</span>
-            <span className="dot" />
-            <span className="cd-pair"><span className="num">{String(cd.s).padStart(2,'0')}</span>{th.cd_s}</span>
+          <div className="hero-top">
+            <div className="hero-logo" ref={logoRef} aria-label={tc.a11y_couple}>
+              {window.MonoLogo && <window.MonoLogo size={68} ink="var(--ink)" accent="var(--sage-deep)" />}
+            </div>
+            <div className="hero-cd-row" ref={cdRowRef} aria-label={tc.a11y_countdown}>
+              <span className="cd-pair"><span className="num">{String(cd.d).padStart(2,'0')}</span>{th.cd_d}</span>
+              <span className="dot" />
+              <span className="cd-pair"><span className="num">{String(cd.h).padStart(2,'0')}</span>{th.cd_h}</span>
+              <span className="dot" />
+              <span className="cd-pair"><span className="num">{String(cd.m).padStart(2,'0')}</span>{th.cd_m}</span>
+              <span className="dot" />
+              <span className="cd-pair"><span className="num">{String(cd.s).padStart(2,'0')}</span>{th.cd_s}</span>
+            </div>
           </div>
 
           <div className="hero-center" ref={centerRef}>
             <div className="hero-title" ref={titleRef}>
-              <div className="hero-logo" ref={logoRef} aria-label={tc.a11y_couple}>
-                {window.MonoLogo && <window.MonoLogo size={64} ink="var(--ink)" accent="var(--sage-deep)" />}
-              </div>
               <div className="hero-eyebrow" ref={eyebrowRef}>{th.eyebrow}</div>
               <div className="hero-names" ref={namesRef}>
                 <div className="names-display">

@@ -46,76 +46,49 @@ const LangGate = ({ onSelect }) => {
           position: fixed;
           inset: 0;
           z-index: 9999;
-          background: var(--cream);
+          background:
+            radial-gradient(ellipse at 50% 0%, var(--beige-light) 0%, var(--cream) 60%),
+            var(--cream);
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: space-between;
-          padding: 36px 24px 32px;
-          overflow: hidden;
+          padding:
+            max(28px, env(safe-area-inset-top))
+            max(20px, env(safe-area-inset-right))
+            max(28px, env(safe-area-inset-bottom))
+            max(20px, env(safe-area-inset-left));
+          overflow: auto;
           opacity: 1;
           transition: opacity 0.6s ease;
           max-width: 480px;
           margin: 0 auto;
+          gap: clamp(24px, 6vh, 44px);
         }
-        .gate.exit {
-          opacity: 0;
-          pointer-events: none;
-        }
-
-        /* === Background pattern: vines + Chokha ornaments === */
-        .gate-pattern {
-          position: absolute; inset: 0;
-          pointer-events: none;
-          opacity: 0.28;
-          z-index: 0;
-        }
-        .gate-pattern svg {
-          position: absolute;
-          color: var(--sage-deep);
-        }
-
-        /* Tile vine pattern */
-        .vine-bg {
-          position: absolute; inset: 0;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='120' height='120'><g fill='none' stroke='%235c6e54' stroke-width='0.8' stroke-linecap='round' opacity='0.35'><path d='M60 0 C 50 20, 70 40, 60 60 C 50 80, 70 100, 60 120'/><path d='M60 20 C 70 18, 78 22, 80 30 C 78 24, 72 22, 66 26'/><path d='M60 40 C 50 38, 42 42, 40 50 C 42 44, 48 42, 54 46'/><path d='M60 60 C 70 58, 78 62, 80 70 C 78 64, 72 62, 66 66'/><path d='M60 80 C 50 78, 42 82, 40 90 C 42 84, 48 82, 54 86'/><path d='M60 100 C 70 98, 78 102, 80 110'/><circle cx='80' cy='30' r='2' fill='%235c6e54'/><circle cx='40' cy='50' r='2' fill='%235c6e54'/><circle cx='80' cy='70' r='2' fill='%235c6e54'/><circle cx='40' cy='90' r='2' fill='%235c6e54'/></g></svg>");
-          background-size: 120px 120px;
-          opacity: 0.45;
-        }
-
-        /* Chokha-inspired ornament — repeating diamond chain at top & bottom */
-        .chokha-band {
-          position: absolute; left: 0; right: 0;
-          height: 28px;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 28' width='80' height='28'><g fill='none' stroke='%233d4a36' stroke-width='1' stroke-linecap='round'><path d='M0 14 L80 14' opacity='0.4'/><path d='M40 4 L50 14 L40 24 L30 14 Z'/><path d='M40 8 L46 14 L40 20 L34 14 Z' opacity='0.5'/><circle cx='40' cy='14' r='1.5' fill='%233d4a36'/><path d='M5 14 L15 14 M65 14 L75 14' opacity='0.5'/><circle cx='10' cy='14' r='1' fill='%233d4a36' opacity='0.6'/><circle cx='70' cy='14' r='1' fill='%233d4a36' opacity='0.6'/></g></svg>");
-          background-size: 80px 28px;
-          opacity: 0.7;
-        }
-        .chokha-top { top: 0; }
-        .chokha-bottom { bottom: 0; transform: scaleY(-1); }
-
+        .gate.exit { opacity: 0; pointer-events: none; }
         .gate > * { position: relative; z-index: 1; }
 
         /* === Header === */
         .gate-head {
-          display: flex; flex-direction: column; align-items: center; gap: 14px;
-          padding-top: 36px;
+          display: flex; flex-direction: column; align-items: center;
+          gap: clamp(12px, 2.4vh, 18px);
+          margin-top: clamp(16px, 4vh, 36px);
           opacity: 0;
           animation: g-fade 1.2s 0.2s forwards cubic-bezier(.4,0,.2,1);
         }
         .gate-monogram {
           display: flex; align-items: center; justify-content: center;
           position: relative;
-          padding: 4px 18px;
+          padding: 6px 22px;
         }
         .gate-monogram svg {
-          filter: drop-shadow(0 1px 14px rgba(247, 242, 230, 0.5));
+          filter: drop-shadow(0 1px 14px rgba(247, 242, 230, 0.55));
+          width: clamp(96px, 28vw, 140px);
+          height: auto;
         }
-        /* Decorative corner brackets */
         .gate-monogram::before, .gate-monogram::after {
           content: '';
           position: absolute;
-          width: 12px; height: 12px;
+          width: 14px; height: 14px;
           border-top: 1px solid var(--sage-deep);
           border-right: 1px solid var(--sage-deep);
           opacity: 0.55;
@@ -125,18 +98,15 @@ const LangGate = ({ onSelect }) => {
 
         .gate-meta {
           font-family: var(--sans);
-          font-size: 10px;
-          letter-spacing: 0.4em;
+          font-size: clamp(10px, 2.6vw, 11px);
+          letter-spacing: 0.42em;
           text-transform: uppercase;
           color: var(--sage-deep);
-          opacity: 0.8;
-          display: flex; align-items: center; gap: 10px;
+          display: flex; align-items: center; gap: 12px;
         }
         .gate-meta .dot {
-          width: 3px; height: 3px;
-          border-radius: 50%;
-          background: var(--sage-deep);
-          opacity: 0.6;
+          width: 3px; height: 3px; border-radius: 50%;
+          background: var(--sage-deep); opacity: 0.6;
         }
 
         /* === Center prompt === */
@@ -146,43 +116,46 @@ const LangGate = ({ onSelect }) => {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 28px;
+          gap: clamp(20px, 4vh, 32px);
           width: 100%;
-          padding: 16px 0;
           opacity: 0;
           animation: g-fade 1.2s 0.5s forwards cubic-bezier(.4,0,.2,1);
         }
         .gate-script {
           font-family: var(--script);
-          font-size: 36px;
+          font-size: clamp(28px, 8vw, 38px);
           color: var(--sage-deep);
-          line-height: 1;
+          line-height: 1.05;
+          text-align: center;
         }
         .gate-title-row {
-          display: flex; align-items: center; gap: 12px;
+          display: flex; align-items: center; gap: 14px;
           font-family: var(--sans);
-          font-size: 9px;
-          letter-spacing: 0.4em;
+          font-size: clamp(9px, 2.4vw, 10px);
+          letter-spacing: 0.42em;
           text-transform: uppercase;
-          color: var(--ink-soft);
+          color: var(--sage-deep);
+          opacity: 0.85;
         }
         .gate-title-row::before, .gate-title-row::after {
-          content: ''; width: 24px; height: 1px;
-          background: var(--sage-deep); opacity: 0.4;
+          content: ''; width: 28px; height: 1px;
+          background: var(--sage-deep); opacity: 0.42;
         }
 
-        /* === Language list === */
+        /* === Language buttons === */
         .gate-langs {
           display: flex;
           flex-direction: column;
           width: 100%;
-          gap: 10px;
+          gap: 12px;
         }
         .lang-btn {
           appearance: none;
-          background: rgba(247, 242, 230, 0.6);
+          background: rgba(247, 242, 230, 0.7);
           border: 1px solid var(--rule);
-          padding: 18px 20px;
+          border-radius: 6px;
+          padding: 16px 18px;
+          min-height: 64px;
           display: grid;
           grid-template-columns: 36px 1fr auto;
           gap: 16px;
@@ -191,76 +164,64 @@ const LangGate = ({ onSelect }) => {
           text-align: left;
           font-family: inherit;
           color: inherit;
-          transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(.4,0,.2,1);
+          transition: background .35s ease, border-color .35s ease, transform .35s cubic-bezier(.4,0,.2,1);
           opacity: 0;
-          transform: translateY(20px);
-          animation: g-up 0.9s forwards cubic-bezier(.2,.8,.2,1);
-          position: relative;
-          overflow: hidden;
-        }
-        .lang-btn::before {
-          /* subtle vine corner ornament */
-          content: '';
-          position: absolute;
-          top: 0; right: 0;
-          width: 40px; height: 40px;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none' stroke='%235c6e54' stroke-width='0.6' stroke-linecap='round' opacity='0.3'><path d='M40 0 C 32 4, 28 12, 30 20'/><circle cx='30' cy='20' r='1.2' fill='%235c6e54'/><path d='M40 8 C 36 8, 34 12, 36 16'/></svg>");
-          background-size: contain;
-          background-repeat: no-repeat;
-          opacity: 0.6;
+          transform: translateY(18px);
+          animation: g-up 0.85s forwards cubic-bezier(.2,.8,.2,1);
         }
         .lang-btn:nth-child(1) { animation-delay: 0.7s; }
-        .lang-btn:nth-child(2) { animation-delay: 0.85s; }
-        .lang-btn:nth-child(3) { animation-delay: 1.0s; }
+        .lang-btn:nth-child(2) { animation-delay: 0.83s; }
+        .lang-btn:nth-child(3) { animation-delay: 0.96s; }
 
-        .lang-btn:hover, .lang-btn.hovered {
+        .lang-btn:active {
+          transform: scale(0.985);
           background: var(--beige-light);
-          border-color: var(--sage-deep);
         }
+        @media (hover: hover) {
+          .lang-btn:hover {
+            background: var(--beige-light);
+            border-color: var(--sage-deep);
+          }
+          .lang-btn:hover .arrow { transform: translateX(4px); }
+        }
+
         .lang-btn.chosen {
           background: var(--sage-deep);
           border-color: var(--sage-deep);
           color: var(--cream);
         }
-        .lang-btn.chosen .lang-native, .lang-btn.chosen .lang-tag, .lang-btn.chosen .arrow {
-          color: var(--cream);
-        }
-        .lang-btn.chosen .lang-flag-mark {
-          background: var(--cream);
-        }
+        .lang-btn.chosen .lang-native,
+        .lang-btn.chosen .lang-tag,
+        .lang-btn.chosen .arrow { color: var(--cream); }
 
         .lang-flag-mark {
-          width: 30px; height: 30px;
+          width: 36px; height: 36px;
           border-radius: 50%;
           border: 1px solid var(--sage-deep);
           display: flex; align-items: center; justify-content: center;
           background: var(--cream);
           overflow: hidden;
           flex-shrink: 0;
-          position: relative;
+          box-shadow: 0 1px 3px rgba(31, 36, 25, 0.08);
         }
-        .lang-flag-mark svg {
-          width: 100%;
-          height: 100%;
-          display: block;
-        }
+        .lang-flag-mark svg { width: 100%; height: 100%; display: block; }
 
         .lang-info {
           display: flex; flex-direction: column;
-          gap: 2px;
+          gap: 3px;
           min-width: 0;
         }
         .lang-native {
           font-family: var(--display);
-          font-size: 26px;
-          line-height: 1;
+          font-size: clamp(22px, 6vw, 26px);
+          line-height: 1.05;
           color: var(--ink);
           letter-spacing: 0.01em;
         }
         .lang-tag {
           font-family: var(--sans);
-          font-size: 9px;
-          letter-spacing: 0.32em;
+          font-size: 10px;
+          letter-spacing: 0.34em;
           text-transform: uppercase;
           color: var(--sage-deep);
           opacity: 0.85;
@@ -271,50 +232,48 @@ const LangGate = ({ onSelect }) => {
           color: var(--sage-deep);
           transition: transform 0.4s ease;
         }
-        .lang-btn:hover .arrow, .lang-btn.hovered .arrow {
-          transform: translateX(4px);
-        }
 
         /* === Foot === */
         .gate-foot {
-          display: flex; flex-direction: column; align-items: center; gap: 14px;
-          padding-top: 24px;
+          display: flex; flex-direction: column; align-items: center;
+          gap: 12px;
+          margin-bottom: 4px;
           opacity: 0;
-          animation: g-fade 1.2s 1.3s forwards cubic-bezier(.4,0,.2,1);
+          animation: g-fade 1.2s 1.2s forwards cubic-bezier(.4,0,.2,1);
         }
         .gate-flags {
           display: flex; align-items: center; gap: 14px;
           font-family: var(--sans);
-          font-size: 9px;
-          letter-spacing: 0.32em;
+          font-size: clamp(9px, 2.4vw, 10px);
+          letter-spacing: 0.36em;
           text-transform: uppercase;
           color: var(--sage-deep);
         }
         .gate-flags svg {
-          width: 26px; height: 18px;
+          width: 28px; height: 19px;
           display: block;
-          border-radius: 1px;
+          border-radius: 2px;
           box-shadow: 0 1px 3px rgba(31, 36, 25, 0.18);
         }
         .gate-foot .date {
           font-family: var(--display);
-          font-size: 16px;
+          font-size: clamp(15px, 4.2vw, 17px);
           color: var(--ink);
-          letter-spacing: 0.06em;
+          letter-spacing: 0.08em;
         }
 
-        /* === Animations === */
         @keyframes g-fade { to { opacity: 1; } }
-        @keyframes g-up { to { opacity: 1; transform: translateY(0); } }
+        @keyframes g-up   { to { opacity: 1; transform: translateY(0); } }
 
-        .gate.exit .gate-langs { transform: translateY(-12px); transition: transform 0.7s ease, opacity 0.6s ease; opacity: 0.4; }
-        .gate.exit .lang-btn.chosen { opacity: 1; transform: scale(1.02); }
+        .gate.exit .gate-langs { transform: translateY(-10px); transition: transform 0.7s ease, opacity 0.6s ease; opacity: 0.4; }
+        .gate.exit .lang-btn.chosen { opacity: 1; transform: scale(1.015); }
+
+        /* Honour reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+          .gate-head, .gate-prompt, .gate-foot, .lang-btn { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .lang-btn { transition: background 0.2s, border-color 0.2s; }
+        }
       `}</style>
-
-      {/* Background patterns */}
-      <div className="vine-bg" />
-      <div className="chokha-band chokha-top" />
-      <div className="chokha-band chokha-bottom" />
 
       <div className="gate-head">
         <div className="gate-monogram" aria-label="Justine et Levani">
@@ -328,9 +287,9 @@ const LangGate = ({ onSelect }) => {
       </div>
 
       <div className="gate-prompt">
-        <div className="gate-script">Bienvenue · მოგესალმებით</div>
+        <div className="gate-script">Bienvenue · მოგესალმებით · Willkommen</div>
         <div className="gate-title-row">
-          <span>Choisissez votre langue</span>
+          <span>Choisissez · აირჩიეთ · Wählen</span>
         </div>
 
         <div className="gate-langs">
