@@ -16,7 +16,7 @@ window.dashy = (text) => {
   const parts = text.split(/(—|–|-)/g);
   return parts.map((p, i) =>
     (p === '—' || p === '–' || p === '-')
-      ? React.createElement('span', { key: i, style: { fontStyle: 'normal' } }, p)
+      ? React.createElement('span', { key: i, className: 'no-it' }, p)
       : p
   );
 };
