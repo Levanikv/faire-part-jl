@@ -17,26 +17,12 @@ const Timeline = () => {
     <section className="scene timeline-scene" ref={ref} data-screen-label="05 Soirée">
       <style>{`
         .timeline-scene {
-          background: linear-gradient(180deg, #d8c8a4 0%, var(--sage-light) 60%, var(--sage) 100%);
+          background: linear-gradient(180deg, var(--beige) 0%, #d8c8a4 100%);
           padding: 96px 28px;
           gap: 32px;
-          color: var(--ink);
+          color: var(--sage-deep);
           position: relative;
           overflow: hidden;
-        }
-        /* faint stars */
-        .timeline-scene::before {
-          content: '';
-          position: absolute; inset: 0;
-          background-image:
-            radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.7) 50%, transparent),
-            radial-gradient(1px 1px at 85% 22%, rgba(255,255,255,0.6) 50%, transparent),
-            radial-gradient(1px 1px at 30% 8%, rgba(255,255,255,0.55) 50%, transparent),
-            radial-gradient(1.5px 1.5px at 70% 12%, rgba(255,255,255,0.7) 50%, transparent),
-            radial-gradient(1px 1px at 55% 28%, rgba(255,255,255,0.5) 50%, transparent);
-          opacity: ${Math.min(1, fill * 1.5)};
-          transition: opacity 1s ease;
-          pointer-events: none;
         }
         .timeline-scene > * { position: relative; }
 
@@ -45,56 +31,60 @@ const Timeline = () => {
           padding: 12px 0 12px 56px;
           width: 100%;
         }
+        /* Vertical line: bg + fg are perfectly co-located at left: 22px */
         .tl-line-bg {
           position: absolute; left: 22px; top: 0; bottom: 0;
-          width: 1px; background: rgba(31, 36, 25, 0.2);
+          width: 1px; background: rgba(61, 74, 54, 0.22);
         }
         .tl-line-fg {
           position: absolute; left: 22px; top: 0;
-          width: 1px; background: var(--ink);
+          width: 1px; background: var(--sage-deep);
           transform-origin: top;
         }
         .tl-item {
           position: relative;
           padding: 22px 0;
-          border-bottom: 1px solid rgba(31, 36, 25, 0.16);
+          border-bottom: 1px solid rgba(61, 74, 54, 0.16);
           transition: transform .8s cubic-bezier(.2,.8,.2,1), opacity .8s;
         }
         .tl-item:last-child { border-bottom: none; }
+        /* Marker is centered ON the line: list pad-left 56 + marker left -45 + half width 11 = 22 */
         .tl-item .marker {
           position: absolute;
-          left: -42px; top: 26px;
+          left: -45px; top: 26px;
           width: 22px; height: 22px;
           background: var(--cream);
-          border: 1px solid var(--ink);
+          border: 1px solid var(--sage-deep);
           border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
           font-size: 10px;
-          color: var(--ink);
+          color: var(--sage-deep);
           transition: background 0.4s, color 0.4s, transform 0.5s;
         }
         .tl-item.reached .marker {
-          background: var(--ink);
+          background: var(--sage-deep);
           color: var(--cream);
           transform: scale(1.1);
         }
         .tl-item .time {
-          font-family: var(--display); font-size: 18px;
-          color: var(--ink-soft);
+          font-family: var(--display); font-size: 20px;
+          color: var(--sage-deep);
           letter-spacing: 0.04em;
+          opacity: 0.85;
         }
         .tl-item .ttl {
           font-family: var(--display);
-          font-size: 32px;
-          color: var(--ink);
+          font-size: 36px;
+          color: var(--sage-deep);
           line-height: 1.05;
           margin-top: 4px;
           letter-spacing: -0.005em;
         }
         .tl-item .sub {
           font-family: var(--serif); font-style: italic; font-weight: 300;
-          font-size: 15px; color: var(--ink-soft); margin-top: 4px;
-          line-height: 1.4;
+          font-size: 17px; color: var(--sage-deep); margin-top: 6px;
+          line-height: 1.45;
+          opacity: 0.85;
         }
       `}</style>
 

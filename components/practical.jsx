@@ -1,5 +1,4 @@
-// PRACTICAL — Transport, hébergement, enfants
-// Updated: 1 chambre par invité au château, navettes Paris ↔ Auxerre ↔ Chaumont
+// PRACTICAL — Hébergement, parking, enfants
 
 const Practical = () => {
   const ref = React.useRef(null);
@@ -7,19 +6,19 @@ const Practical = () => {
 
   const items = [
     {
-      tag: 'IV', label: 'Transport', icon: '🚐',
-      title: 'Navettes',
-      body: 'Liaison entre la cathédrale et le domaine.',
-      detail: 'Départ après l\'office · retour Paris dimanche en fin de journée'
-    },
-    {
-      tag: 'V', label: 'Hébergement', icon: '🛏',
+      tag: 'IV', label: 'Hébergement',
       title: 'Sur place',
       body: 'Une chambre attribuée à chaque invité au château.',
       detail: 'Affectation communiquée à l\'arrivée · clés remises au check-in'
     },
     {
-      tag: 'VI', label: 'Enfants', icon: '✧',
+      tag: 'V', label: 'Parking',
+      title: 'Au château',
+      body: 'Stationnement libre dans la cour du domaine.',
+      detail: 'Accès direct depuis l\'allée principale · pas de réservation'
+    },
+    {
+      tag: 'VI', label: 'Enfants',
       title: 'Babysitter',
       body: 'Disponible sur place toute la soirée.',
       detail: 'Coin enfants aménagé · espace nuit calme'
@@ -29,8 +28,10 @@ const Practical = () => {
   return (
     <section className="scene practical" ref={ref} data-screen-label="06 Pratique">
       <style>{`
+        /* Top fades in from beige (continuing the timeline section's bottom)
+           so the seam between sections feels stitched together. */
         .practical {
-          background: var(--cream);
+          background: linear-gradient(180deg, #d8c8a4 0%, var(--beige) 14%, var(--cream) 38%);
           padding: 96px 28px;
           gap: 28px;
         }
@@ -41,49 +42,50 @@ const Practical = () => {
         }
         .prac-card {
           background: var(--beige-light);
-          padding: 24px 22px;
+          padding: 28px 24px;
           display: grid;
           grid-template-columns: auto 1fr;
-          gap: 18px;
+          gap: 20px;
           align-items: start;
           transition: background .4s;
         }
         .prac-card:hover { background: var(--beige); }
         .prac-card .num {
           font-family: var(--display);
-          font-size: 32px;
+          font-size: 36px;
           color: var(--sage-deep);
           line-height: 1;
           padding-top: 4px;
           border-right: 1px solid var(--rule);
-          padding-right: 18px;
-          min-width: 42px;
+          padding-right: 20px;
+          min-width: 46px;
           letter-spacing: -0.01em;
         }
         .prac-card .lbl {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.34em; text-transform: uppercase;
-          color: var(--sage-deep); opacity: 0.85;
-          margin-bottom: 5px;
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.36em; text-transform: uppercase;
+          color: var(--sage-deep);
+          margin-bottom: 6px;
         }
         .prac-card .ttl {
           font-family: var(--display);
-          font-size: 26px;
-          color: var(--ink);
+          font-size: 30px;
+          color: var(--sage-deep);
           line-height: 1.1;
-          margin-bottom: 6px;
+          margin-bottom: 8px;
         }
         .prac-card .body {
           font-family: var(--serif);
-          font-size: 16px;
-          color: var(--ink);
-          line-height: 1.45;
+          font-size: 18px;
+          color: var(--sage-deep);
+          line-height: 1.5;
         }
         .prac-card .detail {
           font-family: var(--serif); font-style: italic; font-weight: 300;
-          font-size: 13px; color: var(--ink-soft);
-          margin-top: 8px;
-          line-height: 1.5;
+          font-size: 15px; color: var(--sage-deep);
+          opacity: 0.85;
+          margin-top: 10px;
+          line-height: 1.55;
         }
       `}</style>
 

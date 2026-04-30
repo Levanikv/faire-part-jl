@@ -5,14 +5,14 @@
 const Reception = () => {
   const ref = React.useRef(null);
   const [inView, progress] = window.useInView(ref);
-  const drawn = Math.max(0, Math.min(1, (progress - 0.18) / 0.5));
-  const dusk = Math.max(0, Math.min(1, (progress - 0.35) / 0.4));
+  const drawn = Math.max(0, Math.min(1, (progress - 0.05) / 0.25));
+  const dusk = Math.max(0, Math.min(1, (progress - 0.15) / 0.3));
 
   return (
     <section className="scene reception" ref={ref} data-screen-label="04 Réception">
       <style>{`
         .reception {
-          background: linear-gradient(180deg, var(--beige-light) 0%, var(--cream) 38%, #d8c8a4 100%);
+          background: linear-gradient(180deg, var(--beige-light) 0%, var(--cream) 38%, var(--beige) 100%);
           padding-top: 96px;
           padding-bottom: 80px;
           align-items: center;
@@ -29,17 +29,7 @@ const Reception = () => {
           transition: opacity 1.8s ease;
           pointer-events: none;
         }
-        /* faint distant trees silhouette */
-        .reception::after {
-          content: '';
-          position: absolute; bottom: 20%; left: 0; right: 0; height: 30px;
-          background: radial-gradient(ellipse 60px 18px at 10% 100%, var(--sage-deep) 0%, transparent 60%),
-                      radial-gradient(ellipse 80px 22px at 30% 100%, var(--sage-deep) 0%, transparent 60%),
-                      radial-gradient(ellipse 70px 20px at 70% 100%, var(--sage-deep) 0%, transparent 60%),
-                      radial-gradient(ellipse 90px 24px at 92% 100%, var(--sage-deep) 0%, transparent 60%);
-          opacity: ${dusk * 0.18};
-          pointer-events: none;
-        }
+        /* (sage tree silhouette removed — kept the section beige-only) */
         .reception > * { position: relative; }
 
         .recep-intro {
@@ -76,21 +66,21 @@ const Reception = () => {
           width: 100%;
         }
         .recep-addr .lbl {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.34em; text-transform: uppercase;
-          color: var(--sage-deep); opacity: 0.85;
-          margin-bottom: 8px;
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.36em; text-transform: uppercase;
+          color: var(--sage-deep);
+          margin-bottom: 10px;
         }
         .recep-addr .v {
           font-family: var(--display);
-          font-size: 24px;
-          color: var(--ink);
+          font-size: 26px;
+          color: var(--sage-deep);
           line-height: 1.25;
         }
         .recep-addr .v em {
           display: block;
           font-family: var(--serif); font-style: italic; font-weight: 300;
-          font-size: 14px; color: var(--sage-deep); margin-top: 4px;
+          font-size: 16px; color: var(--sage-deep); opacity: 0.82; margin-top: 6px;
         }
         .recep-quote {
           font-family: var(--serif);

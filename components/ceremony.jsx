@@ -5,13 +5,14 @@
 const Ceremony = () => {
   const ref = React.useRef(null);
   const [inView, progress] = window.useInView(ref);
-  const drawn = Math.max(0, Math.min(1, (progress - 0.22) / 0.4));
+  const drawn = Math.max(0, Math.min(1, (progress - 0.05) / 0.22));
 
   return (
     <section className="scene ceremony" ref={ref} data-screen-label="02 Cérémonie">
       <style>{`
         .ceremony {
-          background: var(--cream);
+          /* Top picks up where the hero ended (--beige), fades into cream */
+          background: linear-gradient(180deg, var(--beige) 0%, var(--beige-light) 12%, var(--cream) 32%);
           padding-top: 92px;
           padding-bottom: 92px;
           align-items: center;
@@ -67,16 +68,16 @@ const Ceremony = () => {
         }
         .card-row .body { flex: 1; padding-top: 2px; }
         .card-row .lbl {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.34em; text-transform: uppercase;
-          color: var(--sage-deep); opacity: 0.85;
-          margin-bottom: 5px;
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.36em; text-transform: uppercase;
+          color: var(--sage-deep);
+          margin-bottom: 6px;
         }
         .card-row .val {
           font-family: var(--display);
-          font-size: 22px;
-          line-height: 1.2;
-          color: var(--ink);
+          font-size: 24px;
+          line-height: 1.25;
+          color: var(--sage-deep);
           letter-spacing: -0.005em;
         }
         .card-row .val em {
@@ -84,9 +85,10 @@ const Ceremony = () => {
           font-style: italic;
           font-weight: 300;
           color: var(--sage-deep);
-          font-size: 14px;
+          opacity: 0.78;
+          font-size: 16px;
           display: block;
-          margin-top: 2px;
+          margin-top: 4px;
           letter-spacing: 0.02em;
         }
         .card-rule { height: 1px; background: var(--rule); }

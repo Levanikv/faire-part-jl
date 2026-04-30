@@ -8,7 +8,7 @@ const Brunch = () => {
     <section className="scene brunch" ref={ref} data-screen-label="11 Brunch">
       <style>{`
         .brunch {
-          background: linear-gradient(180deg, var(--cream) 0%, var(--beige) 30%, var(--cream) 70%, var(--beige-light) 100%);
+          background: linear-gradient(180deg, var(--beige-light) 0%, var(--cream) 25%, var(--beige) 60%, var(--beige-light) 100%);
           padding: 96px 28px;
           gap: 24px;
           align-items: center;
@@ -53,31 +53,33 @@ const Brunch = () => {
         }
         .br-card .ttl {
           font-family: var(--display);
-          font-size: 24px;
-          color: var(--ink);
+          font-size: 26px;
+          color: var(--sage-deep);
           letter-spacing: 0.01em;
         }
         .br-card .lbl {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.34em; text-transform: uppercase;
-          color: var(--sage-deep); opacity: 0.85;
-          margin-bottom: 4px;
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.36em; text-transform: uppercase;
+          color: var(--sage-deep);
+          margin-bottom: 6px;
         }
         .br-time-row {
           display: flex; align-items: center; justify-content: center; gap: 18px;
           font-family: var(--display);
-          font-size: 32px;
-          color: var(--ink);
+          font-size: 36px;
+          color: var(--sage-deep);
           letter-spacing: -0.005em;
         }
         .br-time-row .arrow {
           color: var(--sage-deep); font-size: 22px;
           font-family: var(--serif); font-style: italic;
+          opacity: 0.7;
         }
         .br-rule { height: 1px; background: var(--rule); }
         .br-meta {
           font-family: var(--serif); font-style: italic; font-weight: 300;
-          font-size: 15px; color: var(--ink-soft); line-height: 1.55;
+          font-size: 16px; color: var(--sage-deep); line-height: 1.6;
+          opacity: 0.85;
         }
       `}</style>
 
@@ -135,7 +137,7 @@ const Closing = () => {
     <section className="scene closing" ref={ref} data-screen-label="12 Closing">
       <style>{`
         .closing {
-          background: linear-gradient(180deg, var(--cream) 0%, var(--sage-deep) 100%);
+          background: linear-gradient(180deg, var(--beige-light) 0%, #d8c8a4 100%);
           padding: 100px 28px 60px;
           gap: 28px;
           align-items: center;

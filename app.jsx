@@ -93,7 +93,6 @@ const App = () => {
       <Timeline />
       <Practical />
       <DressCode />
-      <Gallery />
       <Weather />
       <BrunchScene />
       <Closing />

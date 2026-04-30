@@ -104,35 +104,24 @@ const LangGate = ({ onSelect }) => {
           animation: g-fade 1.2s 0.2s forwards cubic-bezier(.4,0,.2,1);
         }
         .gate-monogram {
-          width: 88px; height: 88px;
-          border-radius: 50%;
-          border: 1px solid var(--sage-deep);
           display: flex; align-items: center; justify-content: center;
-          font-family: var(--display);
-          font-size: 32px;
-          color: var(--sage-deep);
           position: relative;
+          padding: 4px 18px;
         }
+        .gate-monogram svg {
+          filter: drop-shadow(0 1px 14px rgba(247, 242, 230, 0.5));
+        }
+        /* Decorative corner brackets */
         .gate-monogram::before, .gate-monogram::after {
           content: '';
           position: absolute;
-          width: 8px; height: 8px;
+          width: 12px; height: 12px;
           border-top: 1px solid var(--sage-deep);
           border-right: 1px solid var(--sage-deep);
+          opacity: 0.55;
         }
-        .gate-monogram::before { top: -1px; right: -1px; }
-        .gate-monogram::after { bottom: -1px; left: -1px; transform: rotate(180deg); }
-
-        .gate-monogram .amp {
-          font-family: var(--serif);
-          font-style: italic;
-          font-weight: 300;
-          font-size: 22px;
-          color: var(--sage);
-          margin: 0 2px;
-          align-self: end;
-          padding-bottom: 6px;
-        }
+        .gate-monogram::before { top: 0; right: 0; }
+        .gate-monogram::after { bottom: 0; left: 0; transform: rotate(180deg); }
 
         .gate-meta {
           font-family: var(--sans);
@@ -300,14 +289,12 @@ const LangGate = ({ onSelect }) => {
           letter-spacing: 0.32em;
           text-transform: uppercase;
           color: var(--sage-deep);
-          opacity: 0.7;
         }
-        .mini-flag {
-          width: 18px; height: 12px;
-          border: 1px solid var(--sage-deep);
-          opacity: 0.7;
-          overflow: hidden;
-          position: relative;
+        .gate-flags svg {
+          width: 26px; height: 18px;
+          display: block;
+          border-radius: 1px;
+          box-shadow: 0 1px 3px rgba(31, 36, 25, 0.18);
         }
         .gate-foot .date {
           font-family: var(--display);
@@ -330,8 +317,8 @@ const LangGate = ({ onSelect }) => {
       <div className="chokha-band chokha-bottom" />
 
       <div className="gate-head">
-        <div className="gate-monogram">
-          J<span className="amp">&amp;</span>L
+        <div className="gate-monogram" aria-label="Justine et Levani">
+          {window.MonoLogo && <window.MonoLogo size={120} ink="var(--ink)" accent="var(--sage-deep)" />}
         </div>
         <div className="gate-meta">
           <span>Paris</span>
@@ -388,9 +375,9 @@ const FlagDisc = ({ code }) => {
       <svg viewBox="0 0 30 30">
         <clipPath id={`c-${code}`}><circle cx="15" cy="15" r="14" /></clipPath>
         <g clipPath={`url(#c-${code})`}>
-          <rect x="0" y="0" width="10" height="30" fill="#7a8b6f" />
-          <rect x="10" y="0" width="10" height="30" fill="#f7f2e6" />
-          <rect x="20" y="0" width="10" height="30" fill="#a8826b" />
+          <rect x="0"  y="0" width="10" height="30" fill="#0055A4" />
+          <rect x="10" y="0" width="10" height="30" fill="#FFFFFF" />
+          <rect x="20" y="0" width="10" height="30" fill="#EF4135" />
         </g>
       </svg>
     );
@@ -400,13 +387,15 @@ const FlagDisc = ({ code }) => {
       <svg viewBox="0 0 30 30">
         <clipPath id={`c-${code}`}><circle cx="15" cy="15" r="14" /></clipPath>
         <g clipPath={`url(#c-${code})`}>
-          <rect x="0" y="0" width="30" height="30" fill="#f7f2e6" />
-          <rect x="13" y="0" width="4" height="30" fill="#a8826b" opacity="0.85" />
-          <rect x="0" y="13" width="30" height="4" fill="#a8826b" opacity="0.85" />
-          {/* small Bolnisi crosses in 4 quadrants */}
-          {[[7,7],[23,7],[7,23],[23,23]].map(([x,y],i)=>(
-            <g key={i} transform={`translate(${x} ${y})`} stroke="#a8826b" strokeWidth="0.8" fill="none">
-              <path d="M-2 0 L2 0 M0 -2 L0 2" />
+          <rect x="0" y="0" width="30" height="30" fill="#FFFFFF" />
+          {/* Saint George cross — central red bands */}
+          <rect x="13" y="0"  width="4"  height="30" fill="#FF0000" />
+          <rect x="0"  y="13" width="30" height="4"  fill="#FF0000" />
+          {/* 4 Bolnisi crosses in the quadrants */}
+          {[[7.5,7.5],[22.5,7.5],[7.5,22.5],[22.5,22.5]].map(([x,y],i)=>(
+            <g key={i} transform={`translate(${x} ${y})`} stroke="#FF0000" strokeWidth="0.9" fill="none" strokeLinecap="square">
+              <path d="M-2.4 0 L-0.9 0 M0.9 0 L2.4 0 M0 -2.4 L0 -0.9 M0 0.9 L0 2.4" />
+              <path d="M-0.9 -0.9 L0.9 -0.9 M-0.9 0.9 L0.9 0.9 M-0.9 -0.9 L-0.9 0.9 M0.9 -0.9 L0.9 0.9" />
             </g>
           ))}
         </g>
@@ -418,9 +407,9 @@ const FlagDisc = ({ code }) => {
       <svg viewBox="0 0 30 30">
         <clipPath id={`c-${code}`}><circle cx="15" cy="15" r="14" /></clipPath>
         <g clipPath={`url(#c-${code})`}>
-          <rect x="0" y="0" width="30" height="10" fill="#3d4a36" />
-          <rect x="0" y="10" width="30" height="10" fill="#a8826b" />
-          <rect x="0" y="20" width="30" height="10" fill="#d4c4a3" />
+          <rect x="0" y="0"  width="30" height="10" fill="#000000" />
+          <rect x="0" y="10" width="30" height="10" fill="#DD0000" />
+          <rect x="0" y="20" width="30" height="10" fill="#FFCE00" />
         </g>
       </svg>
     );
@@ -429,17 +418,23 @@ const FlagDisc = ({ code }) => {
 };
 
 const FlagFR = () => (
-  <svg width="18" height="12" viewBox="0 0 18 12">
-    <rect x="0" y="0" width="6" height="12" fill="#7a8b6f" />
-    <rect x="6" y="0" width="6" height="12" fill="#f7f2e6" />
-    <rect x="12" y="0" width="6" height="12" fill="#a8826b" />
+  <svg width="26" height="18" viewBox="0 0 18 12">
+    <rect x="0"  y="0" width="6" height="12" fill="#0055A4" />
+    <rect x="6"  y="0" width="6" height="12" fill="#FFFFFF" />
+    <rect x="12" y="0" width="6" height="12" fill="#EF4135" />
   </svg>
 );
 const FlagGE = () => (
-  <svg width="18" height="12" viewBox="0 0 18 12">
-    <rect width="18" height="12" fill="#f7f2e6" />
-    <rect x="8" y="0" width="2" height="12" fill="#a8826b" opacity="0.85" />
-    <rect x="0" y="5" width="18" height="2" fill="#a8826b" opacity="0.85" />
+  <svg width="26" height="18" viewBox="0 0 18 12">
+    <rect width="18" height="12" fill="#FFFFFF" />
+    <rect x="8" y="0" width="2"  height="12" fill="#FF0000" />
+    <rect x="0" y="5" width="18" height="2"  fill="#FF0000" />
+    {/* 4 small Bolnisi crosses */}
+    {[[4.5,2.5],[13.5,2.5],[4.5,9.5],[13.5,9.5]].map(([x,y],i)=>(
+      <g key={i} transform={`translate(${x} ${y})`} stroke="#FF0000" strokeWidth="0.5" fill="none">
+        <path d="M-1.4 0 L-0.5 0 M0.5 0 L1.4 0 M0 -1.4 L0 -0.5 M0 0.5 L0 1.4" />
+      </g>
+    ))}
   </svg>
 );
 
