@@ -9,6 +9,11 @@ const LangGate = ({ onSelect }) => {
 
   const handle = (lang) => {
     if (exiting) return;
+    // Start the panduri loop right inside the click handler so iOS Safari
+    // counts it as a user-gesture-initiated playback.
+    if (window.__startBgAudio) {
+      try { window.__startBgAudio(); } catch (e) { /* ignore */ }
+    }
     setChosen(lang);
     setExiting(true);
     // wait for exit animation

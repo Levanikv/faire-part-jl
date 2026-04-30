@@ -1,13 +1,14 @@
 // AudioBackground — discreet music control floating top-right.
-// The button is always visible (placeholder UI). When AUDIO_SRC is set,
-// clicking it actually plays / mutes; otherwise it just toggles UI state
-// so the user can see the affordance.
+// The Georgian panduri loop auto-starts (faded in) when the user picks a
+// language in LangGate (window.__startBgAudio fires inside that gesture so
+// iOS Safari permits playback). The FAB then toggles play/mute manually.
 
 const { useState: useStateAudio, useEffect: useEffectAudio, useRef: useRefAudio } = React;
 
-// Set this to your hosted audio URL (or a local path) when you have the track.
-// Examples: "audio/qartuli.mp3"  ·  "https://example.com/qartuli.mp3"
-const AUDIO_SRC = null;
+// Soft Georgian panduri loop (Rustavi — Mtis Melodiebi, 36s segment with
+// fade-in/out for clean looping). Mono 80 kbps mp3 ≈ 350 KB.
+const AUDIO_SRC = 'audio/panduri.mp3';
+const TARGET_VOLUME = 0.32;
 
 const AudioBackground = () => {
   const ref = useRefAudio(null);
@@ -18,15 +19,49 @@ const AudioBackground = () => {
     tip_off: 'Qartuli ♪', tip_on: 'En cours',
   };
 
-  // (No useEffect autoplay — autoplay-with-sound is blocked on iOS Safari
-  //  anyway, and we want the user to opt-in via the button.)
+  // Smooth volume ramp — used on play (fade in) and on mute (fade out).
+  const fadeTo = useRefAudio(null);
+  const fade = (target, ms = 900) => {
+    const a = ref.current;
+    if (!a) return;
+    if (fadeTo.current) cancelAnimationFrame(fadeTo.current);
+    const start = a.volume;
+    const t0 = performance.now();
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / ms);
+      a.volume = start + (target - start) * k;
+      if (k < 1) fadeTo.current = requestAnimationFrame(step);
+    };
+    fadeTo.current = requestAnimationFrame(step);
+  };
+
+  // Expose a play hook so the LangGate can start the track during the
+  // user gesture that selected a language (iOS Safari requires that).
+  useEffectAudio(() => {
+    window.__startBgAudio = () => {
+      const a = ref.current;
+      if (!a) return;
+      a.muted = false;
+      a.volume = 0;
+      a.play().then(() => fade(TARGET_VOLUME, 1400)).catch(() => {});
+      setMuted(false);
+      setHasInteracted(true);
+    };
+    return () => { delete window.__startBgAudio; };
+  }, []);
 
   const toggle = () => {
     setHasInteracted(true);
     const a = ref.current;
-    if (a && AUDIO_SRC) {
-      if (muted) { a.muted = false; a.volume = 0.35; a.play().catch(() => {}); }
-      else { a.muted = true; }
+    if (a) {
+      if (muted) {
+        a.muted = false;
+        if (a.paused) a.play().catch(() => {});
+        fade(TARGET_VOLUME, 700);
+      } else {
+        fade(0, 500);
+        setTimeout(() => { if (ref.current) ref.current.muted = true; }, 520);
+      }
     }
     setMuted((m) => !m);
   };
@@ -48,11 +83,19 @@ const AudioBackground = () => {
           display: flex; align-items: center; justify-content: center;
           cursor: pointer;
           padding: 0;
-          transition: transform .3s cubic-bezier(.4,0,.2,1), background .3s;
-          box-shadow: 0 4px 18px rgba(31, 36, 25, 0.08);
           opacity: 0;
-          transform: scale(0.8);
-          animation: audioFabIn 1s 1.2s forwards cubic-bezier(.2,.8,.2,1);
+          transform: scale(0.85);
+          pointer-events: none;
+          box-shadow: 0 4px 18px rgba(31, 36, 25, 0.08);
+          transition:
+            opacity 0.9s cubic-bezier(.2,.8,.2,1) 0.6s,
+            transform 0.9s cubic-bezier(.2,.8,.2,1) 0.6s,
+            background 0.3s;
+        }
+        body.has-lang .audio-fab {
+          opacity: 1;
+          transform: scale(1);
+          pointer-events: auto;
         }
         .audio-fab:hover { transform: scale(1.05); background: rgba(243, 236, 216, 0.95); }
         .audio-fab .ico { color: var(--sage-deep); display: block; }
@@ -92,7 +135,6 @@ const AudioBackground = () => {
           animation: audioInvite 2.6s 2s infinite ease-out;
         }
 
-        @keyframes audioFabIn { to { opacity: 1; transform: scale(1); } }
         @keyframes audioWave  {
           0% { transform: scale(1); opacity: 0.6; }
           100% { transform: scale(1.45); opacity: 0; }
@@ -104,7 +146,7 @@ const AudioBackground = () => {
         }
       `}</style>
 
-      {AUDIO_SRC && <audio ref={ref} src={AUDIO_SRC} loop muted preload="auto" />}
+      <audio ref={ref} src={AUDIO_SRC} loop muted preload="auto" playsInline />
 
       <button
         className={`audio-fab ${!muted ? 'playing' : ''} ${!hasInteracted ? 'invite-pulse' : ''}`}

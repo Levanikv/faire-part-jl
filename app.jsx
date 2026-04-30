@@ -72,6 +72,7 @@ const App = () => {
   }, [tweaks.palette]);
 
   useEffectApp(() => {
+    document.body.classList.toggle('has-lang', !!lang);
     if (lang) {
       document.documentElement.setAttribute('lang', lang === 'ge' ? 'ka' : lang);
       // smooth-scroll back to top
@@ -79,38 +80,43 @@ const App = () => {
     }
   }, [lang]);
 
-  if (!lang) {
-    return <window.LangGate onSelect={setLang} />;
-  }
-
+  // AudioBackground stays mounted from the very first paint so the <audio>
+  // ref exists when LangGate fires its click handler — iOS Safari only
+  // permits play() inside the originating user gesture.
   return (
-    <window.LangContext.Provider value={lang}>
+    <window.LangContext.Provider value={lang || 'fr'}>
       <window.AudioBackground />
-      <Hero />
-      <Ceremony />
-      <Journey />
-      <Reception />
-      <Timeline />
-      <Practical />
-      <DressCode />
-      <Weather />
-      <BrunchScene />
-      <Closing />
+      {!lang ? (
+        <window.LangGate onSelect={setLang} />
+      ) : (
+        <>
+          <Hero />
+          <Ceremony />
+          <Journey />
+          <Reception />
+          <Timeline />
+          <Practical />
+          <DressCode />
+          <Weather />
+          <BrunchScene />
+          <Closing />
 
-      <window.TweaksPanel title="Tweaks">
-        <window.TweakSection label="Palette" />
-        <window.TweakRadio
-          label="Ambiance"
-          value={tweaks.palette}
-          onChange={(v) => setTweak('palette', v)}
-          options={[
-            { value: 'sage-light', label: 'Clair' },
-            { value: 'sage-medium', label: 'Sauge' },
-            { value: 'sage-deep', label: 'Profond' },
-            { value: 'olive', label: 'Olive' },
-          ]}
-        />
-      </window.TweaksPanel>
+          <window.TweaksPanel title="Tweaks">
+            <window.TweakSection label="Palette" />
+            <window.TweakRadio
+              label="Ambiance"
+              value={tweaks.palette}
+              onChange={(v) => setTweak('palette', v)}
+              options={[
+                { value: 'sage-light', label: 'Clair' },
+                { value: 'sage-medium', label: 'Sauge' },
+                { value: 'sage-deep', label: 'Profond' },
+                { value: 'olive', label: 'Olive' },
+              ]}
+            />
+          </window.TweaksPanel>
+        </>
+      )}
     </window.LangContext.Provider>
   );
 };
