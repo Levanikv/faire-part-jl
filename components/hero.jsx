@@ -300,6 +300,8 @@ const Hero = () => {
           overflow: hidden;
           border-radius: 2px;
           background: var(--beige-deep);
+          /* Cream halo at the edges → photos melt into the page beige */
+          box-shadow: inset 0 0 28px rgba(243, 236, 216, 0.55);
           will-change: transform, opacity;
         }
         /* Tone fallback shown while the JPEG loads */
@@ -317,15 +319,30 @@ const Hero = () => {
           object-fit: cover;
           display: block;
           z-index: 1;
-          /* Subtle warm grade so the masonry feels cohesive */
-          filter: saturate(0.95) contrast(1.02);
+          /* Warm desaturated grade so the photos live in the beige world */
+          filter:
+            saturate(0.72)
+            contrast(0.94)
+            brightness(1.06)
+            sepia(0.14);
+        }
+        /* Beige soft-light wash blends each photo's mid-tones with the bg */
+        .hp-blend {
+          position: absolute; inset: 0;
+          background: linear-gradient(160deg,
+            rgba(247, 242, 230, 0.20) 0%,
+            rgba(220, 208, 176, 0.10) 50%,
+            rgba(200, 184, 144, 0.28) 100%);
+          mix-blend-mode: soft-light;
+          z-index: 2;
+          pointer-events: none;
         }
         .hp-grain {
           position: absolute; inset: 0;
           background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='1'/><feColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.43 0 0 0 0 0.33 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
           mix-blend-mode: multiply;
-          opacity: 0.32;
-          z-index: 2;
+          opacity: 0.42;
+          z-index: 3;
           pointer-events: none;
         }
         /* (.hp-tag captions removed — photos render clean, no overlays) */
@@ -511,6 +528,7 @@ const Hero = () => {
                         draggable="false"
                       />
                     )}
+                    <span className="hp-blend" />
                     <span className="hp-grain" />
                   </div>
                 ))}
