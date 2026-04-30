@@ -102,7 +102,7 @@ const Timeline = () => {
               <span className="marker">{e.icon}</span>
               <div className="time">{e.time}</div>
               <div className="ttl">{e.title}</div>
-              <div className="sub">{e.sub}</div>
+              <div className="sub">{window.dashy(e.sub)}</div>
             </div>
           );
         })}

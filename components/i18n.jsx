@@ -9,6 +9,18 @@ window.useT = () => {
   return window.TRANSLATIONS[lang] || window.TRANSLATIONS.fr;
 };
 
+// Wrap em/en-dashes in a non-italic span so they render upright inside italic
+// text. Used by components rendering translated copy that may contain "—" or "–".
+window.dashy = (text) => {
+  if (typeof text !== 'string') return text;
+  const parts = text.split(/(—|–)/g);
+  return parts.map((p, i) =>
+    (p === '—' || p === '–')
+      ? React.createElement('span', { key: i, style: { fontStyle: 'normal' } }, p)
+      : p
+  );
+};
+
 // Photo grid memories — 9 hand-picked moments, translated date labels.
 // `src` is shared across languages; only the captions change. The aspect-ratio
 // is also locked per slot so the masonry rhythm is identical in every language.
@@ -39,19 +51,19 @@ const PHOTOS_FR = buildPhotos([
 ]);
 
 const PHOTOS_GE = buildPhotos([
-  { lbl: 'თბილისი',         d: 'საქართველო' },
+  { lbl: 'Tbilissi',         d: 'Géorgie' },
   { lbl: 'მზის ქვეშ',       d: 'ზაფხული' },
-  { lbl: 'მზის ჩასვლისას',  d: 'ბრეტანი' },
+  { lbl: 'მზის ჩასვლისას',  d: 'Bretagne' },
   { lbl: 'შემოთავაზება',    d: 'ზღვაზე' },
   { lbl: 'ერთად',           d: 'დღეს' },
-  { lbl: 'ოჯახი',           d: 'ნორმანდია' },
+  { lbl: 'ოჯახი',           d: 'Normandie' },
   { lbl: 'დღესასწაული',     d: 'პირველი დაბადების დღე' },
   { lbl: 'საღამო',          d: 'სამნი' },
-  { lbl: 'პირველი ბინა',    d: 'პარიზი' },
+  { lbl: 'პირველი ბინა',    d: 'Paris' },
 ]);
 
 const PHOTOS_DE = buildPhotos([
-  { lbl: 'Tiflis',           d: 'Georgien' },
+  { lbl: 'Tbilissi',         d: 'Géorgie' },
   { lbl: 'In der Sonne',     d: 'Sommer' },
   { lbl: 'Im Sonnenuntergang', d: 'Bretagne' },
   { lbl: 'Der Antrag',       d: 'Auf See' },
@@ -221,7 +233,7 @@ window.TRANSLATIONS = {
       date_month: 'სექტემბერი',
       date_year: '2026',
       date_dotted: '05–06 · 09 · 2026',
-      place: 'პარიზი · შომონ-სიურ-იონი',
+      place: 'Paris · Chaumont-sur-Yonne',
       a11y_couple: 'ჟუსტინ და ლევანი',
       a11y_countdown: 'უკუთვლა',
     },
@@ -233,9 +245,9 @@ window.TRANSLATIONS = {
     ceremony: {
       eyebrow_num: 'I',
       eyebrow: 'ცერემონია',
-      title_main: 'წმინდა სტეფანეს',
-      title_em: 'ტაძარი',
-      subtitle: 'პარიზი · მე-16 უბანი',
+      title_main: 'ტაძარი',
+      title_em: 'Saint-Stéphane',
+      subtitle: 'Paris · მე-16 უბანი',
       intro: ['ქართული მართლმადიდებლური წესით,', 'მამა არჩილ დავრიჩაშვილის კურთხევით,', 'აღთქმას გავცვლით.'],
       lbl_address: 'მისამართი',
       val_address: ['7 Rue Georges Bizet', '75016 Paris'],
@@ -259,16 +271,16 @@ window.TRANSLATIONS = {
     },
     journey: {
       eyebrow: 'მგზავრობა',
-      title_main: 'პარიზიდან',
-      title_em: 'ბურგუნდიის',
+      title_main: 'Paris',
+      title_em: 'Bourgogne',
       title_to: 'მიმართულებით',
       subtitle: '130 კმ · 1სთ 45წთ მგზავრობა',
-      intro: ['დატოვეთ დედაქალაქი, გადაკვეთეთ იონი,', 'გაჰყევით მდინარეს ჩვენამდე.'],
-      pin_paris: 'პარიზი',
+      intro: ['დატოვეთ დედაქალაქი, გადაკვეთეთ Yonne,', 'გაჰყევით მდინარეს ჩვენამდე.'],
+      pin_paris: 'Paris',
       pin_paris_sub: 'გასვლა',
-      pin_sens: 'სანსი',
+      pin_sens: 'Sens',
       pin_sens_sub: 'გავდივართ',
-      pin_chaumont: 'შომონ-სიურ-იონი',
+      pin_chaumont: 'Chaumont-sur-Yonne',
       pin_chaumont_sub: 'სასახლე',
       stat_km: 'კმ',
       stat_duration_label: 'მგზავრობა',
@@ -277,14 +289,14 @@ window.TRANSLATIONS = {
     reception: {
       eyebrow_num: 'II',
       eyebrow: 'მიღება',
-      title_main: 'შომონ-სიურ-იონის',
-      title_em: 'სასახლე',
-      subtitle: 'კერძო მამული · ბურგუნდია',
+      title_main: 'სასახლე',
+      title_em: 'Chaumont-sur-Yonne',
+      subtitle: 'კერძო მამული · Bourgogne',
       intro: ['გაუმარჯოს! Santé! Prost!', 'კერძების მსვლელობისას, აღმართეთ თქვენი სასმისი.'],
       lbl_address: 'მისამართი',
-      val_address: 'შომონის სასახლე',
+      val_address: 'Château de Chaumont',
       val_address_em: '5 Rue de la Montagne · 89340 Chaumont-sur-Yonne',
-      quote: 'ბურგუნდიის ვარსკვლავთა ქვეშ',
+      quote: 'Bourgogne-ის ვარსკვლავთა ქვეშ',
     },
     timeline: {
       eyebrow_num: 'III',
@@ -294,7 +306,7 @@ window.TRANSLATIONS = {
       subtitle: 'მზის ჩასვლიდან გათენებამდე',
       events: [
         { time: '18:00', title: 'კოქტეილი',     sub: 'ტერასაზე, მზის ჩასვლისას', icon: '✦' },
-        { time: '20:00', title: 'ვახშამი',      sub: 'ქართული ბანკეტი — სუფრა და კახური ღვინო', icon: '◇' },
+        { time: '20:00', title: 'ვახშამი',      sub: 'ქართული ბანკეტი — სუფრა და Kakheti-ს ღვინო', icon: '◇' },
         { time: '23:00', title: 'ცეკვის გახსნა',sub: 'პირველი ცეკვა', icon: '✧' },
         { time: 'გვიან', title: 'ბოლომდე',      sub: 'წვეულება არ ჩერდება', icon: '☾' },
       ],
@@ -330,7 +342,7 @@ window.TRANSLATIONS = {
       pal_avoid_cap: ['კაშკაშა წითელი, ნეონი, ფლუო.', 'მოერიდეთ ასევე თეთრს და სუფთა სპილოს ძვალს.'],
     },
     weather: {
-      label: 'ბურგუნდია · სექტემბრის დასაწყისი',
+      label: 'Bourgogne · სექტემბრის დასაწყისი',
       temp_em: 'რბილი',
     },
     brunch: {
@@ -411,7 +423,7 @@ window.TRANSLATIONS = {
       eyebrow: 'Die Reise',
       title_main: 'Paris',
       title_em: 'nach',
-      title_to: 'Burgund',
+      title_to: 'Bourgogne',
       subtitle: '130 km · 1h45 Fahrt',
       intro: ['Verlassen Sie die Hauptstadt, überqueren Sie die Yonne,', 'folgen Sie dem Fluss bis zu uns.'],
       pin_paris: 'Paris',
@@ -429,12 +441,12 @@ window.TRANSLATIONS = {
       eyebrow: 'Empfang',
       title_main: 'Schloss',
       title_em: 'Chaumont-sur-Yonne',
-      subtitle: 'Privatdomäne · Burgund',
+      subtitle: 'Privatdomäne · Bourgogne',
       intro: ['Gaumarjos! Santé! Prost!', 'Erheben Sie bei jedem Gang Ihr Glas.'],
       lbl_address: 'Adresse',
-      val_address: 'Schloss Chaumont',
+      val_address: 'Château de Chaumont',
       val_address_em: '5 Rue de la Montagne · 89340 Chaumont-sur-Yonne',
-      quote: 'Unter den Sternen Burgunds',
+      quote: 'Unter den Sternen der Bourgogne',
     },
     timeline: {
       eyebrow_num: 'III',
@@ -444,7 +456,7 @@ window.TRANSLATIONS = {
       subtitle: 'von der Dämmerung bis zum Morgen',
       events: [
         { time: '18:00', title: 'Cocktail',          sub: 'Auf der Terrasse bei Sonnenuntergang', icon: '✦' },
-        { time: '20:00', title: 'Abendessen',        sub: 'Georgisches Bankett — Supra & Wein aus Kachetien', icon: '◇' },
+        { time: '20:00', title: 'Abendessen',        sub: 'Georgisches Bankett — Supra & Wein aus Kakheti', icon: '◇' },
         { time: '23:00', title: 'Eröffnung des Balls', sub: 'Erster Tanz', icon: '✧' },
         { time: 'Spät',  title: 'Bis zum Ende',      sub: 'Das Fest hört nicht auf', icon: '☾' },
       ],
@@ -480,7 +492,7 @@ window.TRANSLATIONS = {
       pal_avoid_cap: ['Knallige Rottöne, Neon, Leuchtfarben.', 'Vermeiden Sie auch reines Weiß und Elfenbein.'],
     },
     weather: {
-      label: 'Burgund · Anfang September',
+      label: 'Bourgogne · Anfang September',
       temp_em: 'mild',
     },
     brunch: {
