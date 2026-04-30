@@ -145,7 +145,7 @@ const Closing = () => {
           gap: 28px;
           align-items: center;
           justify-content: center;
-          color: var(--cream);
+          color: var(--sage-deep);
           text-align: center;
           min-height: 100svh;
         }
@@ -184,27 +184,27 @@ const Closing = () => {
           max-width: 320px;
         }
         .cl-langs {
-          display: flex; flex-direction: column; gap: 6px;
+          display: flex; flex-direction: column; gap: 8px;
           font-family: var(--serif); font-style: italic; font-weight: 300;
-          color: var(--cream);
-          font-size: 16px;
+          color: var(--sage-deep);
+          font-size: 17px;
           line-height: 1.5;
           padding-top: 20px;
-          border-top: 1px solid rgba(247,242,230,0.3);
+          border-top: 1px solid rgba(61, 74, 54, 0.28);
           width: 80%;
           text-align: center;
         }
-        .cl-langs .lang { display: flex; align-items: baseline; justify-content: center; gap: 10px; opacity: 0.95; }
+        .cl-langs .lang { display: flex; align-items: baseline; justify-content: center; gap: 12px; }
         .cl-langs .lang .tag {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.32em; text-transform: uppercase;
-          color: var(--sage-mist); opacity: 0.8; min-width: 24px; text-align: right;
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.34em; text-transform: uppercase;
+          color: var(--sage-deep); opacity: 0.6; min-width: 24px; text-align: right;
         }
         .cl-foot {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.4em; text-transform: uppercase;
-          color: var(--sage-mist); opacity: 0.7;
-          margin-top: 24px;
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.42em; text-transform: uppercase;
+          color: var(--sage-deep); opacity: 0.65;
+          margin-top: 28px;
         }
       `}</style>
 
