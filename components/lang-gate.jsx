@@ -378,7 +378,7 @@ const LangGate = ({ onSelect }) => {
         <div className="gate-flags">
           <span>Franco · Géorgien</span>
         </div>
-        <div className="date">05 · 09 · 2026</div>
+        <div className="date">05-06 septembre 2026</div>
       </div>
     </div>
   );
