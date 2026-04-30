@@ -22,12 +22,12 @@ npx serve .
 python3 -m http.server 8000
 ```
 
-Puis ouvrir [http://localhost:8000/faire-part.html](http://localhost:8000/faire-part.html).
+Puis ouvrir [http://localhost:8000](http://localhost:8000).
 
 ## Structure
 
 ```
-faire-part.html        # entrée principale + tokens CSS
+index.html             # entrée principale + tokens CSS
 app.jsx                # composition des scènes + tweaks panel
 components/            # une scène par fichier
   lang-gate.jsx        # choix de langue
