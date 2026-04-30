@@ -300,7 +300,6 @@ const Hero = () => {
           overflow: hidden;
           border-radius: 2px;
           background: var(--beige-deep);
-          border: 1px solid var(--rule);
           will-change: transform, opacity;
         }
         /* Tone fallback shown while the JPEG loads */
@@ -329,25 +328,7 @@ const Hero = () => {
           z-index: 2;
           pointer-events: none;
         }
-        .hp-tag {
-          position: absolute;
-          left: 6px; right: 6px; bottom: 6px;
-          display: flex; justify-content: space-between; align-items: baseline; gap: 6px;
-          font-family: var(--sans);
-          font-size: 6px;
-          letter-spacing: 0.32em;
-          text-transform: uppercase;
-          color: rgba(247, 242, 230, 0.95);
-          text-shadow: 0 1px 4px rgba(31, 36, 25, 0.5);
-          z-index: 3;
-        }
-        .hp-tag .hp-lbl {
-          font-family: var(--serif);
-          font-style: italic;
-          text-transform: none;
-          letter-spacing: 0.01em;
-          font-size: 8px;
-        }
+        /* (.hp-tag captions removed — photos render clean, no overlays) */
 
         /* Top cluster — JL monogram stacked above the countdown, absolutely
            pinned to the top of the viewport with safe-area padding. */
@@ -531,10 +512,6 @@ const Hero = () => {
                       />
                     )}
                     <span className="hp-grain" />
-                    <div className="hp-tag">
-                      <span className="hp-lbl">{p.lbl}</span>
-                      <span>{p.d}</span>
-                    </div>
                   </div>
                 ))}
               </div>
