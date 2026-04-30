@@ -146,7 +146,7 @@ const AudioBackground = () => {
         }
       `}</style>
 
-      <audio ref={ref} src={AUDIO_SRC} loop muted preload="auto" playsInline />
+      <audio ref={ref} src={AUDIO_SRC} loop muted preload="none" playsInline />
 
       <button
         className={`audio-fab ${!muted ? 'playing' : ''} ${!hasInteracted ? 'invite-pulse' : ''}`}

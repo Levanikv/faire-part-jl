@@ -84,6 +84,7 @@ const Hero = () => {
 
   useEffect(() => {
     if (!window.gsap || !window.ScrollTrigger) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const gsap = window.gsap;
     gsap.registerPlugin(window.ScrollTrigger);
     const ST = window.ScrollTrigger;
