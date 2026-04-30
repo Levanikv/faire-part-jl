@@ -132,11 +132,11 @@ const Reception = () => {
 
       <div className={`recep-addr blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.4s' }}>
         <div className="lbl">{t.lbl_address}</div>
-        <div className="v">{t.val_address}<em>{t.val_address_em}</em></div>
+        <div className="v">{t.val_address}<em>{window.dashy(t.val_address_em)}</em></div>
       </div>
 
       <p className={`recep-quote blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.5s' }}>
-        {t.quote}
+        {window.dashy(t.quote)}
       </p>
     </section>
   );
