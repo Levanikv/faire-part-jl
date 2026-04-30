@@ -149,18 +149,6 @@ const DressCode = () => {
         .fig-card .silh svg {
           max-width: 100%; height: auto;
         }
-        .fig-card .lbl {
-          font-family: var(--sans); font-size: 9px;
-          letter-spacing: 0.34em; text-transform: uppercase;
-          color: var(--sage-deep);
-          text-align: center;
-        }
-        .fig-card .req {
-          font-family: var(--display); font-size: clamp(18px, 5vw, 22px);
-          color: var(--ink);
-          text-align: center; line-height: 1.15;
-          overflow-wrap: break-word; hyphens: auto;
-        }
         /* Color palette block */
         .palette {
           width: 100%;
@@ -234,8 +222,6 @@ const DressCode = () => {
               <path d="M52 110 L54 118 L48 118 L46 110" />
             </svg>
           </div>
-          <span className="lbl">{t.lbl_men}</span>
-          <span className="req">{t.req_men[0]}<br/>{t.req_men[1]}</span>
         </div>
         <div className="fig-card">
           <div className="silh">
@@ -249,8 +235,6 @@ const DressCode = () => {
               <path d="M30 80 Q40 84 50 80" opacity="0.4" />
             </svg>
           </div>
-          <span className="lbl">{t.lbl_women}</span>
-          <span className="req">{t.req_women[0]}<br/>{t.req_women[1]}</span>
         </div>
       </div>
 
