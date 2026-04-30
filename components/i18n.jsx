@@ -86,7 +86,7 @@ window.TRANSLATIONS = {
       title_main: 'Cathédrale',
       title_em: 'Saint-Stéphane',
       subtitle: 'Paris · 16ᵉ arrondissement',
-      intro: ['Sous les coupoles byzantines', 'de la Métropole grecque-orthodoxe de France,', 'nous échangerons nos vœux.'],
+      intro: ['Dans le rite géorgien orthodoxe,', 'bénis par le Père Artchile Davrichachvili,', 'nous échangerons nos vœux.'],
       lbl_address: 'Adresse',
       val_address: ['7 Rue Georges Bizet', '75016 Paris'],
       lbl_welcome: 'Accueil',
@@ -99,6 +99,11 @@ window.TRANSLATIONS = {
       val_metro: [
         { name: 'Iéna', sub: 'L9 · 4 min à pied' },
         { name: 'Alma-Marceau', sub: 'L9 · 6 min à pied' },
+      ],
+      lbl_parking: 'Parkings',
+      val_parking: [
+        { name: 'Parking Indigo Paris Alma George V' },
+        { name: 'Parking Alma George V' },
       ],
       quote: 'Et de deux cœurs, un seul',
     },
@@ -235,7 +240,7 @@ window.TRANSLATIONS = {
       title_main: 'წმინდა სტეფანეს',
       title_em: 'ტაძარი',
       subtitle: 'პარიზი · მე-16 უბანი',
-      intro: ['საფრანგეთის ბერძნული მართლმადიდებლური მიტროპოლიის', 'ბიზანტიური გუმბათების ქვეშ', 'გავცვლით აღთქმას.'],
+      intro: ['ქართული მართლმადიდებლური წესით,', 'მამა არჩილ დავრიჩაშვილის კურთხევით,', 'აღთქმას გავცვლით.'],
       lbl_address: 'მისამართი',
       val_address: ['7 Rue Georges Bizet', '75016 Paris'],
       lbl_welcome: 'მიღება',
@@ -248,6 +253,11 @@ window.TRANSLATIONS = {
       val_metro: [
         { name: 'Iéna', sub: 'ლ9 · 4 წთ ფეხით' },
         { name: 'Alma-Marceau', sub: 'ლ9 · 6 წთ ფეხით' },
+      ],
+      lbl_parking: 'პარკინგი',
+      val_parking: [
+        { name: 'Parking Indigo Paris Alma George V' },
+        { name: 'Parking Alma George V' },
       ],
       quote: 'და ორი გულიდან ერთი',
     },
@@ -384,7 +394,7 @@ window.TRANSLATIONS = {
       title_main: 'Kathedrale',
       title_em: 'Saint-Stéphane',
       subtitle: 'Paris · 16. Arrondissement',
-      intro: ['Unter den byzantinischen Kuppeln', 'der griechisch-orthodoxen Metropolie von Frankreich', 'tauschen wir unsere Gelübde aus.'],
+      intro: ['Im georgisch-orthodoxen Ritus,', 'gesegnet von Pater Artschil Dawritschaschwili,', 'tauschen wir unsere Gelübde aus.'],
       lbl_address: 'Adresse',
       val_address: ['7 Rue Georges Bizet', '75016 Paris'],
       lbl_welcome: 'Empfang',
@@ -397,6 +407,11 @@ window.TRANSLATIONS = {
       val_metro: [
         { name: 'Iéna', sub: 'L9 · 4 Min. zu Fuß' },
         { name: 'Alma-Marceau', sub: 'L9 · 6 Min. zu Fuß' },
+      ],
+      lbl_parking: 'Parkplätze',
+      val_parking: [
+        { name: 'Parking Indigo Paris Alma George V' },
+        { name: 'Parking Alma George V' },
       ],
       quote: 'Aus zwei Herzen, eins',
     },

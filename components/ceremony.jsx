@@ -171,6 +171,20 @@ const Ceremony = () => {
             </div>
           </div>
         </div>
+        <div className="card-rule" />
+        <div className="card-row">
+          <div className="pin" style={{borderStyle:'dashed'}}>P</div>
+          <div className="body">
+            <div className="lbl">{t.lbl_parking}</div>
+            <div className="val">
+              {t.val_parking.map((p, i) => (
+                <React.Fragment key={i}>
+                  {p.name}{i < t.val_parking.length - 1 && <br/>}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <p className="ceremony-quote">
