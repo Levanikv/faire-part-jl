@@ -90,6 +90,7 @@ const App = () => {
         <window.LangGate onSelect={setLang} />
       ) : (
         <>
+          <window.LangSwitcher lang={lang} onSelect={setLang} />
           <Hero />
           <Ceremony />
           <Journey />
