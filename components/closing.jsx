@@ -171,10 +171,28 @@ const Closing = () => {
         }
         .cl-rule { width: 60px; height: 1px; background: var(--sage-deep); opacity: 0.5; }
         .cl-date {
+          display: flex; flex-direction: column; align-items: center;
+          gap: 4px;
           font-family: var(--display);
           font-size: 24px;
           color: var(--ink);
           letter-spacing: 0.02em;
+          text-align: center;
+        }
+        .cl-date .month {
+          font-family: var(--serif);
+          font-style: italic;
+          font-weight: 400;
+          font-size: 0.78em;
+          color: var(--ink-soft);
+          letter-spacing: 0.01em;
+        }
+        .cl-date .month .num {
+          font-family: var(--display);
+          font-style: normal;
+          color: var(--ink);
+          margin-left: 8px;
+          font-variant-numeric: tabular-nums;
         }
         .cl-message {
           font-family: var(--serif); font-style: italic; font-weight: 300;
@@ -215,7 +233,10 @@ const Closing = () => {
         {tc.groom}
       </h2>
       <span className={`cl-rule blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.45s' }} />
-      <div className={`cl-date blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.55s' }}>{tc.date_dotted}</div>
+      <div className={`cl-date blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.55s' }}>
+        <span>{tc.date_day}</span>
+        <span className="month">{tc.date_month} <span className="num">{tc.date_year}</span></span>
+      </div>
       <p className={`cl-message blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.7s' }}>
         {t.message.map((line, i) => (
           <React.Fragment key={i}>{line}{i < t.message.length - 1 && <br/>}</React.Fragment>

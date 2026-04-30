@@ -459,9 +459,14 @@ const Hero = () => {
           display: flex; flex-direction: column; align-items: center; gap: 14px;
           will-change: opacity;
         }
+        .hero-date .date-stack {
+          display: flex; flex-direction: column; align-items: center;
+          gap: 4px;
+          text-align: center;
+        }
         .hero-date .date-row {
-          display: flex; align-items: center; justify-content: center;
-          gap: 16px;
+          display: flex; align-items: baseline; justify-content: center;
+          gap: 12px;
           font-family: var(--serif);
           font-style: italic;
           font-weight: 400;
@@ -475,11 +480,6 @@ const Hero = () => {
           font-size: 1.08em;
           color: var(--ink);
           font-variant-numeric: tabular-nums;
-        }
-        .hero-date .date-row .dash {
-          width: 22px; height: 1px;
-          background: var(--sage-deep);
-          opacity: 0.5;
         }
         .hero-date .place {
           font-family: var(--sans);
@@ -527,11 +527,14 @@ const Hero = () => {
           </div>
 
           <div className="hero-date" ref={dateRef}>
-            <div className="date-row">
-              <span className="num">{tc.date_day}</span>
-              <span>{tc.date_month}</span>
-              <span className="dash" />
-              <span className="num">{tc.date_year}</span>
+            <div className="date-stack">
+              <div className="date-row">
+                <span className="num">{tc.date_day}</span>
+              </div>
+              <div className="date-row">
+                <span>{tc.date_month}</span>
+                <span className="num">{tc.date_year}</span>
+              </div>
             </div>
             <div className="place">{tc.place}</div>
           </div>
