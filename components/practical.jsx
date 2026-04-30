@@ -110,10 +110,14 @@ const DressCode = () => {
       <style>{`
         .dress {
           background: linear-gradient(180deg, var(--cream) 0%, var(--beige) 60%, var(--cream) 100%);
-          padding: 96px 28px 120px;
+          padding: 96px clamp(20px, 5vw, 28px) 120px;
           gap: 28px;
           align-items: center;
+          overflow-x: clip;
+          width: 100%;
+          max-width: 100%;
         }
+        .dress > * { max-width: 100%; }
         .dress-intro {
           font-family: var(--serif);
           font-style: italic;
@@ -126,31 +130,45 @@ const DressCode = () => {
         }
         .dress-fig {
           display: grid; grid-template-columns: 1fr 1fr;
-          gap: 16px; width: 100%;
+          gap: 14px; width: 100%;
+          min-width: 0;
         }
         .fig-card {
           background: var(--beige-light);
           border: 1px solid var(--rule);
-          padding: 24px 14px 18px;
+          padding: 22px 12px 18px;
           display: flex; flex-direction: column; align-items: center; gap: 12px;
           aspect-ratio: 1 / 1.32;
+          min-width: 0;
+          overflow: hidden;
         }
-        .fig-card .silh { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .fig-card .silh {
+          flex: 1; display: flex; align-items: center; justify-content: center;
+          width: 100%; min-width: 0;
+        }
+        .fig-card .silh svg {
+          max-width: 100%; height: auto;
+        }
         .fig-card .lbl {
           font-family: var(--sans); font-size: 9px;
           letter-spacing: 0.34em; text-transform: uppercase;
           color: var(--sage-deep);
+          text-align: center;
         }
         .fig-card .req {
-          font-family: var(--display); font-size: 22px; color: var(--ink);
-          text-align: center; line-height: 1.1;
+          font-family: var(--display); font-size: clamp(18px, 5vw, 22px);
+          color: var(--ink);
+          text-align: center; line-height: 1.15;
+          overflow-wrap: break-word; hyphens: auto;
         }
         /* Color palette block */
         .palette {
           width: 100%;
+          max-width: 100%;
           background: var(--beige-light);
           border: 1px solid var(--rule);
-          padding: 20px 20px 22px;
+          padding: 20px 18px 22px;
+          min-width: 0;
         }
         .palette .h {
           font-family: var(--sans); font-size: 9px;
@@ -160,9 +178,13 @@ const DressCode = () => {
         .palette .row {
           display: flex; gap: 6px;
           margin-bottom: 8px;
+          min-width: 0;
         }
         .swatch {
-          flex: 1; aspect-ratio: 1 / 1; border-radius: 50%;
+          flex: 1 1 0;
+          min-width: 0;
+          aspect-ratio: 1 / 1;
+          border-radius: 50%;
           box-shadow: 0 1px 0 rgba(0,0,0,0.06);
         }
         .swatch.crossed {

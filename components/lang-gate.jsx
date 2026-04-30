@@ -2,6 +2,30 @@
 // Franco-Georgian mariage. Subtle vine patterns, Chokha-inspired ornaments,
 // flags woven in discreetly. Three languages: FR / GE / DE.
 
+// Auto-cycling welcome line — fades the chars of the current language out,
+// then fades the next language's chars in with a left-to-right stagger.
+const WELCOME_WORDS = ['Bienvenue', 'მოგესალმებით', 'Willkommen'];
+const WelcomeCycler = () => {
+  const [idx, setIdx] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % WELCOME_WORDS.length), 3200);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="welcome-cycler" aria-live="polite">
+      {WELCOME_WORDS.map((word, i) => (
+        <span key={i} className={`welcome-word ${i === idx ? 'active' : ''}`}>
+          {[...word].map((ch, j) => (
+            <span key={j} className="ch" style={{ '--i': j }}>
+              {ch === ' ' ? ' ' : ch}
+            </span>
+          ))}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 const LangGate = ({ onSelect }) => {
   const [hovered, setHovered] = React.useState(null);
   const [exiting, setExiting] = React.useState(false);
@@ -126,12 +150,50 @@ const LangGate = ({ onSelect }) => {
           opacity: 0;
           animation: g-fade 1.2s 0.5s forwards cubic-bezier(.4,0,.2,1);
         }
-        .gate-script {
+        /* Auto-cycling Welcome — three languages overlay each other, only
+           the .active one is visible; chars fade in left-to-right (stagger),
+           and fade out together when becoming inactive. */
+        .welcome-cycler {
+          position: relative;
+          width: 100%;
+          height: 1.4em;
           font-family: var(--script);
-          font-size: clamp(28px, 8vw, 38px);
+          font-size: clamp(34px, 9.5vw, 46px);
           color: var(--sage-deep);
-          line-height: 1.05;
+          line-height: 1.1;
           text-align: center;
+          overflow: visible;
+        }
+        .welcome-word {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          white-space: nowrap;
+        }
+        .welcome-word .ch {
+          display: inline-block;
+          opacity: 0;
+          transform: translateY(0.45em);
+          filter: blur(8px);
+          transition:
+            opacity 0.55s cubic-bezier(.2,.8,.2,1),
+            transform 0.55s cubic-bezier(.2,.8,.2,1),
+            filter 0.55s cubic-bezier(.2,.8,.2,1);
+          /* default delay = 0 so OUT fades all chars together */
+          transition-delay: 0s;
+        }
+        .welcome-word.active .ch {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+          /* IN gets a left-to-right stagger */
+          transition-delay: calc(var(--i, 0) * 0.045s);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .welcome-word .ch { transition: opacity 0.2s; transform: none; filter: none; transition-delay: 0s; }
+          .welcome-word .ch { transform: none; filter: none; }
         }
         .gate-title-row {
           display: flex; align-items: center; gap: 14px;
@@ -284,15 +346,10 @@ const LangGate = ({ onSelect }) => {
         <div className="gate-monogram" aria-label="Justine et Levani">
           {window.MonoLogo && <window.MonoLogo size={120} ink="var(--ink)" accent="var(--sage-deep)" />}
         </div>
-        <div className="gate-meta">
-          <span>Paris</span>
-          <span className="dot" />
-          <span>Tbilisi</span>
-        </div>
       </div>
 
       <div className="gate-prompt">
-        <div className="gate-script">Bienvenue · მოგესალმებით · Willkommen</div>
+        <WelcomeCycler />
         <div className="gate-title-row">
           <span>Choisissez · აირჩიეთ · Wählen</span>
         </div>

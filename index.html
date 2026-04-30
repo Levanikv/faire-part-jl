@@ -114,12 +114,16 @@
     min-height: 100svh;       /* small viewport — chrome visible */
     min-height: 100dvh;       /* dynamic — adapts to chrome show/hide */
     width: 100%;
+    max-width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
     padding: 48px 28px;
     scroll-snap-align: start;
+    /* Safety net so no inner element can ever push the page sideways. */
+    overflow-x: clip;
   }
+  :where(section.scene) > * { max-width: 100%; }
 
   ::selection { background: var(--sage); color: var(--cream); }
 
