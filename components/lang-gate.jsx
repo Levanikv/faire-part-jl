@@ -47,21 +47,21 @@ const LangGate = ({ onSelect }) => {
   const langs = [
     {
       code: 'fr',
-      label: 'Français',
+      label: 'Choisissez',
       native: 'Bienvenue',
       flag: 'fr',
       tagline: 'Le mariage de Justine & Levani',
     },
     {
       code: 'ge',
-      label: 'ქართული',
+      label: 'აირჩიეთ',
       native: 'მოგესალმებით',
       flag: 'ge',
       tagline: 'ჟუსტინ და ლევანის ქორწილი',
     },
     {
       code: 'de',
-      label: 'Deutsch',
+      label: 'Wählen',
       native: 'Willkommen',
       flag: 'de',
       tagline: 'Die Hochzeit von Justine & Levani',
@@ -350,9 +350,6 @@ const LangGate = ({ onSelect }) => {
 
       <div className="gate-prompt">
         <WelcomeCycler />
-        <div className="gate-title-row">
-          <span>Choisissez · აირჩიეთ · Wählen</span>
-        </div>
 
         <div className="gate-langs">
           {langs.map((l) => (
@@ -378,10 +375,8 @@ const LangGate = ({ onSelect }) => {
       </div>
 
       <div className="gate-foot">
-        <div className="gate-flags" aria-hidden="true">
-          <FlagFR />
+        <div className="gate-flags">
           <span>Franco · Géorgien</span>
-          <FlagGE />
         </div>
         <div className="date">05 · 09 · 2026</div>
       </div>
