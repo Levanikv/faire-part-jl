@@ -74,8 +74,8 @@ const Practical = () => {
         <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        {window.dashy(t.title_main)} <span className="em">{window.dashy(t.title_em)}</span>
-        <span className="it">{window.dashy(t.subtitle)}</span>
+        {t.title_main} <span className="em">{t.title_em}</span>
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <div className={`prac-grid blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
@@ -197,13 +197,13 @@ const DressCode = () => {
         <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        {window.dashy(t.title_main)} <span className="em">{window.dashy(t.title_em)}</span><br/>{window.dashy(t.title_extra)}
-        <span className="it">{window.dashy(t.subtitle)}</span>
+        {t.title_main} <span className="em">{t.title_em}</span><br/>{t.title_extra}
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`dress-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
         {t.intro.map((line, i) => (
-          <React.Fragment key={i}>{window.dashy(line)}{i < t.intro.length - 1 && <br/>}</React.Fragment>
+          <React.Fragment key={i}>{line}{i < t.intro.length - 1 && <br/>}</React.Fragment>
         ))}
       </p>
 

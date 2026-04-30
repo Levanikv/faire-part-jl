@@ -9,18 +9,6 @@ window.useT = () => {
   return window.TRANSLATIONS[lang] || window.TRANSLATIONS.fr;
 };
 
-// Wrap em/en-dashes and hyphen-minus in a non-italic span so they render
-// upright inside italic text (e.g. "Chaumont-sur-Yonne" in section titles).
-window.dashy = (text) => {
-  if (typeof text !== 'string') return text;
-  const parts = text.split(/(—|–|-)/g);
-  return parts.map((p, i) =>
-    (p === '—' || p === '–' || p === '-')
-      ? React.createElement('span', { key: i, className: 'no-it' }, p)
-      : p
-  );
-};
-
 // Photo grid memories — 9 hand-picked moments, translated date labels.
 // `src` is shared across languages; only the captions change. The aspect-ratio
 // is also locked per slot so the masonry rhythm is identical in every language.

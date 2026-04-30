@@ -118,9 +118,9 @@ const Ceremony = () => {
       </div>
 
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        {window.dashy(t.title_main)}<br/>
-        <span className="em">{window.dashy(t.title_em)}</span>
-        <span className="it">{window.dashy(t.subtitle)}</span>
+        {t.title_main}<br/>
+        <span className="em">{t.title_em}</span>
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`ceremony-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>

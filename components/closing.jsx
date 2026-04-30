@@ -94,8 +94,8 @@ const Brunch = () => {
       </div>
 
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.2s' }}>
-        {window.dashy(t.title_main)} <span className="em">{window.dashy(t.title_em)}</span><br/>{window.dashy(t.title_extra)}
-        <span className="it">{window.dashy(t.subtitle)}</span>
+        {t.title_main} <span className="em">{t.title_em}</span><br/>{t.title_extra}
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <div className={`br-icon ${inView ? 'in' : ''}`}>

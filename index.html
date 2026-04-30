@@ -194,18 +194,6 @@
     color: var(--sage-deep);
   }
 
-  /* Dashes/hyphens stay upright even inside italic copy. Used by
-     window.dashy() in components/i18n.jsx. We force a sans-serif
-     family because Cormorant Garamond's italic hyphen is slanted and
-     even font-style:normal can leak when the parent forces italic. */
-  .no-it {
-    font-family: var(--sans) !important;
-    font-style: normal !important;
-    font-synthesis: none;
-    font-weight: 400;
-    letter-spacing: 0;
-  }
-
   /* Eyebrow tag above each H2 — sans-serif spaced, sauge */
   .eyebrow {
     display: flex; align-items: center; gap: 14px;
