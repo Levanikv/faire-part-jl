@@ -7,3 +7,7 @@ dist/
 build/
 .vscode/
 .idea/
+
+# Raw source photos — only the optimised images/hero/* JPEGs ship to prod
+photos/
+uploads/

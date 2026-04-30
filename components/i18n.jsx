@@ -9,52 +9,58 @@ window.useT = () => {
   return window.TRANSLATIONS[lang] || window.TRANSLATIONS.fr;
 };
 
-// Photo grid memories — same 12 entries, translated date labels.
-// Tones stay identical so the visual rhythm is preserved.
-const PHOTOS_FR = [
-  { lbl: 'Premier regard',     d: 'Mai 2019',      tone: '#a8b89a', ar: '4/5' },
-  { lbl: 'Tbilissi',           d: 'Été 2020',      tone: '#c8b890', ar: '1/1' },
-  { lbl: 'Sous la pluie',      d: 'Paris 2021',    tone: '#5c6e54', ar: '4/5' },
-  { lbl: 'Premier voyage',     d: 'Géorgie 2022',  tone: '#7a8b6f', ar: '5/6' },
-  { lbl: 'Premier appart',     d: 'Paris 2022',    tone: '#9aab8f', ar: '3/4' },
-  { lbl: 'Vignes de Kakheti',  d: 'Été 2023',      tone: '#d4c4a3', ar: '1/1' },
-  { lbl: "Au bord de l'eau",   d: 'Bretagne 2023', tone: '#7a8b6f', ar: '1/1' },
-  { lbl: 'Hiver',              d: 'Tbilissi 2024', tone: '#3d4a36', ar: '4/5' },
-  { lbl: 'La demande',         d: 'Décembre 2024', tone: '#5c6e54', ar: '5/6' },
-  { lbl: 'Le matin',           d: 'Paris 2025',    tone: '#c8b890', ar: '4/5' },
-  { lbl: 'Au parc',            d: 'Été 2025',      tone: '#a8b89a', ar: '1/1' },
-  { lbl: 'Ensemble',           d: "Aujourd'hui",   tone: '#8a9b80', ar: '4/5' },
+// Photo grid memories — 9 hand-picked moments, translated date labels.
+// `src` is shared across languages; only the captions change. The aspect-ratio
+// is also locked per slot so the masonry rhythm is identical in every language.
+const PHOTO_SLOTS = [
+  { src: 'images/hero/01.jpg', tone: '#a8b89a', ar: '4/5' },  // col 0 row 0 — Tbilisi cathédrale
+  { src: 'images/hero/02.jpg', tone: '#c8b890', ar: '4/5' },  // col 1 row 0 — au soleil
+  { src: 'images/hero/03.jpg', tone: '#7a8b6f', ar: '1/1' },  // col 2 row 0 — coucher de soleil
+  { src: 'images/hero/04.jpg', tone: '#5c6e54', ar: '5/6' },  // col 0 row 1 — la demande
+  { src: 'images/hero/05.jpg', tone: '#9aab8f', ar: '1/1' },  // col 1 row 1 — ensemble
+  { src: 'images/hero/06.jpg', tone: '#d4c4a3', ar: '4/5' },  // col 2 row 1 — en famille
+  { src: 'images/hero/07.jpg', tone: '#a8b89a', ar: '1/1' },  // col 0 row 2 — la fête
+  { src: 'images/hero/08.jpg', tone: '#3d4a36', ar: '4/5' },  // col 1 row 2 — un soir
+  { src: 'images/hero/09.jpg', tone: '#7a8b6f', ar: '4/5' },  // col 2 row 2 — premier appart
 ];
 
-const PHOTOS_GE = [
-  { lbl: 'პირველი მზერა',  d: 'მაისი 2019',     tone: '#a8b89a', ar: '4/5' },
-  { lbl: 'თბილისი',        d: 'ზაფხული 2020',   tone: '#c8b890', ar: '1/1' },
-  { lbl: 'წვიმის ქვეშ',    d: 'პარიზი 2021',    tone: '#5c6e54', ar: '4/5' },
-  { lbl: 'პირველი მოგზაურობა', d: 'საქართველო 2022', tone: '#7a8b6f', ar: '5/6' },
-  { lbl: 'პირველი ბინა',   d: 'პარიზი 2022',    tone: '#9aab8f', ar: '3/4' },
-  { lbl: 'კახეთის ვენახები',d: 'ზაფხული 2023',   tone: '#d4c4a3', ar: '1/1' },
-  { lbl: 'ზღვისპირას',     d: 'ბრეტანი 2023',   tone: '#7a8b6f', ar: '1/1' },
-  { lbl: 'ზამთარი',        d: 'თბილისი 2024',   tone: '#3d4a36', ar: '4/5' },
-  { lbl: 'შემოთავაზება',   d: 'დეკემბერი 2024', tone: '#5c6e54', ar: '5/6' },
-  { lbl: 'დილა',           d: 'პარიზი 2025',    tone: '#c8b890', ar: '4/5' },
-  { lbl: 'პარკში',         d: 'ზაფხული 2025',   tone: '#a8b89a', ar: '1/1' },
-  { lbl: 'ერთად',          d: 'დღეს',           tone: '#8a9b80', ar: '4/5' },
-];
+const buildPhotos = (captions) => PHOTO_SLOTS.map((slot, i) => ({ ...slot, ...captions[i] }));
 
-const PHOTOS_DE = [
-  { lbl: 'Erster Blick',      d: 'Mai 2019',        tone: '#a8b89a', ar: '4/5' },
-  { lbl: 'Tiflis',            d: 'Sommer 2020',     tone: '#c8b890', ar: '1/1' },
-  { lbl: 'Im Regen',          d: 'Paris 2021',      tone: '#5c6e54', ar: '4/5' },
-  { lbl: 'Erste Reise',       d: 'Georgien 2022',   tone: '#7a8b6f', ar: '5/6' },
-  { lbl: 'Erste Wohnung',     d: 'Paris 2022',      tone: '#9aab8f', ar: '3/4' },
-  { lbl: 'Weinberge Kacheti', d: 'Sommer 2023',     tone: '#d4c4a3', ar: '1/1' },
-  { lbl: 'Am Wasser',         d: 'Bretagne 2023',   tone: '#7a8b6f', ar: '1/1' },
-  { lbl: 'Winter',            d: 'Tiflis 2024',     tone: '#3d4a36', ar: '4/5' },
-  { lbl: 'Der Antrag',        d: 'Dezember 2024',   tone: '#5c6e54', ar: '5/6' },
-  { lbl: 'Der Morgen',        d: 'Paris 2025',      tone: '#c8b890', ar: '4/5' },
-  { lbl: 'Im Park',           d: 'Sommer 2025',     tone: '#a8b89a', ar: '1/1' },
-  { lbl: 'Zusammen',          d: 'Heute',           tone: '#8a9b80', ar: '4/5' },
-];
+const PHOTOS_FR = buildPhotos([
+  { lbl: 'Tbilissi',         d: 'Géorgie' },
+  { lbl: 'Au soleil',        d: 'Été' },
+  { lbl: 'Au crépuscule',    d: 'Bretagne' },
+  { lbl: 'La demande',       d: 'En mer' },
+  { lbl: 'Ensemble',         d: "Aujourd'hui" },
+  { lbl: 'En famille',       d: 'Normandie' },
+  { lbl: 'La fête',          d: 'Premier anniversaire' },
+  { lbl: 'Un soir',          d: 'À trois' },
+  { lbl: 'Premier appart',   d: 'Paris' },
+]);
+
+const PHOTOS_GE = buildPhotos([
+  { lbl: 'თბილისი',         d: 'საქართველო' },
+  { lbl: 'მზის ქვეშ',       d: 'ზაფხული' },
+  { lbl: 'მზის ჩასვლისას',  d: 'ბრეტანი' },
+  { lbl: 'შემოთავაზება',    d: 'ზღვაზე' },
+  { lbl: 'ერთად',           d: 'დღეს' },
+  { lbl: 'ოჯახი',           d: 'ნორმანდია' },
+  { lbl: 'დღესასწაული',     d: 'პირველი დაბადების დღე' },
+  { lbl: 'საღამო',          d: 'სამნი' },
+  { lbl: 'პირველი ბინა',    d: 'პარიზი' },
+]);
+
+const PHOTOS_DE = buildPhotos([
+  { lbl: 'Tiflis',           d: 'Georgien' },
+  { lbl: 'In der Sonne',     d: 'Sommer' },
+  { lbl: 'Im Sonnenuntergang', d: 'Bretagne' },
+  { lbl: 'Der Antrag',       d: 'Auf See' },
+  { lbl: 'Zusammen',         d: 'Heute' },
+  { lbl: 'Familie',          d: 'Normandie' },
+  { lbl: 'Das Fest',         d: 'Erster Geburtstag' },
+  { lbl: 'Ein Abend',        d: 'Zu dritt' },
+  { lbl: 'Erste Wohnung',    d: 'Paris' },
+]);
 
 window.TRANSLATIONS = {
   fr: {

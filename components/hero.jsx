@@ -303,18 +303,31 @@ const Hero = () => {
           border: 1px solid var(--rule);
           will-change: transform, opacity;
         }
+        /* Tone fallback shown while the JPEG loads */
         .hp-fill {
           position: absolute; inset: 0;
           background:
             radial-gradient(circle at 28% 32%, rgba(255,255,255,0.55) 0%, transparent 55%),
             radial-gradient(circle at 70% 70%, rgba(0,0,0,0.10) 0%, transparent 55%),
             linear-gradient(135deg, var(--ph-tone) 0%, var(--beige-deep) 100%);
+          z-index: 0;
+        }
+        .hp-img {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          display: block;
+          z-index: 1;
+          /* Subtle warm grade so the masonry feels cohesive */
+          filter: saturate(0.95) contrast(1.02);
         }
         .hp-grain {
           position: absolute; inset: 0;
           background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='1'/><feColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.43 0 0 0 0 0.33 0 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
           mix-blend-mode: multiply;
-          opacity: 0.5;
+          opacity: 0.32;
+          z-index: 2;
+          pointer-events: none;
         }
         .hp-tag {
           position: absolute;
@@ -324,8 +337,9 @@ const Hero = () => {
           font-size: 6px;
           letter-spacing: 0.32em;
           text-transform: uppercase;
-          color: rgba(247, 242, 230, 0.92);
-          z-index: 2;
+          color: rgba(247, 242, 230, 0.95);
+          text-shadow: 0 1px 4px rgba(31, 36, 25, 0.5);
+          z-index: 3;
         }
         .hp-tag .hp-lbl {
           font-family: var(--serif);
@@ -506,6 +520,16 @@ const Hero = () => {
                     style={{ '--ph-tone': p.tone, aspectRatio: p.ar }}
                   >
                     <span className="hp-fill" />
+                    {p.src && (
+                      <img
+                        className="hp-img"
+                        src={p.src}
+                        alt={`${p.lbl} — ${p.d}`}
+                        loading="eager"
+                        decoding="async"
+                        draggable="false"
+                      />
+                    )}
                     <span className="hp-grain" />
                     <div className="hp-tag">
                       <span className="hp-lbl">{p.lbl}</span>
