@@ -329,8 +329,8 @@ const Hero = () => {
           overflow: hidden;
           border-radius: 2px;
           background: var(--beige-deep);
-          /* Cream halo at the edges → photos melt into the page beige */
-          box-shadow: inset 0 0 28px rgba(243, 236, 216, 0.55);
+          /* Bigger cream halo at the edges so photos melt deeper into the bg */
+          box-shadow: inset 0 0 42px 4px rgba(243, 236, 216, 0.7);
           will-change: transform, opacity;
         }
         /* Tone fallback shown while the JPEG loads */
@@ -348,21 +348,22 @@ const Hero = () => {
           object-fit: cover;
           display: block;
           z-index: 1;
-          /* Warm desaturated grade so the photos live in the beige world */
+          opacity: 0.92;
+          /* Strong warm desaturated grade — photos belong to the beige world */
           filter:
-            saturate(0.72)
-            contrast(0.94)
-            brightness(1.06)
-            sepia(0.14);
+            saturate(0.55)
+            contrast(0.92)
+            brightness(1.08)
+            sepia(0.26);
         }
-        /* Beige soft-light wash blends each photo's mid-tones with the bg */
+        /* Beige multiply wash that genuinely tints each photo toward the bg */
         .hp-blend {
           position: absolute; inset: 0;
           background: linear-gradient(160deg,
-            rgba(247, 242, 230, 0.20) 0%,
-            rgba(220, 208, 176, 0.10) 50%,
-            rgba(200, 184, 144, 0.28) 100%);
-          mix-blend-mode: soft-light;
+            rgba(247, 242, 230, 0.22) 0%,
+            rgba(220, 208, 176, 0.32) 55%,
+            rgba(200, 184, 144, 0.42) 100%);
+          mix-blend-mode: multiply;
           z-index: 2;
           pointer-events: none;
         }
