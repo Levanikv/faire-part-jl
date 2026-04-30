@@ -203,7 +203,7 @@ const DressCode = () => {
 
       <p className={`dress-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
         {t.intro.map((line, i) => (
-          <React.Fragment key={i}>{line}{i < t.intro.length - 1 && <br/>}</React.Fragment>
+          <React.Fragment key={i}>{window.dashy(line)}{i < t.intro.length - 1 && <br/>}</React.Fragment>
         ))}
       </p>
 
