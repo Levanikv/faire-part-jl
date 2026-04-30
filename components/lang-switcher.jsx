@@ -33,6 +33,14 @@ const LangSwitcher = ({ lang, onSelect }) => {
           transform: scale(1);
           pointer-events: auto;
         }
+        body.has-lang.fabs-hidden .lang-switcher {
+          opacity: 0;
+          transform: translateY(-12px) scale(0.92);
+          pointer-events: none;
+          transition:
+            opacity 0.35s cubic-bezier(.2,.8,.2,1),
+            transform 0.35s cubic-bezier(.2,.8,.2,1);
+        }
         .lang-switcher button {
           width: 38px; height: 38px;
           border-radius: 50%;

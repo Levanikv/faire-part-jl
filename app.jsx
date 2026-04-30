@@ -80,6 +80,36 @@ const App = () => {
     }
   }, [lang]);
 
+  // Hide the floating top-bar widgets (language switcher + audio button)
+  // when the user scrolls down, reveal them again on scroll-up or near top.
+  useEffectApp(() => {
+    if (!lang) return;
+    let lastY = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (y < 60) {
+          document.body.classList.remove('fabs-hidden');
+        } else if (delta > 4) {
+          document.body.classList.add('fabs-hidden');
+        } else if (delta < -4) {
+          document.body.classList.remove('fabs-hidden');
+        }
+        lastY = y;
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.body.classList.remove('fabs-hidden');
+    };
+  }, [lang]);
+
   // AudioBackground stays mounted from the very first paint so the <audio>
   // ref exists when LangGate fires its click handler — iOS Safari only
   // permits play() inside the originating user gesture.

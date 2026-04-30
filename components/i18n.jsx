@@ -9,13 +9,13 @@ window.useT = () => {
   return window.TRANSLATIONS[lang] || window.TRANSLATIONS.fr;
 };
 
-// Wrap em/en-dashes in a non-italic span so they render upright inside italic
-// text. Used by components rendering translated copy that may contain "—" or "–".
+// Wrap em/en-dashes and hyphen-minus in a non-italic span so they render
+// upright inside italic text (e.g. "Chaumont-sur-Yonne" in section titles).
 window.dashy = (text) => {
   if (typeof text !== 'string') return text;
-  const parts = text.split(/(—|–)/g);
+  const parts = text.split(/(—|–|-)/g);
   return parts.map((p, i) =>
-    (p === '—' || p === '–')
+    (p === '—' || p === '–' || p === '-')
       ? React.createElement('span', { key: i, style: { fontStyle: 'normal' } }, p)
       : p
   );

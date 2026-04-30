@@ -97,6 +97,14 @@ const AudioBackground = () => {
           transform: scale(1);
           pointer-events: auto;
         }
+        body.has-lang.fabs-hidden .audio-fab {
+          opacity: 0;
+          transform: translateY(-12px) scale(0.92);
+          pointer-events: none;
+          transition:
+            opacity 0.35s cubic-bezier(.2,.8,.2,1),
+            transform 0.35s cubic-bezier(.2,.8,.2,1);
+        }
         .audio-fab:hover { transform: scale(1.05); background: rgba(243, 236, 216, 0.95); }
         .audio-fab .ico { color: var(--sage-deep); display: block; }
         .audio-fab.playing .wave {
