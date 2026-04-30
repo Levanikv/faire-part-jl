@@ -90,6 +90,7 @@ const Hero = () => {
 
     const block   = ref.current;
     const wrapper = wrapperRef.current;
+    const content = contentRef.current;
     const center  = centerRef.current;
     const title   = titleRef.current;
     const grid    = gridRef.current;
@@ -97,7 +98,7 @@ const Hero = () => {
     // Sub elements (top cluster: logo + countdown, bottom: date) fade in around it.
     const titleEls = [eyebrowRef.current, namesRef.current].filter(Boolean);
     const subEls  = [logoRef.current, cdRowRef.current, dateRef.current].filter(Boolean);
-    if (!block || !grid || !title || !center) return;
+    if (!block || !grid || !title || !center || !content) return;
 
     // Lenis smooth scroll (shared across the page)
     if (window.Lenis && !window.__lenis) {
