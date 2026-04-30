@@ -7,6 +7,7 @@ const Reception = () => {
   const [inView, progress] = window.useInView(ref);
   const drawn = Math.max(0, Math.min(1, (progress - 0.05) / 0.25));
   const dusk = Math.max(0, Math.min(1, (progress - 0.15) / 0.3));
+  const t = window.useT().reception;
 
   return (
     <section className="scene reception" ref={ref} data-screen-label="04 Réception">
@@ -98,19 +99,20 @@ const Reception = () => {
       `}</style>
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
-        <span className="num">II</span>
-        <span>Réception</span>
+        <span className="num">{t.eyebrow_num}</span>
+        <span>{t.eyebrow}</span>
       </div>
 
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Château<br/>
-        <span className="em">Chaumont-sur-Yonne</span>
-        <span className="it">Domaine privé · Bourgogne</span>
+        {t.title_main}<br/>
+        <span className="em">{t.title_em}</span>
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`recep-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
-        Au crépuscule, les fenêtres s'allument une à une.<br/>
-        La fête peut commencer.
+        {t.intro.map((line, i) => (
+          <React.Fragment key={i}>{line}{i < t.intro.length - 1 && <br/>}</React.Fragment>
+        ))}
       </p>
 
       <div className="chateau-illust">
@@ -129,12 +131,12 @@ const Reception = () => {
       </div>
 
       <div className={`recep-addr blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.4s' }}>
-        <div className="lbl">Adresse</div>
-        <div className="v">Château de Chaumont<em>5 Rue de la Montagne · 89340 Chaumont-sur-Yonne</em></div>
+        <div className="lbl">{t.lbl_address}</div>
+        <div className="v">{t.val_address}<em>{t.val_address_em}</em></div>
       </div>
 
       <p className={`recep-quote blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.5s' }}>
-        Sous les étoiles de Bourgogne
+        {t.quote}
       </p>
     </section>
   );

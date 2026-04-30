@@ -3,6 +3,7 @@
 const Brunch = () => {
   const ref = React.useRef(null);
   const [inView] = window.useInView(ref);
+  const t = window.useT().brunch;
 
   return (
     <section className="scene brunch" ref={ref} data-screen-label="11 Brunch">
@@ -84,17 +85,17 @@ const Brunch = () => {
       `}</style>
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
-        <span className="num">IV</span>
-        <span>Le lendemain</span>
+        <span className="num">{t.eyebrow_num}</span>
+        <span>{t.eyebrow}</span>
       </div>
 
       <div className={`br-script blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Dimanche
+        {t.script}
       </div>
 
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.2s' }}>
-        Brunch <span className="em">&</span><br/>journée chill
-        <span className="it">06 · 09 · 2026</span>
+        {t.title_main} <span className="em">{t.title_em}</span><br/>{t.title_extra}
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <div className={`br-icon ${inView ? 'in' : ''}`}>
@@ -103,23 +104,23 @@ const Brunch = () => {
 
       <div className={`br-card blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.4s' }}>
         <div>
-          <div className="lbl">Heure</div>
+          <div className="lbl">{t.lbl_time}</div>
           <div className="br-time-row">
             <span>11h</span>
-            <span className="arrow">jusqu'à</span>
+            <span className="arrow">{t.time_arrow}</span>
             <span>18h</span>
           </div>
         </div>
         <div className="br-rule" />
         <div>
-          <div className="lbl">Lieu</div>
-          <div className="ttl">Au domaine, sur l'herbe</div>
+          <div className="lbl">{t.lbl_place}</div>
+          <div className="ttl">{t.place}</div>
         </div>
         <div className="br-rule" />
         <p className="br-meta">
-          Buffet matinal, café et retrouvailles.<br/>
-          Une journée tranquille pour prolonger la fête,<br/>
-          jusqu'au coucher du soleil.
+          {t.meta.map((line, i) => (
+            <React.Fragment key={i}>{line}{i < t.meta.length - 1 && <br/>}</React.Fragment>
+          ))}
         </p>
       </div>
     </section>
@@ -132,6 +133,8 @@ const Brunch = () => {
 const Closing = () => {
   const ref = React.useRef(null);
   const [inView] = window.useInView(ref);
+  const tc = window.useT().common;
+  const t = window.useT().closing;
 
   return (
     <section className="scene closing" ref={ref} data-screen-label="12 Closing">
@@ -205,25 +208,27 @@ const Closing = () => {
         }
       `}</style>
 
-      <div className={`cl-script blur-in ${inView ? 'in' : ''}`}>À très bientôt</div>
+      <div className={`cl-script blur-in ${inView ? 'in' : ''}`}>{t.script}</div>
       <h2 className={`cl-mono blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.2s' }}>
-        Justine
+        {tc.bride}
         <span className="amp">&amp;</span>
-        Levani
+        {tc.groom}
       </h2>
       <span className={`cl-rule blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.45s' }} />
-      <div className={`cl-date blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.55s' }}>05 · 09 · 2026</div>
+      <div className={`cl-date blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.55s' }}>{tc.date_dotted}</div>
       <p className={`cl-message blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.7s' }}>
-        Nous serions honorés de vous compter<br/>parmi nous pour célébrer notre union.
+        {t.message.map((line, i) => (
+          <React.Fragment key={i}>{line}{i < t.message.length - 1 && <br/>}</React.Fragment>
+        ))}
       </p>
 
       <div className={`cl-langs blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.9s' }}>
-        <div className="lang"><span className="tag">FR</span><span>Avec amour</span></div>
-        <div className="lang"><span className="tag">GE</span><span>სიყვარულით</span></div>
-        <div className="lang"><span className="tag">DE</span><span>Mit Liebe</span></div>
+        <div className="lang"><span className="tag">FR</span><span>{t.lang_fr}</span></div>
+        <div className="lang"><span className="tag">GE</span><span>{t.lang_ge}</span></div>
+        <div className="lang"><span className="tag">DE</span><span>{t.lang_de}</span></div>
       </div>
 
-      <div className={`cl-foot blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '1.1s' }}>— Save the Date —</div>
+      <div className={`cl-foot blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '1.1s' }}>{t.foot}</div>
     </section>
   );
 };

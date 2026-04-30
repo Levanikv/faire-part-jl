@@ -6,6 +6,7 @@ const Ceremony = () => {
   const ref = React.useRef(null);
   const [inView, progress] = window.useInView(ref);
   const drawn = Math.max(0, Math.min(1, (progress - 0.05) / 0.22));
+  const t = window.useT().ceremony;
 
   return (
     <section className="scene ceremony" ref={ref} data-screen-label="02 Cérémonie">
@@ -112,18 +113,20 @@ const Ceremony = () => {
       `}</style>
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
-        <span className="num">I</span>
-        <span>Cérémonie</span>
+        <span className="num">{t.eyebrow_num}</span>
+        <span>{t.eyebrow}</span>
       </div>
 
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Cathédrale<br/>
-        <span className="em">Saint-Stéphane</span>
-        <span className="it">Paris · 16ᵉ arrondissement</span>
+        {t.title_main}<br/>
+        <span className="em">{t.title_em}</span>
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`ceremony-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
-        Sous les coupoles byzantines<br/>de la Métropole grecque-orthodoxe de France,<br/>nous échangerons nos vœux.
+        {t.intro.map((line, i) => (
+          <React.Fragment key={i}>{line}{i < t.intro.length - 1 && <br/>}</React.Fragment>
+        ))}
       </p>
 
       <div className="ceremony-illust">
@@ -134,38 +137,44 @@ const Ceremony = () => {
         <div className="card-row">
           <div className="pin">◇</div>
           <div className="body">
-            <div className="lbl">Adresse</div>
-            <div className="val">7 Rue Georges Bizet<br/>75016 Paris</div>
+            <div className="lbl">{t.lbl_address}</div>
+            <div className="val">{t.val_address[0]}<br/>{t.val_address[1]}</div>
           </div>
         </div>
         <div className="card-rule" />
         <div className="card-row">
           <div className="pin">13<sup style={{fontSize:'0.6em',marginLeft:'1px'}}>30</sup></div>
           <div className="body">
-            <div className="lbl">Accueil</div>
-            <div className="val">13h30 <em>Arrivée des invités</em></div>
+            <div className="lbl">{t.lbl_welcome}</div>
+            <div className="val">{t.val_welcome_time} <em>{t.val_welcome_em}</em></div>
           </div>
         </div>
         <div className="card-rule" />
         <div className="card-row">
           <div className="pin solid">14</div>
           <div className="body">
-            <div className="lbl">Office</div>
-            <div className="val">14h00 <em>Cérémonie religieuse</em></div>
+            <div className="lbl">{t.lbl_office}</div>
+            <div className="val">{t.val_office_time} <em>{t.val_office_em}</em></div>
           </div>
         </div>
         <div className="card-rule" />
         <div className="card-row">
           <div className="pin" style={{borderStyle:'dashed'}}>M</div>
           <div className="body">
-            <div className="lbl">Métro</div>
-            <div className="val">Iéna <em>L9 · 4 min à pied</em><br/>Alma-Marceau <em>L9 · 6 min à pied</em></div>
+            <div className="lbl">{t.lbl_metro}</div>
+            <div className="val">
+              {t.val_metro.map((m, i) => (
+                <React.Fragment key={i}>
+                  {m.name} <em>{m.sub}</em>{i < t.val_metro.length - 1 && <br/>}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       <p className="ceremony-quote">
-        Et de deux cœurs, un seul
+        {t.quote}
       </p>
     </section>
   );

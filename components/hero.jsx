@@ -62,22 +62,8 @@ function useCountdown(targetDate) {
   return tl;
 }
 
-// Aspect ratios are tuned so the three columns total roughly the same height,
-// breaking the rigid 4×3 grid into a masonry rhythm.
-const HERO_PHOTOS = [
-  { lbl: 'Premier regard',     d: 'Mai 2019',      tone: '#a8b89a', ar: '4/5' },  // col 0
-  { lbl: 'Tbilissi',           d: 'Été 2020',      tone: '#c8b890', ar: '1/1' },  // col 1
-  { lbl: 'Sous la pluie',      d: 'Paris 2021',    tone: '#5c6e54', ar: '4/5' },  // col 2
-  { lbl: 'Premier voyage',     d: 'Géorgie 2022',  tone: '#7a8b6f', ar: '5/6' },  // col 0
-  { lbl: 'Premier appart',     d: 'Paris 2022',    tone: '#9aab8f', ar: '3/4' },  // col 1 (taller — featured)
-  { lbl: 'Vignes de Kakheti',  d: 'Été 2023',      tone: '#d4c4a3', ar: '1/1' },  // col 2
-  { lbl: "Au bord de l'eau",   d: 'Bretagne 2023', tone: '#7a8b6f', ar: '1/1' },  // col 0
-  { lbl: 'Hiver',              d: 'Tbilissi 2024', tone: '#3d4a36', ar: '4/5' },  // col 1
-  { lbl: 'La demande',         d: 'Décembre 2024', tone: '#5c6e54', ar: '5/6' },  // col 2
-  { lbl: 'Le matin',           d: 'Paris 2025',    tone: '#c8b890', ar: '4/5' },  // col 0
-  { lbl: 'Au parc',            d: 'Été 2025',      tone: '#a8b89a', ar: '1/1' },  // col 1
-  { lbl: 'Ensemble',           d: "Aujourd'hui",   tone: '#8a9b80', ar: '4/5' },  // col 2
-];
+// Photo data lives in i18n.jsx (per-language labels). Aspect-ratios + tones
+// stay identical across languages so the visual rhythm is preserved.
 
 const Hero = () => {
   const ref = useRef(null);
@@ -92,6 +78,9 @@ const Hero = () => {
   const cdRowRef = useRef(null);
   const dateRef = useRef(null);
   const cd = useCountdown(new Date('2026-09-05T15:00:00+02:00'));
+  const t = window.useT();
+  const tc = t.common;
+  const th = t.hero;
 
   useEffect(() => {
     if (!window.gsap || !window.ScrollTrigger) return;
@@ -451,27 +440,27 @@ const Hero = () => {
 
       <div className="hero-wrapper" ref={wrapperRef}>
         <div className="hero-content" ref={contentRef}>
-          <div className="hero-cd-row" ref={cdRowRef} aria-label="Compte à rebours">
-            <span className="cd-pair"><span className="num">{String(cd.d).padStart(2,'0')}</span>j</span>
+          <div className="hero-cd-row" ref={cdRowRef} aria-label={tc.a11y_countdown}>
+            <span className="cd-pair"><span className="num">{String(cd.d).padStart(2,'0')}</span>{th.cd_d}</span>
             <span className="dot" />
-            <span className="cd-pair"><span className="num">{String(cd.h).padStart(2,'0')}</span>h</span>
+            <span className="cd-pair"><span className="num">{String(cd.h).padStart(2,'0')}</span>{th.cd_h}</span>
             <span className="dot" />
-            <span className="cd-pair"><span className="num">{String(cd.m).padStart(2,'0')}</span>m</span>
+            <span className="cd-pair"><span className="num">{String(cd.m).padStart(2,'0')}</span>{th.cd_m}</span>
             <span className="dot" />
-            <span className="cd-pair"><span className="num">{String(cd.s).padStart(2,'0')}</span>s</span>
+            <span className="cd-pair"><span className="num">{String(cd.s).padStart(2,'0')}</span>{th.cd_s}</span>
           </div>
 
           <div className="hero-center" ref={centerRef}>
             <div className="hero-title" ref={titleRef}>
-              <div className="hero-logo" ref={logoRef} aria-label="Justine et Levani">
+              <div className="hero-logo" ref={logoRef} aria-label={tc.a11y_couple}>
                 {window.MonoLogo && <window.MonoLogo size={64} ink="var(--ink)" accent="var(--sage-deep)" />}
               </div>
-              <div className="hero-eyebrow" ref={eyebrowRef}>Le mariage de</div>
+              <div className="hero-eyebrow" ref={eyebrowRef}>{th.eyebrow}</div>
               <div className="hero-names" ref={namesRef}>
                 <div className="names-display">
-                  <span className="first">Justine</span>
+                  <span className="first">{tc.bride}</span>
                   <span className="et">&amp;</span>
-                  <span className="second">Levani</span>
+                  <span className="second">{tc.groom}</span>
                 </div>
               </div>
             </div>
@@ -479,12 +468,12 @@ const Hero = () => {
 
           <div className="hero-date" ref={dateRef}>
             <div className="date-row">
-              <span className="num">05</span>
-              <span>septembre</span>
+              <span className="num">{tc.date_day}</span>
+              <span>{tc.date_month}</span>
               <span className="dash" />
-              <span className="num">2026</span>
+              <span className="num">{tc.date_year}</span>
             </div>
-            <div className="place">Paris · Chaumont-sur-Yonne</div>
+            <div className="place">{tc.place}</div>
           </div>
         </div>
 
@@ -492,7 +481,7 @@ const Hero = () => {
           <div className="hero-grid" ref={gridRef}>
             {[0, 1, 2].map((ci) => (
               <div key={ci} className="hp-col">
-                {HERO_PHOTOS.filter((_, i) => i % 3 === ci).map((p, j) => (
+                {th.photos.filter((_, i) => i % 3 === ci).map((p, j) => (
                   <div
                     key={`${ci}-${j}`}
                     className="hp-item"

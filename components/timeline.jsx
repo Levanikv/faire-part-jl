@@ -5,13 +5,8 @@ const Timeline = () => {
   const ref = React.useRef(null);
   const [inView, progress] = window.useInView(ref);
   const fill = Math.max(0, Math.min(1, (progress - 0.2) / 0.6));
-
-  const events = [
-    { time: '18h00', title: 'Cocktail', sub: 'Sur la terrasse, au soleil couchant', icon: '✦' },
-    { time: '20h00', title: 'Dîner', sub: 'Buffet géorgien — supra & vin de Kakheti', icon: '◇' },
-    { time: '23h00', title: 'Ouverture du bal', sub: 'Première danse', icon: '✧' },
-    { time: 'Late', title: 'Jusqu\'au bout', sub: 'La fête ne s\'arrête pas', icon: '☾' },
-  ];
+  const t = window.useT().timeline;
+  const events = t.events;
 
   return (
     <section className="scene timeline-scene" ref={ref} data-screen-label="05 Soirée">
@@ -89,12 +84,12 @@ const Timeline = () => {
       `}</style>
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
-        <span className="num">III</span>
-        <span>La Soirée</span>
+        <span className="num">{t.eyebrow_num}</span>
+        <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Au fil<br/><span className="em">des heures</span>
-        <span className="it">du crépuscule à l'aube</span>
+        {t.title_main}<br/><span className="em">{t.title_em}</span>
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <div className="tl-list">

@@ -3,27 +3,8 @@
 const Practical = () => {
   const ref = React.useRef(null);
   const [inView] = window.useInView(ref);
-
-  const items = [
-    {
-      tag: 'IV', label: 'Hébergement',
-      title: 'Sur place',
-      body: 'Une chambre attribuée à chaque invité au château.',
-      detail: 'Affectation communiquée à l\'arrivée · clés remises au check-in'
-    },
-    {
-      tag: 'V', label: 'Parking',
-      title: 'Au château',
-      body: 'Stationnement libre dans la cour du domaine.',
-      detail: 'Accès direct depuis l\'allée principale · pas de réservation'
-    },
-    {
-      tag: 'VI', label: 'Enfants',
-      title: 'Babysitter',
-      body: 'Disponible sur place toute la soirée.',
-      detail: 'Coin enfants aménagé · espace nuit calme'
-    },
-  ];
+  const t = window.useT().practical;
+  const items = t.items;
 
   return (
     <section className="scene practical" ref={ref} data-screen-label="06 Pratique">
@@ -90,11 +71,11 @@ const Practical = () => {
       `}</style>
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
-        <span>Informations</span>
+        <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Le <span className="em">pratique</span>
-        <span className="it">tout est prévu pour vous</span>
+        {t.title_main} <span className="em">{t.title_em}</span>
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <div className={`prac-grid blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
@@ -118,6 +99,7 @@ const Practical = () => {
 const DressCode = () => {
   const ref = React.useRef(null);
   const [inView] = window.useInView(ref);
+  const t = window.useT().dress;
 
   // Color palette swatches showing what to favor (muted) vs avoid (vivid)
   const favored = ['#3d4a36', '#5c6e54', '#a8b89a', '#c8b890', '#d4c4a3', '#3a3e35', '#5a4a36', '#7d6e54'];
@@ -201,17 +183,18 @@ const DressCode = () => {
       `}</style>
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
-        <span className="num">VII</span>
-        <span>Dress Code</span>
+        <span className="num">{t.eyebrow_num}</span>
+        <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Chic <span className="em">&</span><br/>élégant
-        <span className="it">pas de thème · couleurs douces</span>
+        {t.title_main} <span className="em">{t.title_em}</span><br/>{t.title_extra}
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`dress-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
-        Aucun thème particulier — laissez parler votre élégance.<br/>
-        Évitez simplement les couleurs trop vives.
+        {t.intro.map((line, i) => (
+          <React.Fragment key={i}>{line}{i < t.intro.length - 1 && <br/>}</React.Fragment>
+        ))}
       </p>
 
       <div className={`dress-fig blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.4s' }}>
@@ -229,8 +212,8 @@ const DressCode = () => {
               <path d="M52 110 L54 118 L48 118 L46 110" />
             </svg>
           </div>
-          <span className="lbl">Messieurs</span>
-          <span className="req">Costume<br/>sombre</span>
+          <span className="lbl">{t.lbl_men}</span>
+          <span className="req">{t.req_men[0]}<br/>{t.req_men[1]}</span>
         </div>
         <div className="fig-card">
           <div className="silh">
@@ -244,25 +227,29 @@ const DressCode = () => {
               <path d="M30 80 Q40 84 50 80" opacity="0.4" />
             </svg>
           </div>
-          <span className="lbl">Mesdames</span>
-          <span className="req">Robe<br/>longue</span>
+          <span className="lbl">{t.lbl_women}</span>
+          <span className="req">{t.req_women[0]}<br/>{t.req_women[1]}</span>
         </div>
       </div>
 
       <div className={`palette blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.5s' }}>
-        <div className="h">À favoriser · tons doux</div>
+        <div className="h">{t.pal_fav_h}</div>
         <div className="row">
           {favored.map((c, i) => <span key={i} className="swatch" style={{ background: c }} />)}
         </div>
-        <div className="cap">Sauge, terre, ivoire, marine, ardoise…</div>
+        <div className="cap">{t.pal_fav_cap}</div>
       </div>
 
       <div className={`palette blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.6s' }}>
-        <div className="h">À éviter · couleurs vives</div>
+        <div className="h">{t.pal_avoid_h}</div>
         <div className="row">
           {avoided.map((c, i) => <span key={i} className="swatch crossed" style={{ background: c }} />)}
         </div>
-        <div className="cap">Rouges éclatants, néons, fluos.<br/>Évitez aussi le blanc &amp; l'ivoire pur.</div>
+        <div className="cap">
+          {t.pal_avoid_cap.map((line, i) => (
+            <React.Fragment key={i}>{line}{i < t.pal_avoid_cap.length - 1 && <br/>}</React.Fragment>
+          ))}
+        </div>
       </div>
     </section>
   );

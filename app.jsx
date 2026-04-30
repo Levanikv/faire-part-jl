@@ -84,7 +84,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <window.LangContext.Provider value={lang}>
       <window.AudioBackground />
       <Hero />
       <Ceremony />
@@ -111,7 +111,7 @@ const App = () => {
           ]}
         />
       </window.TweaksPanel>
-    </>
+    </window.LangContext.Provider>
   );
 };
 

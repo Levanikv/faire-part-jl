@@ -347,6 +347,7 @@ const Gallery = () => {
 const Weather = () => {
   const ref = React.useRef(null);
   const [inView] = window.useInView(ref);
+  const t = window.useT().weather;
   return (
     <section className="scene weather" ref={ref} data-screen-label="09 Météo" style={{minHeight: 'auto'}}>
       <style>{`
@@ -359,8 +360,8 @@ const Weather = () => {
       `}</style>
       <div className={`w-card blur-in ${inView ? 'in' : ''}`}>
         <div>
-          <div className="l">Bourgogne · début septembre</div>
-          <div className="v">22°<em>doux</em></div>
+          <div className="l">{t.label}</div>
+          <div className="v">22°<em>{t.temp_em}</em></div>
         </div>
         <span style={{ color: 'var(--sage-deep)' }}>
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">

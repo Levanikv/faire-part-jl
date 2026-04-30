@@ -12,6 +12,10 @@ const AudioBackground = () => {
   const ref = useRefAudio(null);
   const [muted, setMuted] = useStateAudio(true);
   const [hasInteracted, setHasInteracted] = useStateAudio(false);
+  const t = (window.useT && window.useT().audio) || {
+    activate: 'Activer la musique', mute: 'Couper la musique',
+    tip_off: 'Qartuli ♪', tip_on: 'En cours',
+  };
 
   if (!AUDIO_SRC) return null; // no track configured → don't show the button
 
@@ -105,10 +109,10 @@ const AudioBackground = () => {
       <button
         className={`audio-fab ${!muted ? 'playing' : ''} ${!hasInteracted ? 'invite-pulse' : ''}`}
         onClick={toggle}
-        aria-label={muted ? 'Activer la musique' : 'Couper la musique'}
-        title={muted ? 'Qartuli — activer le son' : 'Qartuli — couper'}
+        aria-label={muted ? t.activate : t.mute}
+        title={muted ? t.activate : t.mute}
       >
-        <span className="label-tip">{muted ? 'Qartuli ♪' : 'En cours'}</span>
+        <span className="label-tip">{muted ? t.tip_off : t.tip_on}</span>
         {!muted && <span className="wave" />}
         <svg className="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
           {muted ? (

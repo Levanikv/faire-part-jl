@@ -5,6 +5,7 @@
 const Journey = () => {
   const ref = React.useRef(null);
   const [inView, progress] = window.useInView(ref);
+  const t = window.useT().journey;
 
   // Route draws from progress 0.18 → 0.75
   const draw = Math.max(0, Math.min(1, (progress - 0.18) / 0.55));
@@ -168,17 +169,18 @@ const Journey = () => {
 
       <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
         <span className="num">·</span>
-        <span>Le Voyage</span>
+        <span>{t.eyebrow}</span>
       </div>
       <h2 className={`blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.15s' }}>
-        Paris<br/>
-        <span className="em">vers</span> Bourgogne
-        <span className="it">130 km · 1h45 de route</span>
+        {t.title_main}<br/>
+        <span className="em">{t.title_em}</span> {t.title_to}
+        <span className="it">{t.subtitle}</span>
       </h2>
 
       <p className={`journey-intro blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.3s' }}>
-        Quittez la capitale, traversez l'Yonne,<br/>
-        suivez la rivière jusqu'à nous.
+        {t.intro.map((line, i) => (
+          <React.Fragment key={i}>{line}{i < t.intro.length - 1 && <br/>}</React.Fragment>
+        ))}
       </p>
 
       <div className={`map-frame blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.4s' }}>
@@ -316,8 +318,8 @@ const Journey = () => {
             {draw > 0.02 && draw < 0.1 && <span className="pulse" />}
           </span>
           <span className="city-label" style={{ opacity: inView ? 1 : 0, transition: 'opacity 0.8s 0.5s' }}>
-            Paris
-            <span className="sub">le départ</span>
+            {t.pin_paris}
+            <span className="sub">{t.pin_paris_sub}</span>
           </span>
         </div>
 
@@ -325,8 +327,8 @@ const Journey = () => {
         <div className="city-pin" style={{ left: '54%', top: '52%' }}>
           <span className={`dot ${draw > 0.45 ? 'active' : ''}`} />
           <span className="city-label" style={{ opacity: draw > 0.4 ? 1 : 0, transition: 'opacity 0.6s', fontSize: '14px' }}>
-            Sens
-            <span className="sub">on traverse</span>
+            {t.pin_sens}
+            <span className="sub">{t.pin_sens_sub}</span>
           </span>
         </div>
 
@@ -335,8 +337,8 @@ const Journey = () => {
             {draw > 0.95 && <span className="pulse" />}
           </span>
           <span className="city-label" style={{ opacity: draw > 0.7 ? 1 : 0, transition: 'opacity 0.6s' }}>
-            Chaumont-sur-Yonne
-            <span className="sub">le château</span>
+            {t.pin_chaumont}
+            <span className="sub">{t.pin_chaumont_sub}</span>
           </span>
         </div>
       </div>
@@ -344,15 +346,15 @@ const Journey = () => {
       <div className={`stat-row blur-in ${inView ? 'in' : ''}`} style={{ transitionDelay: '0.55s' }}>
         <div className="stat">
           <span className="v">130</span>
-          <span className="l">km</span>
+          <span className="l">{t.stat_km}</span>
         </div>
         <div className="stat">
           <span className="v">1h45</span>
-          <span className="l">trajet</span>
+          <span className="l">{t.stat_duration_label}</span>
         </div>
         <div className="stat">
           <span className="v">A6</span>
-          <span className="l">autoroute</span>
+          <span className="l">{t.stat_highway_label}</span>
         </div>
       </div>
     </section>
