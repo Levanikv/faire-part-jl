@@ -130,7 +130,7 @@ window.TRANSLATIONS = {
       title_main: 'Château',
       title_em: 'Chaumont-sur-Yonne',
       subtitle: 'Domaine privé · Bourgogne',
-      intro: ['Au crépuscule, les fenêtres s’allument une à une.', 'La fête peut commencer.'],
+      intro: ['Gaumarjos! Santé! Prost!', 'Au fil des mets, levez votre verre.'],
       lbl_address: 'Adresse',
       val_address: 'Château de Chaumont',
       val_address_em: '5 Rue de la Montagne · 89340 Chaumont-sur-Yonne',
@@ -144,7 +144,7 @@ window.TRANSLATIONS = {
       subtitle: 'du crépuscule à l’aube',
       events: [
         { time: '18h00', title: 'Cocktail',         sub: 'Sur la terrasse, au soleil couchant', icon: '✦' },
-        { time: '20h00', title: 'Dîner',            sub: 'Buffet géorgien — supra & vin de Kakheti', icon: '◇' },
+        { time: '20h00', title: 'Dîner',            sub: 'Banquet géorgien — supra & vin de Kakheti', icon: '◇' },
         { time: '23h00', title: 'Ouverture du bal', sub: 'Première danse', icon: '✧' },
         { time: 'Late',  title: 'Jusqu’au bout', sub: 'La fête ne s’arrête pas', icon: '☾' },
       ],
