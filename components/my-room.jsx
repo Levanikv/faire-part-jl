@@ -177,6 +177,17 @@
       <line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
     </svg>
   );
+  const PinIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s-7-7.2-7-13a7 7 0 1 1 14 0c0 5.8-7 13-7 13z"/>
+      <circle cx="12" cy="9" r="2.4"/>
+    </svg>
+  );
+
+  // 1-2 initiales en majuscules à partir d'un nom complet
+  const getInitials = (name) => (name || '')
+    .split(/\s+/).filter(Boolean)
+    .map(w => w[0]).join('').slice(0, 2).toUpperCase();
 
   /* ─── PLAN SVG STATIQUE + halos animés ───────────────────────────── */
   // NB : les libellés gravés dans le SVG (Sud / Centre / Nord / sdb / esc /
@@ -1047,6 +1058,7 @@
             color: var(--ink); line-height: 1.2;
           }
 
+          /* ── Section "Dans la chambre" ─────────────────────────── */
           .with-block { padding: 0; }
           .with-block .with-lbl {
             font-family: var(--sans); font-size: 9.5px;
@@ -1056,16 +1068,38 @@
             display: flex; align-items: center; gap: 12px;
           }
           .with-block .with-lbl::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
-          .with-list { display: flex; flex-wrap: wrap; gap: 8px; }
+          .with-list { display: flex; flex-wrap: wrap; gap: 10px; }
           .with-chip {
-            font-family: var(--serif); font-style: italic;
-            font-size: 16px; color: var(--ink);
-            padding: 7px 16px;
+            display: inline-flex; align-items: center;
+            gap: 10px;
+            padding: 4px 16px 4px 4px;
             border: 1px solid var(--rule);
             border-radius: 999px;
-            background: transparent;
+            background: rgba(247, 242, 230, 0.58);
+            font-family: var(--serif); font-style: italic;
+            font-size: 16px; color: var(--ink);
+            line-height: 1;
+            transition: background 0.25s, border-color 0.25s;
+          }
+          .with-chip:hover {
+            background: rgba(247, 242, 230, 1);
+            border-color: var(--sage-deep);
+          }
+          .with-chip .ini {
+            flex-shrink: 0;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: var(--sage-deep);
+            color: var(--cream);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-family: var(--display);
+            font-style: normal;
+            font-size: 11.5px;
+            letter-spacing: 0.06em;
+            line-height: 1;
           }
 
+          /* ── Section "Pour vous y rendre" ──────────────────────── */
           .how-block { padding: 0; }
           .how-block .how-lbl {
             font-family: var(--sans); font-size: 9.5px;
@@ -1076,46 +1110,80 @@
           }
           .how-block .how-lbl::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
           .how-block .how-txt {
+            display: flex; align-items: flex-start; gap: 12px;
             font-family: var(--serif);
-            font-size: 18px; color: var(--ink);
+            font-size: 17.5px; color: var(--ink);
             line-height: 1.55;
-            padding-left: 2px;
+            padding: 14px 16px;
+            background: rgba(247, 242, 230, 0.55);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
           }
-          .how-block .how-txt::before {
-            content: '→ ';
+          .how-block .how-pin {
+            flex-shrink: 0;
             color: var(--sage-deep);
-            font-family: var(--display);
-            font-style: normal;
-            margin-right: 6px;
+            margin-top: 4px;
+            display: inline-flex;
           }
 
+          /* ── Note (callout discret) ────────────────────────────── */
           .note-block {
-            background: transparent;
-            border-left: 2px solid var(--sage-deep);
-            padding: 4px 16px 4px 18px;
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 12px 16px 12px 14px;
+            background: rgba(122, 139, 111, 0.08);
+            border-left: 2px solid var(--sage);
+            border-radius: 0 4px 4px 0;
             font-family: var(--serif); font-style: italic; font-weight: 300;
             font-size: 14.5px; color: var(--sage-deep);
-            opacity: 0.92; line-height: 1.5;
+            line-height: 1.5;
+          }
+          .note-block::before {
+            content: '※';
+            font-family: var(--display);
+            font-style: normal;
+            color: var(--sage);
+            font-size: 14px;
+            line-height: 1.45;
+            flex-shrink: 0;
+            opacity: 0.85;
           }
 
+          /* ── Bouton reset ──────────────────────────────────────── */
           .actions-bar {
             display: flex; justify-content: center;
-            padding-top: 4px;
-            border-top: 1px solid var(--rule);
-            margin-top: 8px;
+            padding-top: 14px;
+            margin-top: 4px;
+            position: relative;
+          }
+          .actions-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 56px; height: 1px;
+            background: var(--rule);
           }
           .btn-reset {
-            appearance: none; border: 0; background: transparent;
+            appearance: none; border: 1px solid var(--rule);
+            background: rgba(247, 242, 230, 0.5);
             color: var(--sage-deep);
             font-family: var(--sans); font-size: 9.5px;
             letter-spacing: 0.42em; text-transform: uppercase;
-            cursor: pointer; padding: 12px 20px;
-            opacity: 0.75;
-            transition: opacity 0.2s, gap 0.2s;
+            cursor: pointer; padding: 12px 22px;
+            border-radius: 999px;
+            transition: background 0.25s, color 0.25s, border-color 0.25s, gap 0.25s;
             display: inline-flex; align-items: center; gap: 10px;
           }
-          .btn-reset:hover { opacity: 1; gap: 14px; }
-          .btn-reset .arrow { font-family: var(--display); font-size: 16px; }
+          .btn-reset:hover {
+            background: var(--sage-deep);
+            color: var(--cream);
+            border-color: var(--sage-deep);
+            gap: 14px;
+          }
+          .btn-reset .arrow {
+            font-family: var(--display);
+            font-size: 16px; letter-spacing: 0;
+          }
 
           .result-state.visible > * {
             opacity: 0; transform: translateY(8px);
@@ -1268,7 +1336,10 @@
                 </div>
                 <div className="with-list">
                   {roommates.map((r, i) => (
-                    <span key={i} className="with-chip">{r}</span>
+                    <span key={i} className="with-chip">
+                      <span className="ini">{getInitials(r)}</span>
+                      <span>{r}</span>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -1276,7 +1347,10 @@
 
             <div className="how-block">
               <div className="how-lbl">{t.how_label}</div>
-              <div className="how-txt">{directions}</div>
+              <div className="how-txt">
+                <span className="how-pin"><PinIcon /></span>
+                <span>{directions}</span>
+              </div>
             </div>
 
             {guestNote && (
