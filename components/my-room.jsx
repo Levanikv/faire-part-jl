@@ -936,46 +936,78 @@
             letter-spacing: 0.42em; text-transform: uppercase;
             color: var(--sage-deep); margin-bottom: 18px; opacity: 0.85;
           }
+          /* Pancarte de chambre — plaque rectangulaire façon porte de château.
+             Sage-deep, double-filet intérieur, 4 rivets aux angles, ombre
+             portée discrète qui la décolle légèrement du cream. */
           .hero-room .room-badge {
-            width: clamp(168px, 46vw, 210px);
-            aspect-ratio: 1 / 1;
-            border-radius: 50%;
+            width: clamp(200px, 58vw, 248px);
             background: var(--sage-deep);
             color: var(--cream);
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            padding: 22px;
+            padding: 22px 28px 24px;
+            border-radius: 3px;
             box-shadow:
-              0 8px 24px rgba(31, 36, 25, 0.16),
-              inset 0 0 0 1px rgba(247, 242, 230, 0.12);
+              0 14px 26px rgba(31, 36, 25, 0.22),
+              0 2px 4px rgba(31, 36, 25, 0.12),
+              inset 0 1px 0 rgba(247, 242, 230, 0.10);
             position: relative;
           }
+          /* Double-filet intérieur en cream — détail typique des plaques
+             gravées. */
           .hero-room .room-badge::before {
             content: '';
-            position: absolute; inset: 6px;
-            border-radius: 50%;
-            border: 1px solid rgba(247, 242, 230, 0.18);
+            position: absolute; inset: 8px;
+            border: 1px solid rgba(247, 242, 230, 0.22);
+            border-radius: 1px;
             pointer-events: none;
           }
+          .hero-room .room-badge::after {
+            content: '';
+            position: absolute; inset: 12px;
+            border-top: 1px solid rgba(247, 242, 230, 0.08);
+            border-bottom: 1px solid rgba(247, 242, 230, 0.08);
+            pointer-events: none;
+          }
+          /* Rivets aux 4 coins, posés sur le filet intérieur. */
+          .hero-room .room-badge .rivet {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: rgba(247, 242, 230, 0.34);
+            box-shadow:
+              inset 0 -1px 0 rgba(31, 36, 25, 0.45),
+              0 0 0 1px rgba(31, 36, 25, 0.25);
+            pointer-events: none;
+          }
+          .hero-room .room-badge .rivet.tl { top: 8px;  left: 8px; }
+          .hero-room .room-badge .rivet.tr { top: 8px;  right: 8px; }
+          .hero-room .room-badge .rivet.bl { bottom: 8px; left: 8px; }
+          .hero-room .room-badge .rivet.br { bottom: 8px; right: 8px; }
           .hero-room .room-badge .badge-number {
             font-family: var(--display);
-            font-size: clamp(56px, 16vw, 78px);
-            line-height: 0.9;
-            letter-spacing: -0.02em;
+            font-size: clamp(54px, 15vw, 74px);
+            line-height: 0.95;
+            letter-spacing: -0.01em;
             font-variant-numeric: tabular-nums;
             margin: 0;
           }
+          .hero-room .room-badge .badge-divider {
+            width: 22px; height: 1px;
+            background: rgba(247, 242, 230, 0.30);
+            margin: 10px 0 9px;
+          }
           .hero-room .room-badge .badge-meta {
-            font-family: var(--serif); font-style: italic; font-weight: 300;
-            font-size: clamp(11px, 2.8vw, 13px);
-            line-height: 1.3;
-            margin-top: 8px;
-            opacity: 0.88;
-            letter-spacing: 0.02em;
+            font-family: var(--sans);
+            font-size: clamp(8.5px, 2.4vw, 9.5px);
+            line-height: 1.35;
+            opacity: 0.85;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
             text-align: center;
             padding: 0 4px;
           }
-          .hero-room .room-badge .badge-meta .sep { opacity: 0.5; margin: 0 5px; }
+          .hero-room .room-badge .badge-meta .sep { opacity: 0.5; margin: 0 6px; }
 
           .plan-block { width: 100%; position: relative; }
           .plan-head {
@@ -1192,11 +1224,16 @@
               <div className="guest-name">{selectedGuest.name}</div>
               <div className="room-prefix">{t.room_prefix}</div>
               <div className="room-badge">
+                <span className="rivet tl" />
+                <span className="rivet tr" />
+                <span className="rivet bl" />
+                <span className="rivet br" />
                 <div className="badge-number">{selectedGuest.room}</div>
+                <div className="badge-divider" />
                 <div className="badge-meta">
-                  {t.stat_wing} {wingLabel(t, roomMeta?.wing)}
+                  {wingLabel(t, roomMeta?.wing)}
                   <span className="sep">·</span>
-                  {floorLong(t, roomMeta?.floor, roomMeta?.floorKey)}
+                  {floorShort(t, roomMeta?.floor)}
                 </div>
               </div>
             </div>
