@@ -162,43 +162,71 @@
 
   ::selection { background: var(--sage); color: var(--cream); }
 
-  /* Nav strip horizontale : lang-switcher · monogramme JL · retour.
-     Tous trois alignés sur la même ligne verticale, padding gauche/droite
-     identiques. Le wrapper laisse passer les clics dans les espaces vides. */
+  /* Nav strip horizontale (3 colonnes) :
+       [retour + sound]   [JL]   [lang-switcher]
+     Tous alignés sur la même ligne verticale. Le wrapper laisse passer les
+     clics dans les espaces vides. */
   .my-room-nav {
     position: fixed;
     top: max(14px, env(safe-area-inset-top));
     left: 0; right: 0;
     z-index: 100;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
     padding: 0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
     pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(.2,.8,.2,1), transform 0.35s cubic-bezier(.2,.8,.2,1);
   }
   .my-room-nav > * { pointer-events: auto; }
+  .my-room-nav .nav-left  {
+    display: flex; align-items: center; gap: 10px;
+    justify-self: start;
+  }
+  .my-room-nav .nav-center { justify-self: center; }
+  .my-room-nav .nav-right  { justify-self: end; }
 
-  /* Override : à l'intérieur de la nav strip, le lang-switcher abandonne
-     sa propre position fixed pour suivre le flux flex. */
-  .my-room-nav .lang-switcher {
+  /* Scroll-hide miroir du comportement home (app.jsx ajoute fabs-hidden au
+     body au scroll-down). */
+  body.fabs-hidden .my-room-nav {
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+  }
+
+  /* À l'intérieur de la nav, on annule les fixed-positions des composants
+     globaux (lang-switcher + audio-fab) pour qu'ils suivent le flux grid. */
+  .my-room-nav .lang-switcher,
+  .my-room-nav .audio-fab {
     position: static !important;
     top: auto !important;
     left: auto !important;
+    right: auto !important;
     transform: none !important;
     opacity: 1 !important;
     pointer-events: auto !important;
-    transition: none;
+    transition: background 0.3s, transform 0.18s;
+  }
+  /* label-tip de l'audio button : sort à droite du bouton dans la strip. */
+  .my-room-nav .audio-fab .label-tip {
+    left: 100%; right: auto;
+    margin-left: 10px; margin-right: 0;
   }
 
-  /* Monogramme JL nu — même traitement que Hero / LangGate (sans pill,
-     ink + accent sage-deep). */
+  /* JL : link cliquable vers le home (avec lang préservé), nu, taille 68
+     comme sur le Hero. */
   .jl-mark {
     display: inline-flex; align-items: center; justify-content: center;
     line-height: 0;
+    color: var(--ink);
+    text-decoration: none;
+    transition: opacity 0.2s;
   }
+  .jl-mark:hover { opacity: 0.75; }
   .jl-mark svg { display: block; }
 
-  /* Pill "Retour" — toujours pill flat, juste posé dans la flex strip. */
+  /* Pill "Retour" — flat, vit dans la nav. */
   .back-link {
     display: inline-flex;
     align-items: center;
@@ -232,6 +260,7 @@
 <script type="text/babel" src="components/icons.jsx" data-filename="components/icons.jsx"></script>
 <script type="text/babel" src="components/i18n.jsx" data-filename="components/i18n.jsx"></script>
 <script type="text/babel" src="components/lang-switcher.jsx" data-filename="components/lang-switcher.jsx"></script>
+<script type="text/babel" src="components/audio-background.jsx" data-filename="components/audio-background.jsx"></script>
 <script type="text/babel" src="components/my-room.jsx" data-filename="components/my-room.jsx"></script>
 
 <script type="text/babel" data-presets="react">
@@ -297,14 +326,23 @@
     return (
       <window.LangContext.Provider value={lang}>
         <div className="my-room-nav">
-          <window.LangSwitcher lang={lang} onSelect={setLang} />
-          <div className="jl-mark" aria-label="Justine et Levani">
-            {window.MonoLogo && <window.MonoLogo size={56} ink="var(--ink)" accent="var(--sage-deep)" />}
+          <div className="nav-left">
+            <a className="back-link" href={`index.html?lang=${lang}`} aria-label="Retour au faire-part">
+              <span className="arrow">←</span>
+              <span>{lang === 'ge' ? 'უკან' : lang === 'de' ? 'Zurück' : 'Retour'}</span>
+            </a>
+            <window.AudioBackground />
           </div>
-          <a className="back-link" href={`index.html?lang=${lang}`} aria-label="Retour au faire-part">
-            <span className="arrow">←</span>
-            <span>{lang === 'ge' ? 'უკან' : lang === 'de' ? 'Zurück' : 'Retour'}</span>
+          <a
+            className="jl-mark nav-center"
+            href={`index.html?lang=${lang}`}
+            aria-label="Justine et Levani — accueil"
+          >
+            {window.MonoLogo && <window.MonoLogo size={68} ink="var(--ink)" accent="var(--sage-deep)" />}
           </a>
+          <div className="nav-right">
+            <window.LangSwitcher lang={lang} onSelect={setLang} />
+          </div>
         </div>
         <window.MyRoom />
       </window.LangContext.Provider>

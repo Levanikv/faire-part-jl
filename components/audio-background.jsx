@@ -99,7 +99,7 @@ const AudioBackground = () => {
         .audio-fab {
           position: fixed;
           top: max(18px, env(safe-area-inset-top));
-          right: max(18px, env(safe-area-inset-right));
+          left: max(18px, env(safe-area-inset-left));
           z-index: 100;
           width: 46px; height: 46px;
           border-radius: 50%;
@@ -144,8 +144,8 @@ const AudioBackground = () => {
         }
         .audio-fab .label-tip {
           position: absolute;
-          right: 100%;
-          margin-right: 10px;
+          left: 100%;
+          margin-left: 10px;
           top: 50%;
           transform: translateY(-50%);
           white-space: nowrap;

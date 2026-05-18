@@ -10,7 +10,7 @@ const LangSwitcher = ({ lang, onSelect }) => {
         .lang-switcher {
           position: fixed;
           top: max(18px, env(safe-area-inset-top));
-          left: max(18px, env(safe-area-inset-left));
+          right: max(18px, env(safe-area-inset-right));
           z-index: 100;
           display: flex;
           gap: 2px;
