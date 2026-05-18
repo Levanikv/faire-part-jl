@@ -62,9 +62,23 @@ const palettes = {
   },
 };
 
+const SUPPORTED_LANGS = ['fr', 'ge', 'de'];
+// Lecture de la langue depuis l'URL (?lang=fr) puis le localStorage. Permet
+// aux pages secondaires (my-room.html…) de renvoyer ici sans repasser par
+// LangGate.
+const initLang = () => {
+  try {
+    const q = new URL(window.location.href).searchParams.get('lang');
+    if (q && SUPPORTED_LANGS.includes(q)) return q;
+    const s = localStorage.getItem('jl_lang');
+    if (s && SUPPORTED_LANGS.includes(s)) return s;
+  } catch (e) {}
+  return null;
+};
+
 const App = () => {
   const [tweaks, setTweak] = window.useTweaks(TWEAK_DEFAULTS);
-  const [lang, setLang] = useStateApp(null);
+  const [lang, setLang] = useStateApp(initLang);
 
   useEffectApp(() => {
     const p = palettes[tweaks.palette] || palettes['sage-medium'];
@@ -75,6 +89,7 @@ const App = () => {
     document.body.classList.toggle('has-lang', !!lang);
     if (lang) {
       document.documentElement.setAttribute('lang', lang === 'ge' ? 'ka' : lang);
+      try { localStorage.setItem('jl_lang', lang); } catch (e) {}
       // smooth-scroll back to top
       window.scrollTo({ top: 0, behavior: 'instant' });
     }

@@ -769,9 +769,9 @@
             min-height: 100vh; min-height: 100dvh;
             width: 100%;
             background: linear-gradient(180deg, var(--cream) 0%, var(--beige-light) 100%);
-            /* Top breathing room large enough to clear the floating lang
-               switcher / back link (~56-64px + safe-area). */
-            padding: calc(96px + env(safe-area-inset-top)) 24px 96px;
+            /* La nav strip fait ~56px de haut + safe-area, on garde 60px
+               de respiration en plus avant le titre. */
+            padding: calc(124px + env(safe-area-inset-top)) 24px 96px;
             display: flex; flex-direction: column;
           }
 

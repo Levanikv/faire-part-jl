@@ -162,17 +162,55 @@
 
   ::selection { background: var(--sage); color: var(--cream); }
 
-  /* Back-to-faire-part link — pill discret en haut à droite, miroir du
-     lang-switcher (qui lui est en haut à gauche). */
-  .back-link {
+  /* Nav strip horizontale : lang-switcher · monogramme JL · retour.
+     Tous trois alignés sur la même ligne verticale, padding gauche/droite
+     identiques. Le wrapper laisse passer les clics dans les espaces vides. */
+  .my-room-nav {
     position: fixed;
-    top: max(18px, env(safe-area-inset-top));
-    right: max(18px, env(safe-area-inset-right));
+    top: max(14px, env(safe-area-inset-top));
+    left: 0; right: 0;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+    pointer-events: none;
+  }
+  .my-room-nav > * { pointer-events: auto; }
+
+  /* Override : à l'intérieur de la nav strip, le lang-switcher abandonne
+     sa propre position fixed pour suivre le flux flex. */
+  .my-room-nav .lang-switcher {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: none;
+  }
+
+  /* Médaillon JL au centre — même look (cream/blur/rule) que les autres
+     pills de la nav. */
+  .jl-stamp {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(243, 236, 216, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 18px rgba(31, 36, 25, 0.08);
+    line-height: 0;
+  }
+  .jl-stamp svg { display: block; }
+
+  /* Pill "Retour" — toujours pill flat, juste posé dans la flex strip. */
+  .back-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 14px;
+    padding: 9px 14px;
     border-radius: 999px;
     background: rgba(243, 236, 216, 0.88);
     backdrop-filter: blur(8px);
@@ -198,6 +236,7 @@
 <body>
 <div id="app"></div>
 
+<script type="text/babel" src="components/icons.jsx" data-filename="components/icons.jsx"></script>
 <script type="text/babel" src="components/i18n.jsx" data-filename="components/i18n.jsx"></script>
 <script type="text/babel" src="components/lang-switcher.jsx" data-filename="components/lang-switcher.jsx"></script>
 <script type="text/babel" src="components/my-room.jsx" data-filename="components/my-room.jsx"></script>
@@ -264,11 +303,16 @@
 
     return (
       <window.LangContext.Provider value={lang}>
-        <window.LangSwitcher lang={lang} onSelect={setLang} />
-        <a className="back-link" href={`index.html`} aria-label="Retour au faire-part">
-          <span className="arrow">←</span>
-          <span>{lang === 'ge' ? 'უკან' : lang === 'de' ? 'Zurück' : 'Retour'}</span>
-        </a>
+        <div className="my-room-nav">
+          <window.LangSwitcher lang={lang} onSelect={setLang} />
+          <div className="jl-stamp" aria-label="Justine et Levani">
+            {window.MonoLogo ? <window.MonoLogo size={38} accent="var(--sage)" /> : null}
+          </div>
+          <a className="back-link" href={`index.html?lang=${lang}`} aria-label="Retour au faire-part">
+            <span className="arrow">←</span>
+            <span>{lang === 'ge' ? 'უკან' : lang === 'de' ? 'Zurück' : 'Retour'}</span>
+          </a>
+        </div>
         <window.MyRoom />
       </window.LangContext.Provider>
     );
