@@ -3,6 +3,7 @@
 const Practical = () => {
   const ref = React.useRef(null);
   const [inView] = window.useInView(ref);
+  const lang = React.useContext(window.LangContext);
   const t = window.useT().practical;
   const items = t.items;
 
@@ -15,6 +16,37 @@ const Practical = () => {
           background: linear-gradient(180deg, #d8c8a4 0%, var(--beige) 14%, var(--cream) 38%);
           padding: 96px 28px;
           gap: 28px;
+        }
+        .myroom-cta {
+          margin-top: 8px;
+          display: flex; flex-direction: column;
+          align-items: center; gap: 6px;
+          padding: 22px 24px;
+          background: var(--beige-light);
+          border: 1px solid var(--rule);
+          color: var(--sage-deep);
+          text-decoration: none;
+          transition: background 0.3s, color 0.3s, gap 0.3s;
+        }
+        .myroom-cta:hover {
+          background: var(--sage-deep);
+          color: var(--cream);
+        }
+        .myroom-cta .lbl {
+          font-family: var(--sans); font-size: 10px;
+          letter-spacing: 0.36em; text-transform: uppercase;
+          display: inline-flex; align-items: center; gap: 12px;
+        }
+        .myroom-cta .lbl .arrow {
+          font-family: var(--display); font-size: 16px;
+          letter-spacing: 0;
+          transition: transform 0.3s;
+        }
+        .myroom-cta:hover .lbl .arrow { transform: translateX(4px); }
+        .myroom-cta .sub {
+          font-family: var(--serif); font-style: italic; font-weight: 300;
+          font-size: 14px;
+          opacity: 0.78;
         }
         .prac-grid {
           display: flex; flex-direction: column; gap: 1px;
@@ -91,6 +123,18 @@ const Practical = () => {
           </div>
         ))}
       </div>
+
+      <a
+        className={`myroom-cta blur-in ${inView ? 'in' : ''}`}
+        style={{ transitionDelay: '0.45s' }}
+        href={`my-room.html?lang=${lang}`}
+      >
+        <span className="lbl">
+          <span>{t.myroom_cta}</span>
+          <span className="arrow">→</span>
+        </span>
+        <span className="sub">{t.myroom_cta_sub}</span>
+      </a>
     </section>
   );
 };
