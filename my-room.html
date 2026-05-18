@@ -190,20 +190,13 @@
     transition: none;
   }
 
-  /* Médaillon JL au centre — même look (cream/blur/rule) que les autres
-     pills de la nav. */
-  .jl-stamp {
+  /* Monogramme JL nu — même traitement que Hero / LangGate (sans pill,
+     ink + accent sage-deep). */
+  .jl-mark {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: rgba(243, 236, 216, 0.88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--rule);
-    box-shadow: 0 4px 18px rgba(31, 36, 25, 0.08);
     line-height: 0;
   }
-  .jl-stamp svg { display: block; }
+  .jl-mark svg { display: block; }
 
   /* Pill "Retour" — toujours pill flat, juste posé dans la flex strip. */
   .back-link {
@@ -305,8 +298,8 @@
       <window.LangContext.Provider value={lang}>
         <div className="my-room-nav">
           <window.LangSwitcher lang={lang} onSelect={setLang} />
-          <div className="jl-stamp" aria-label="Justine et Levani">
-            {window.MonoLogo ? <window.MonoLogo size={38} accent="var(--sage)" /> : null}
+          <div className="jl-mark" aria-label="Justine et Levani">
+            {window.MonoLogo && <window.MonoLogo size={56} ink="var(--ink)" accent="var(--sage-deep)" />}
           </div>
           <a className="back-link" href={`index.html?lang=${lang}`} aria-label="Retour au faire-part">
             <span className="arrow">←</span>
