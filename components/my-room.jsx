@@ -937,29 +937,29 @@
             color: var(--sage-deep); margin-bottom: 18px; opacity: 0.85;
           }
           .hero-room .room-badge {
-            width: clamp(220px, 62vw, 280px);
+            width: clamp(168px, 46vw, 210px);
             aspect-ratio: 1 / 1;
             border-radius: 50%;
             background: var(--sage-deep);
             color: var(--cream);
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            padding: 28px;
+            padding: 22px;
             box-shadow:
-              0 10px 32px rgba(31, 36, 25, 0.18),
+              0 8px 24px rgba(31, 36, 25, 0.16),
               inset 0 0 0 1px rgba(247, 242, 230, 0.12);
             position: relative;
           }
           .hero-room .room-badge::before {
             content: '';
-            position: absolute; inset: 8px;
+            position: absolute; inset: 6px;
             border-radius: 50%;
             border: 1px solid rgba(247, 242, 230, 0.18);
             pointer-events: none;
           }
           .hero-room .room-badge .badge-number {
             font-family: var(--display);
-            font-size: clamp(78px, 22vw, 108px);
+            font-size: clamp(56px, 16vw, 78px);
             line-height: 0.9;
             letter-spacing: -0.02em;
             font-variant-numeric: tabular-nums;
@@ -967,15 +967,15 @@
           }
           .hero-room .room-badge .badge-meta {
             font-family: var(--serif); font-style: italic; font-weight: 300;
-            font-size: clamp(13px, 3.4vw, 15px);
-            line-height: 1.35;
-            margin-top: 12px;
-            opacity: 0.9;
+            font-size: clamp(11px, 2.8vw, 13px);
+            line-height: 1.3;
+            margin-top: 8px;
+            opacity: 0.88;
             letter-spacing: 0.02em;
             text-align: center;
-            padding: 0 6px;
+            padding: 0 4px;
           }
-          .hero-room .room-badge .badge-meta .sep { opacity: 0.55; margin: 0 6px; }
+          .hero-room .room-badge .badge-meta .sep { opacity: 0.5; margin: 0 5px; }
 
           .plan-block { width: 100%; position: relative; }
           .plan-head {
