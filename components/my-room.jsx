@@ -526,29 +526,28 @@
           .zone { font-family: 'Inter', system-ui, sans-serif; font-size: 8px; font-weight: 500; fill: #666; text-anchor: middle; letter-spacing: 1.2px; text-transform: uppercase; }
           .sdb { font-family: 'Inter', system-ui, sans-serif; font-size: 6.5px; font-weight: 400; fill: #888; text-anchor: middle; letter-spacing: 0.4px; text-transform: uppercase; }
           .room-hl {
-            fill: transparent;
-            stroke: var(--sage-deep);
-            stroke-width: 2.5;
-            stroke-linejoin: round;
+            fill: var(--sage-deep);
+            stroke: none;
             opacity: 0;
+            mix-blend-mode: multiply;
             transition: opacity 0.5s cubic-bezier(.2,.8,.2,1);
             pointer-events: none;
           }
-          .room-hl.active { opacity: 1; animation: roomPulse 2.4s ease-in-out infinite; }
+          .room-hl.active { animation: roomPulse 2.2s ease-in-out infinite; }
           .room-hl-halo {
             fill: var(--sage-deep);
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(.2,.8,.2,1);
             pointer-events: none;
           }
-          .room-hl-halo.active { opacity: 0.08; animation: roomHaloPulse 2.4s ease-in-out infinite; }
+          .room-hl-halo.active { animation: roomHaloPulse 2.2s ease-in-out infinite; }
           @keyframes roomPulse {
-            0%, 100% { opacity: 1; stroke-width: 2.5; }
-            50% { opacity: 0.75; stroke-width: 3.2; }
+            0%, 100% { opacity: 0.75; }
+            50%      { opacity: 1; }
           }
           @keyframes roomHaloPulse {
-            0%, 100% { opacity: 0.08; }
-            50% { opacity: 0.14; }
+            0%, 100% { opacity: 0.14; }
+            50%      { opacity: 0.24; }
           }
 
           .iplan-ctrls {
@@ -918,6 +917,8 @@
             text-align: center;
             padding: 8px 0 0;
             position: relative;
+            display: flex; flex-direction: column;
+            align-items: center;
           }
           .hero-room .greeting {
             font-family: var(--sans); font-size: 9.5px;
@@ -930,29 +931,51 @@
             color: var(--ink); line-height: 1.15;
             letter-spacing: -0.005em; margin-bottom: 26px;
           }
-          .hero-room .room-divider {
-            width: 32px; height: 1px;
-            background: var(--sage-deep); opacity: 0.4;
-            margin: 0 auto 22px;
-          }
           .hero-room .room-prefix {
             font-family: var(--sans); font-size: 9px;
             letter-spacing: 0.42em; text-transform: uppercase;
-            color: var(--sage-deep); margin-bottom: 4px; opacity: 0.85;
+            color: var(--sage-deep); margin-bottom: 18px; opacity: 0.85;
           }
-          .hero-room .room-number {
+          .hero-room .room-badge {
+            width: clamp(220px, 62vw, 280px);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background: var(--sage-deep);
+            color: var(--cream);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 28px;
+            box-shadow:
+              0 10px 32px rgba(31, 36, 25, 0.18),
+              inset 0 0 0 1px rgba(247, 242, 230, 0.12);
+            position: relative;
+          }
+          .hero-room .room-badge::before {
+            content: '';
+            position: absolute; inset: 8px;
+            border-radius: 50%;
+            border: 1px solid rgba(247, 242, 230, 0.18);
+            pointer-events: none;
+          }
+          .hero-room .room-badge .badge-number {
             font-family: var(--display);
-            font-size: clamp(96px, 30vw, 140px);
-            line-height: 0.9; color: var(--ink);
-            letter-spacing: -0.02em; margin: 0;
+            font-size: clamp(78px, 22vw, 108px);
+            line-height: 0.9;
+            letter-spacing: -0.02em;
             font-variant-numeric: tabular-nums;
+            margin: 0;
           }
-          .hero-room .room-wing {
+          .hero-room .room-badge .badge-meta {
             font-family: var(--serif); font-style: italic; font-weight: 300;
-            font-size: 18px; color: var(--sage-deep);
-            margin-top: 10px; letter-spacing: 0.02em;
+            font-size: clamp(13px, 3.4vw, 15px);
+            line-height: 1.35;
+            margin-top: 12px;
+            opacity: 0.9;
+            letter-spacing: 0.02em;
+            text-align: center;
+            padding: 0 6px;
           }
-          .hero-room .room-wing .sep { opacity: 0.4; margin: 0 8px; }
+          .hero-room .room-badge .badge-meta .sep { opacity: 0.55; margin: 0 6px; }
 
           .plan-block { width: 100%; position: relative; }
           .plan-head {
@@ -1167,13 +1190,14 @@
             <div className="hero-room">
               <div className="greeting">{t.greeting}</div>
               <div className="guest-name">{selectedGuest.name}</div>
-              <div className="room-divider" />
               <div className="room-prefix">{t.room_prefix}</div>
-              <div className="room-number">{selectedGuest.room}</div>
-              <div className="room-wing">
-                {t.stat_wing} {wingLabel(t, roomMeta?.wing)}
-                <span className="sep">·</span>
-                {floorLong(t, roomMeta?.floor, roomMeta?.floorKey)}
+              <div className="room-badge">
+                <div className="badge-number">{selectedGuest.room}</div>
+                <div className="badge-meta">
+                  {t.stat_wing} {wingLabel(t, roomMeta?.wing)}
+                  <span className="sep">·</span>
+                  {floorLong(t, roomMeta?.floor, roomMeta?.floorKey)}
+                </div>
               </div>
             </div>
 
