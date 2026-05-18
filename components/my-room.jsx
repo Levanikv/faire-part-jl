@@ -769,7 +769,9 @@
             min-height: 100vh; min-height: 100dvh;
             width: 100%;
             background: linear-gradient(180deg, var(--cream) 0%, var(--beige-light) 100%);
-            padding: 64px 24px 96px;
+            /* Top breathing room large enough to clear the floating lang
+               switcher / back link (~56-64px + safe-area). */
+            padding: calc(96px + env(safe-area-inset-top)) 24px 96px;
             display: flex; flex-direction: column;
           }
 
