@@ -1327,7 +1327,7 @@
               </div>
               <div className="stat-cell">
                 <div className="stat-lbl">{t.stat_view}</div>
-                <div className="stat-val" style={{ fontSize: '14px' }}>{viewLabel(t, roomMeta?.view)}</div>
+                <div className="stat-val">{viewLabel(t, roomMeta?.view)}</div>
               </div>
             </div>
 
