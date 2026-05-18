@@ -1153,17 +1153,7 @@
           /* ── Bouton reset ──────────────────────────────────────── */
           .actions-bar {
             display: flex; justify-content: center;
-            padding-top: 14px;
             margin-top: 4px;
-            position: relative;
-          }
-          .actions-bar::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 56px; height: 1px;
-            background: var(--rule);
           }
           .btn-reset {
             appearance: none; border: 1px solid var(--rule);
