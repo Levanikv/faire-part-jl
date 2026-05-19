@@ -846,6 +846,7 @@
   /* ─── COMPOSANT PRINCIPAL ────────────────────────────────────────── */
   const MyRoom = () => {
     const t = window.useT().myroom;
+    const lang = React.useContext(window.LangContext);
     const [query, setQuery] = useState('');
     const [selectedGuest, setSelectedGuest] = useState(null);
     const [focused, setFocused] = useState(false);
@@ -905,11 +906,23 @@
             min-height: 100vh; min-height: 100dvh;
             width: 100%;
             background: linear-gradient(180deg, var(--cream) 0%, var(--beige-light) 100%);
-            /* La nav strip fait ~56px de haut + safe-area, on garde 60px
-               de respiration en plus avant le titre. */
-            padding: calc(124px + env(safe-area-inset-top)) 24px 96px;
+            /* Padding top : laisse passer les FABs flottants (≈ 18 + 46px)
+               sans les chevaucher avant le JL statique. */
+            padding: calc(86px + env(safe-area-inset-top)) 24px 96px;
             display: flex; flex-direction: column;
           }
+
+          /* Monogramme JL statique — vit dans le flux, comme sur le Hero,
+             cliquable vers la home avec lang préservé. */
+          .f-jl {
+            display: flex; justify-content: center;
+            margin-bottom: 28px;
+            color: var(--ink);
+            text-decoration: none;
+            transition: opacity 0.2s;
+          }
+          .f-jl:hover { opacity: 0.78; }
+          .f-jl svg { display: block; }
 
           .f-header {
             display: flex; flex-direction: column; align-items: center;
@@ -1326,6 +1339,14 @@
           .result-state.visible > *:nth-child(7) { animation-delay: 0.6s; }
           @keyframes stagger-in { to { opacity: 1; transform: translateY(0); } }
         `}</style>
+
+        <a
+          className="f-jl"
+          href={`index.html?lang=${lang}`}
+          aria-label="Justine et Levani — accueil"
+        >
+          {window.MonoLogo && <window.MonoLogo size={68} ink="var(--ink)" accent="var(--sage-deep)" />}
+        </a>
 
         <div className="f-header">
           <div className={`eyebrow blur-in ${inView ? 'in' : ''}`}>
