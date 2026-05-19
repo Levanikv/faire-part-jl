@@ -186,29 +186,52 @@
     '520': { wing: 'annex',  floor: 0, view: 'oldbuilding', floorKey: 'annex' },
   };
 
-  // ROOM_RECTS : coordonnées du highlight sur le plan SVG.
-  // Identique au room-finder v4.
+  // ROOM_RECTS : coordonnées du highlight sur le plan SVG. Chaque rect doit
+  // recouvrir UNIQUEMENT la cellule où le numéro est imprimé (pas la salle
+  // de bain adjacente). Référence : positions des <text class="lbl"> dans
+  // PlanBody.
   const ROOM_RECTS = {
-    '334-ext': [115, 100, 60, 35],
-    '334':     [179, 114, 41, 17],
-    '333':     [201, 84, 39, 21],
-    '332':     [240, 84, 38, 21],
+    // 2ᵉ étage centre
+    '334':     [115, 100, 60, 35],  // annexe ouest (le numéro est dans cette boîte)
+    '333':     [210, 84,  34, 21],
+    '332':     [276, 84,  34, 21],
     '331':     [220, 114, 60, 17],
     '330':     [280, 114, 60, 17],
-    '329':     [378, 84, 36, 21],
-    '328':     [491, 79, 60, 57],
-    '206':     [179, 169, 41, 18], '207': [220, 169, 38, 18], '208': [258, 169, 38, 18],
-    '209':     [296, 169, 44, 18], '210': [340, 169, 45, 18], '211': [385, 169, 40, 18],
-    '212':     [425, 169, 36, 18], '214': [481, 164, 50, 26], '215': [481, 190, 50, 26],
-    '220':     [265, 196, 80, 15], '221': [179, 196, 86, 15],
-    '201':     [99, 244, 47, 41],  '202': [99, 333, 47, 41],  '203': [99, 423, 47, 41],
-    '204':     [99, 513, 47, 41],  '205': [99, 603, 47, 41],
-    '216':     [554, 244, 47, 41], '217': [554, 287, 47, 47], '218': [554, 342, 47, 47], '219': [554, 394, 47, 42],
-    '120':     [554, 464, 47, 36], '130': [554, 503, 47, 41], '140': [554, 548, 47, 41],
-    '150':     [554, 598, 47, 49], '160': [554, 665, 47, 43],
-    '510':     [609, 644, 57, 46], '520': [609, 690, 57, 46],
+    '329':     [380, 84,  34, 21],
+    '328':     [491, 79,  60, 57],
+
+    // 1ᵉʳ étage centre
+    '206': [179, 169, 41, 18], '207': [220, 169, 38, 18], '208': [258, 169, 38, 18],
+    '209': [296, 169, 44, 18], '210': [340, 169, 45, 18], '211': [385, 169, 40, 18],
+    '212': [425, 169, 36, 18], '214': [481, 164, 50, 26], '215': [481, 190, 50, 26],
+    '220': [265, 196, 80, 15], '221': [179, 196, 86, 15],
+
+    // Aile Sud
+    '201': [99, 244, 47, 41],  '202': [99, 333, 47, 41],  '203': [99, 423, 47, 41],
+    '204': [99, 513, 47, 41],  '205': [99, 603, 47, 41],
+
+    // Aile Nord — 1ᵉʳ étage. Cellules irrégulières (3 dividers seulement
+    // entre y=244 et y=436). Chaque rect est centré sur son label :
+    //   216 label y=266, 217 y=341, 218 y=400, 219 y=425.
+    '216': [554, 244, 47, 41],
+    '217': [554, 322, 47, 38],
+    '218': [554, 384, 47, 28],
+    '219': [554, 414, 47, 22],
+
+    // Aile Nord — RDC. Cellules régulières (dividers à 500/528/555/585/610/635/665/695).
+    '120': [554, 464, 47, 36],
+    '130': [554, 528, 47, 27],
+    '140': [554, 585, 47, 25],
+    '150': [554, 635, 47, 30],
+    '160': [554, 695, 47, 41],
+
+    // Annexe extérieure
+    '510': [609, 644, 57, 46],
+    '520': [609, 690, 57, 46],
   };
-  const ROOM_EXTRA = { '334': ['334-ext'] };
+  // ROOM_EXTRA permet d'allumer plusieurs rects pour une seule chambre
+  // (chambre 334 ne nécessite plus ce mécanisme — la rect unique couvre déjà).
+  const ROOM_EXTRA = {};
 
   const PLAN_W = 720, PLAN_H = 820;
   const ZOOM_MIN = 1, ZOOM_MAX = 4.5;
@@ -906,23 +929,31 @@
             min-height: 100vh; min-height: 100dvh;
             width: 100%;
             background: linear-gradient(180deg, var(--cream) 0%, var(--beige-light) 100%);
-            /* Padding top : laisse passer les FABs flottants (≈ 18 + 46px)
-               sans les chevaucher avant le JL statique. */
-            padding: calc(86px + env(safe-area-inset-top)) 24px 96px;
+            /* Réserve la place pour le JL absolu (top 40 + 56 px de haut)
+               + une marge généreuse avant l'eyebrow. */
+            padding: calc(150px + env(safe-area-inset-top)) 24px 96px;
             display: flex; flex-direction: column;
+            position: relative;
           }
 
-          /* Monogramme JL statique — vit dans le flux, comme sur le Hero,
+          /* Monogramme JL — même position et même taille que le Hero
+             (top: max(40px, safe-area), size 68, drop-shadow cream),
              cliquable vers la home avec lang préservé. */
           .f-jl {
+            position: absolute;
+            top: max(40px, env(safe-area-inset-top));
+            left: 0; right: 0;
             display: flex; justify-content: center;
-            margin-bottom: 28px;
             color: var(--ink);
             text-decoration: none;
             transition: opacity 0.2s;
+            z-index: 50;
           }
           .f-jl:hover { opacity: 0.78; }
-          .f-jl svg { display: block; }
+          .f-jl svg {
+            display: block;
+            filter: drop-shadow(0 1px 12px rgba(247, 242, 230, 0.6));
+          }
 
           .f-header {
             display: flex; flex-direction: column; align-items: center;
