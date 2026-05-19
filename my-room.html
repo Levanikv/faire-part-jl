@@ -195,10 +195,9 @@
     pointer-events: none;
   }
 
-  /* À l'intérieur de la nav, on annule les fixed-positions des composants
-     globaux (lang-switcher + audio-fab) pour qu'ils suivent le flux grid. */
-  .my-room-nav .lang-switcher,
-  .my-room-nav .audio-fab {
+  /* À l'intérieur de la nav, on annule la position fixed du lang-switcher
+     pour qu'il suive le flux grid. */
+  .my-room-nav .lang-switcher {
     position: static !important;
     top: auto !important;
     left: auto !important;
@@ -207,11 +206,6 @@
     opacity: 1 !important;
     pointer-events: auto !important;
     transition: background 0.3s, transform 0.18s;
-  }
-  /* label-tip de l'audio button : sort à droite du bouton dans la strip. */
-  .my-room-nav .audio-fab .label-tip {
-    left: 100%; right: auto;
-    margin-left: 10px; margin-right: 0;
   }
 
   /* JL : link cliquable vers le home (avec lang préservé), nu, taille 68
@@ -260,7 +254,6 @@
 <script type="text/babel" src="components/icons.jsx" data-filename="components/icons.jsx"></script>
 <script type="text/babel" src="components/i18n.jsx" data-filename="components/i18n.jsx"></script>
 <script type="text/babel" src="components/lang-switcher.jsx" data-filename="components/lang-switcher.jsx"></script>
-<script type="text/babel" src="components/audio-background.jsx" data-filename="components/audio-background.jsx"></script>
 <script type="text/babel" src="components/my-room.jsx" data-filename="components/my-room.jsx"></script>
 
 <script type="text/babel" data-presets="react">
@@ -331,7 +324,6 @@
               <span className="arrow">←</span>
               <span>{lang === 'ge' ? 'უკან' : lang === 'de' ? 'Zurück' : 'Retour'}</span>
             </a>
-            <window.AudioBackground />
           </div>
           <a
             className="jl-mark nav-center"
