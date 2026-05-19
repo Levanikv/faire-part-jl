@@ -4,20 +4,151 @@
 (() => {
   const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
-  /* ─── DONNÉES EXEMPLES (à remplacer par les vrais invités) ───────── */
-  // Notes possibles : 'groundfloor' | 'groundfloor_court' | 'dormitory'
-  //                   | 'annex' | 'family_room' | null
-  const GUESTS = [
-    { name: 'Marie Lambert',    room: '210' },
-    { name: 'Sophie Lambert',   room: '203', sharedWith: ['Pierre Lambert'] },
-    { name: 'Pierre Lambert',   room: '203', sharedWith: ['Sophie Lambert'] },
-    { name: 'Tamar Tsiklauri',  room: '328', aliases: ['Tamta'], note: 'dormitory' },
-    { name: 'Cousins',          room: '510', sharedWith: ['Léo', 'Mathis', 'Noah'], note: 'annex' },
-    { name: 'Grand-père Henri', room: '130', sharedWith: ['Suzanne Lambert'], note: 'groundfloor' },
+  /* ─── INVITÉS ────────────────────────────────────────────────────
+     Liste plate ; sharedWith calculé automatiquement à partir du numéro
+     de chambre. Pour éditer : ajoute/retire des entrées ci-dessous,
+     rien d'autre à toucher.                                           */
+  const RAW_GUESTS = [
+    { name: 'Rauli Zoidze', room: '120' },
+    { name: 'Nino Zoidze', room: '120' },
+    { name: 'Luka Zoidze', room: '120' },
+    { name: 'Lela Zoidze', room: '120' },
+    { name: 'Keti Bachtadze', room: '130' },
+    { name: 'Naimi Labadze', room: '140' },
+    { name: 'Nodari Labadze', room: '140' },
+    { name: 'Nini Kvaliashvili', room: '150' },
+    { name: 'Lass Doumbouya', room: '150' },
+    { name: 'Nata Kvaliashvili', room: '150' },
+    { name: 'Diana Martinez', room: '150' },
+    { name: 'Giorgi Martinez', room: '150' },
+    { name: 'Ani Bachtadze', room: '160' },
+    { name: 'Patrick Bachtadze', room: '160' },
+    { name: 'Neli Bachtadze', room: '160' },
+    { name: 'Nana Labadze', room: '216' },
+    { name: 'Milan Andjelkovic', room: '216' },
+    { name: 'Aliyah Doumbouya', room: '216' },
+    { name: 'Mamuka Labadze', room: '217' },
+    { name: 'Tarulo Labadze', room: '217' },
+    { name: 'Levian Labadze', room: '217' },
+    { name: 'Nona Bachtadze', room: '218' },
+    { name: 'Zaza Bachtadze', room: '218' },
+    { name: 'Sylvie Claveyrolat', room: '219' },
+    { name: 'Christophe Lambert', room: '219' },
+    { name: 'Barbara Salomon', room: '510' },
+    { name: 'Frederic Salomon', room: '510' },
+    { name: 'Shobia Krishnan', room: '510' },
+    { name: 'Naj', room: '510' },
+    { name: 'Jennifer Doudy-Pissatcheva', room: '510' },
+    { name: 'Aymeric Bizeul', room: '510' },
+    { name: 'Aurore Aubriot', room: '520' },
+    { name: 'Luc Varela', room: '520' },
+    { name: 'Maeva Egli dit Egle', room: '520' },
+    { name: 'Isaiah Morin', room: '520' },
+    { name: 'Ava Morin', room: '520' },
+    { name: 'Maylaan Varela Aubriot', room: '520' },
+    { name: 'Hassan Ahjjal', room: '206' },
+    { name: 'Alina Ahjjal', room: '206' },
+    { name: 'Harry Sitbon', room: '207' },
+    { name: 'Andrea Ankry', room: '207' },
+    { name: 'Serge Minet', room: '208' },
+    { name: 'Romain Minet', room: '208' },
+    { name: 'Gabriel Neuman', room: '209' },
+    { name: 'Ema Neuman', room: '209' },
+    { name: 'Romain Tournet Lambert', room: '210' },
+    { name: 'Elisa', room: '210' },
+    { name: 'Nodo Labadze', room: '211' },
+    { name: 'Antonia Labadze', room: '211' },
+    { name: 'Liana Labadze', room: '211' },
+    { name: 'Gilles Leguet', room: '212' },
+    { name: 'Caroline Leguet', room: '212' },
+    { name: 'Audrey Guillaumin', room: '214' },
+    { name: 'Corentin Lambert', room: '214' },
+    { name: 'Barbara Sechi', room: '214' },
+    { name: 'Antoine Minez', room: '214' },
+    { name: 'Salomé Labadze Krüger', room: '215' },
+    { name: 'Christian Krüger', room: '215' },
+    { name: 'Farouk El Moubaraky', room: '220' },
+    { name: 'Victoria El Moubaraky', room: '220' },
+    { name: 'Patrick Rabba', room: '221' },
+    { name: 'Vanessa Rabba', room: '221' },
+    { name: 'Lisa Roger', room: '328' },
+    { name: 'Josselin Lambert', room: '328' },
+    { name: 'Damien De Almeida', room: '328' },
+    { name: 'Luca Sechi', room: '328' },
+    { name: 'Baptiste Sechi', room: '328' },
+    { name: 'Elodie Zouzou', room: '328' },
+    { name: 'Maylis Breart de Boisanger', room: '328' },
+    { name: 'Luna Ouamrane', room: '328' },
+    { name: 'Antoine Amice', room: '328' },
+    { name: 'Louis Tonetti', room: '328' },
+    { name: 'Marine', room: '328' },
+    { name: 'Amir Kabiri', room: '328' },
+    { name: 'Kevin Levêque', room: '328' },
+    { name: 'Romain Van Goch', room: '328' },
+    { name: 'Eka Dapremont', room: '329' },
+    { name: 'Virgile Dapremont', room: '329' },
+    { name: 'Sophie Dapremont', room: '329' },
+    { name: 'Irakli Oboladze', room: '331' },
+    { name: 'Lola Oboladze', room: '331' },
+    { name: 'Tazo Oboladze', room: '331' },
+    { name: 'Daniel Oboladze', room: '331' },
+    { name: 'Bil Andjelkovic', room: '332' },
+    { name: 'Wadi Souei', room: '332' },
+    { name: 'Adham Souei', room: '332' },
+    { name: 'Ghali Souei', room: '332' },
+    { name: 'Sophie Minet', room: '333' },
+    { name: 'Alexia Minet', room: '333' },
+    { name: 'Jayanah Minet', room: '333' },
+    { name: 'Noahn Minet', room: '333' },
+    { name: 'Aina Minet', room: '333' },
+    { name: 'Mila Minet', room: '333' },
+    { name: 'Tatiana Andjelkovic', room: '334' },
+    { name: 'Steven Fevrier', room: '334' },
+    { name: 'Marina Andjelkovic', room: '334' },
+    { name: 'Lyssandre Auguste', room: '334' },
+    { name: 'Ema Andjelkovic', room: '334' },
+    { name: 'Damien Nunes de Viveiros', room: '334' },
+    { name: 'Jovann Andjelkovic', room: '334' },
+    // NB: Aliyah Doumbouya apparaît aussi en 216 dans le XLSX — à vérifier.
+    { name: 'Aliyah Doumbouya', room: '334', aliases: ['Aliyah Doumbouya (334)'] },
+    { name: 'Marco Da Costa', room: '201' },
+    { name: 'Renata Da Costa', room: '201' },
+    { name: 'Rojdia Cunneapen', room: '202' },
+    { name: 'Michel Levêque', room: '202' },
+    { name: 'Nadine Leguet', room: '203' },
+    { name: 'Jacques Mastorakis', room: '203' },
+    { name: 'Noah Kvaliashvili', room: '203' },
+    { name: 'Vincent Havet', room: '204' },
+    { name: 'Chrystele Francois', room: '204' },
+    { name: 'Nona Gorozia', room: '205' },
+    { name: 'Mamuka Gorozia', room: '205' },
   ];
 
+  // Notes par chambre — appliquées à tous les invités de la chambre.
+  const NOTE_BY_ROOM = {
+    '120': 'groundfloor', '130': 'groundfloor', '140': 'groundfloor',
+    '150': 'groundfloor', '160': 'groundfloor',
+    '328': 'dormitory',
+    '510': 'annex', '520': 'annex',
+  };
+
+  // Index room → liste des noms ; permet de calculer sharedWith en O(1).
+  const ROOMMATES = (() => {
+    const idx = {};
+    for (const g of RAW_GUESTS) {
+      (idx[g.room] = idx[g.room] || []).push(g.name);
+    }
+    return idx;
+  })();
+
+  const GUESTS = RAW_GUESTS.map(g => {
+    const sharedWith = (ROOMMATES[g.room] || []).filter(n => n !== g.name);
+    const note = NOTE_BY_ROOM[g.room];
+    return note ? { ...g, sharedWith, note } : { ...g, sharedWith };
+  });
+
   // ROOMS_META : clés stables (wing / view) — traduites au rendu via t.wing_*/t.view_*.
-  // floor est numérique : 0/1/2 (annexe = 0 + label spécial).
+  // floor est numérique : 0/1/2 (annexe = 0 + floorKey spécial).
   const ROOMS_META = {
     '201': { wing: 'south',  floor: 1, view: 'park' },
     '202': { wing: 'south',  floor: 1, view: 'park' },
@@ -41,6 +172,7 @@
     '331': { wing: 'center', floor: 2, view: 'terrace' },
     '332': { wing: 'center', floor: 2, view: 'terrace' },
     '333': { wing: 'center', floor: 2, view: 'terrace' },
+    '334': { wing: 'center', floor: 2, view: 'terrace' },
     '216': { wing: 'north',  floor: 1, view: 'court' },
     '217': { wing: 'north',  floor: 1, view: 'court' },
     '218': { wing: 'north',  floor: 1, view: 'court' },
@@ -759,7 +891,11 @@
     const activeRoom = selectedGuest?.room || null;
     const roomMeta = activeRoom ? ROOMS_META[activeRoom] : null;
     const roommates = selectedGuest?.sharedWith || [];
-    const directions = activeRoom ? (t.directions?.[activeRoom] || '') : '';
+    // Directions par template wing+floor (clé annex pour les dépendances)
+    const directionsKey = roomMeta
+      ? (roomMeta.floorKey === 'annex' ? 'annex' : `${roomMeta.wing}_${roomMeta.floor}`)
+      : null;
+    const directions = directionsKey ? (t.directions?.[directionsKey] || '') : '';
     const guestNote = selectedGuest?.note ? t[`note_${selectedGuest.note}`] : null;
 
     return (
