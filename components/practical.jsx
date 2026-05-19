@@ -17,35 +17,78 @@ const Practical = () => {
           padding: 96px 28px;
           gap: 28px;
         }
+        /* Plaque sage-deep — même langage visuel que la pancarte de
+           chambre dans my-room (rivets aux 4 coins, double filet
+           intérieur, ombre portée). */
         .myroom-cta {
-          margin-top: 8px;
+          margin-top: 14px;
           display: flex; flex-direction: column;
-          align-items: center; gap: 6px;
-          padding: 22px 24px;
-          background: var(--beige-light);
-          border: 1px solid var(--rule);
-          color: var(--sage-deep);
-          text-decoration: none;
-          transition: background 0.3s, color 0.3s, gap 0.3s;
-        }
-        .myroom-cta:hover {
+          align-items: center; gap: 10px;
+          padding: 26px 28px 28px;
           background: var(--sage-deep);
           color: var(--cream);
+          border-radius: 3px;
+          text-decoration: none;
+          position: relative;
+          box-shadow:
+            0 14px 28px rgba(31, 36, 25, 0.22),
+            0 2px 4px rgba(31, 36, 25, 0.12),
+            inset 0 1px 0 rgba(247, 242, 230, 0.10);
+          transition: transform 0.3s cubic-bezier(.2,.8,.2,1),
+                      box-shadow 0.3s cubic-bezier(.2,.8,.2,1);
         }
+        .myroom-cta::before {
+          content: '';
+          position: absolute; inset: 8px;
+          border: 1px solid rgba(247, 242, 230, 0.22);
+          border-radius: 1px;
+          pointer-events: none;
+        }
+        .myroom-cta::after {
+          content: '';
+          position: absolute; inset: 12px;
+          border-top: 1px solid rgba(247, 242, 230, 0.08);
+          border-bottom: 1px solid rgba(247, 242, 230, 0.08);
+          pointer-events: none;
+        }
+        .myroom-cta:hover {
+          transform: translateY(-2px);
+          box-shadow:
+            0 18px 34px rgba(31, 36, 25, 0.28),
+            0 3px 6px rgba(31, 36, 25, 0.16),
+            inset 0 1px 0 rgba(247, 242, 230, 0.10);
+        }
+        /* Rivets aux 4 coins (identiques à la pancarte). */
+        .myroom-cta .rivet {
+          position: absolute;
+          width: 4px; height: 4px;
+          border-radius: 50%;
+          background: rgba(247, 242, 230, 0.34);
+          box-shadow:
+            inset 0 -1px 0 rgba(31, 36, 25, 0.45),
+            0 0 0 1px rgba(31, 36, 25, 0.25);
+          pointer-events: none;
+        }
+        .myroom-cta .rivet.tl { top: 8px;    left: 8px; }
+        .myroom-cta .rivet.tr { top: 8px;    right: 8px; }
+        .myroom-cta .rivet.bl { bottom: 8px; left: 8px; }
+        .myroom-cta .rivet.br { bottom: 8px; right: 8px; }
         .myroom-cta .lbl {
-          font-family: var(--sans); font-size: 10px;
-          letter-spacing: 0.36em; text-transform: uppercase;
-          display: inline-flex; align-items: center; gap: 12px;
+          font-family: var(--sans); font-size: 12px;
+          letter-spacing: 0.4em; text-transform: uppercase;
+          display: inline-flex; align-items: center; gap: 14px;
+          color: var(--cream);
         }
         .myroom-cta .lbl .arrow {
-          font-family: var(--display); font-size: 16px;
+          font-family: var(--display); font-size: 20px;
           letter-spacing: 0;
           transition: transform 0.3s;
         }
-        .myroom-cta:hover .lbl .arrow { transform: translateX(4px); }
+        .myroom-cta:hover .lbl .arrow { transform: translateX(5px); }
         .myroom-cta .sub {
           font-family: var(--serif); font-style: italic; font-weight: 300;
-          font-size: 14px;
+          font-size: 15px;
+          color: var(--cream);
           opacity: 0.78;
         }
         .prac-grid {
@@ -129,6 +172,10 @@ const Practical = () => {
         style={{ transitionDelay: '0.45s' }}
         href={`my-room.html?lang=${lang}`}
       >
+        <span className="rivet tl" />
+        <span className="rivet tr" />
+        <span className="rivet bl" />
+        <span className="rivet br" />
         <span className="lbl">
           <span>{t.myroom_cta}</span>
           <span className="arrow">→</span>
