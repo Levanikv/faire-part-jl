@@ -81,7 +81,7 @@
     { name: 'Luna Ouamrane', room: '328' },
     { name: 'Antoine Amice', room: '328' },
     { name: 'Louis Tonetti', room: '328' },
-    { name: 'Marine', room: '328' },
+    { name: 'Marine Gil', room: '328' },
     { name: 'Amir Kabiri', room: '328' },
     { name: 'Kevin Levêque', room: '328' },
     { name: 'Romain Van Goch', room: '328' },
